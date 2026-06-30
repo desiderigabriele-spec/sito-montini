@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://luigi-idraulico.it/sitemap.xml
