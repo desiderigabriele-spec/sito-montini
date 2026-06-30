@@ -142,11 +142,12 @@
   /* ── Mobile-only overrides (< 768px) ─────────────────── */
   @media (max-width: 767px) {
     .mob-swipe-hint { display: block; }
-    /* Header: nascondi pulsante Chiama ora, centra logo */
+    /* Header: nascondi pulsante Chiama ora, centra logo, riduci altezza */
     .hdr-cta { display: none !important; }
-    header > div { justify-content: center !important; }
+    header > div { justify-content: center !important; padding: 8px 16px !important; }
+    header img { max-height: 46px !important; width: auto !important; }
 
-    /* Caroselli: scroll nativo con snap */
+    /* Caroselli: scroll nativo con snap centrato */
     #pd-carousel-wrapper,
     #srv-carousel-wrapper {
       overflow-x: scroll !important;
@@ -157,17 +158,17 @@
       scrollbar-width: none;
       margin: 0 !important;
       cursor: default !important;
-      padding-left: 16px !important;
-      padding-right: 16px !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
     }
     #pd-carousel-wrapper::-webkit-scrollbar,
     #srv-carousel-wrapper::-webkit-scrollbar { display: none; }
 
-    /* Card full-width sul mobile */
+    /* Card centrate con peek dei vicini */
     #pd-carousel-track > div,
     #srv-carousel-track > div {
-      scroll-snap-align: start;
-      width: calc(100vw - 48px) !important;
+      scroll-snap-align: center !important;
+      width: 86vw !important;
       flex-shrink: 0;
     }
 
@@ -1146,18 +1147,19 @@ class Component extends DCLogic {
           scrollSnapType: 'x mandatory',
           webkitOverflowScrolling: 'touch',
           scrollbarWidth: 'none',
-          padding: '4px 16px 14px'
+          padding: '4px 0 14px'
         });
         Array.from(srvTrack.children).forEach(card => {
-          card.style.width = (window.innerWidth - 48) + 'px';
-          card.style.scrollSnapAlign = 'start';
+          card.style.width = Math.round(window.innerWidth * 0.86) + 'px';
+          card.style.scrollSnapAlign = 'center';
           card.style.flexShrink = '0';
         });
+        const srvStep = () => srvTrack.children[0].offsetWidth + 20;
         if (prevBtn) prevBtn.addEventListener('click', () => {
-          srvWrapper.scrollBy({ left: -srvWrapper.offsetWidth, behavior: 'smooth' });
+          srvWrapper.scrollBy({ left: -srvStep(), behavior: 'smooth' });
         });
         if (nextBtn) nextBtn.addEventListener('click', () => {
-          srvWrapper.scrollBy({ left: srvWrapper.offsetWidth, behavior: 'smooth' });
+          srvWrapper.scrollBy({ left: srvStep(), behavior: 'smooth' });
         });
       }
     }
@@ -1209,18 +1211,19 @@ class Component extends DCLogic {
           scrollSnapType: 'x mandatory',
           webkitOverflowScrolling: 'touch',
           scrollbarWidth: 'none',
-          padding: '4px 16px 14px'
+          padding: '4px 0 14px'
         });
         Array.from(pdTrack.children).forEach(card => {
-          card.style.width = (window.innerWidth - 48) + 'px';
-          card.style.scrollSnapAlign = 'start';
+          card.style.width = Math.round(window.innerWidth * 0.86) + 'px';
+          card.style.scrollSnapAlign = 'center';
           card.style.flexShrink = '0';
         });
+        const pdStep = () => pdTrack.children[0].offsetWidth + 20;
         if (pdPrevBtn) pdPrevBtn.addEventListener('click', () => {
-          pdWrapper.scrollBy({ left: -pdWrapper.offsetWidth, behavior: 'smooth' });
+          pdWrapper.scrollBy({ left: -pdStep(), behavior: 'smooth' });
         });
         if (pdNextBtn) pdNextBtn.addEventListener('click', () => {
-          pdWrapper.scrollBy({ left: pdWrapper.offsetWidth, behavior: 'smooth' });
+          pdWrapper.scrollBy({ left: pdStep(), behavior: 'smooth' });
         });
       }
     }
