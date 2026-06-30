@@ -119,6 +119,16 @@
   @keyframes bar-fill    { from { width: 0; } to { width: 100%; } }
   @keyframes dot-blink   { 0%, 100% { opacity: 1; } 50% { opacity: 0.1; } }
 
+  /* ── Protezione foto ─────────────────────────────────── */
+  #pd-carousel-track img,
+  #srv-carousel-track img,
+  img[src="luigi.webp"] {
+    -webkit-user-drag: none;
+    user-select: none;
+    -webkit-user-select: none;
+    pointer-events: none;
+  }
+
   /* ── Mobile-only overrides (< 768px) ─────────────────── */
   @media (max-width: 767px) {
     /* Header: nascondi pulsante Chiama ora, centra logo */
@@ -1175,6 +1185,14 @@ class Component extends DCLogic {
         });
       }
     }
+
+    // ── Protezione foto ──────────────────────────────────
+    document.addEventListener('contextmenu', e => {
+      if (e.target.tagName === 'IMG') e.preventDefault();
+    }, true);
+    document.addEventListener('dragstart', e => {
+      if (e.target.tagName === 'IMG') e.preventDefault();
+    }, true);
   }
 
   renderVals() {
