@@ -118,6 +118,71 @@
   @keyframes splash-el   { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes bar-fill    { from { width: 0; } to { width: 100%; } }
   @keyframes dot-blink   { 0%, 100% { opacity: 1; } 50% { opacity: 0.1; } }
+
+  /* ── Protezione foto ─────────────────────────────────── */
+  #pd-carousel-track img,
+  #srv-carousel-track img,
+  img[src="luigi.webp"] {
+    -webkit-user-drag: none;
+    user-select: none;
+    -webkit-user-select: none;
+    pointer-events: none;
+  }
+
+  /* Hint swipe: nascosto su desktop, visibile su mobile */
+  .mob-swipe-hint {
+    display: none;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    color: #94a3b8;
+    text-align: center;
+    margin-top: 14px;
+    letter-spacing: 0.4px;
+  }
+
+  /* ── Mobile-only overrides (< 768px) ─────────────────── */
+  @media (max-width: 767px) {
+    .mob-swipe-hint { display: block; }
+    /* Header: nascondi pulsante Chiama ora, centra logo */
+    .hdr-cta { display: none !important; }
+    header > div { justify-content: center !important; }
+
+    /* Caroselli: scroll nativo con snap */
+    #pd-carousel-wrapper,
+    #srv-carousel-wrapper {
+      overflow-x: scroll !important;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      scroll-snap-stop: always;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      margin: 0 !important;
+      cursor: default !important;
+      padding-left: 16px !important;
+      padding-right: 16px !important;
+    }
+    #pd-carousel-wrapper::-webkit-scrollbar,
+    #srv-carousel-wrapper::-webkit-scrollbar { display: none; }
+
+    /* Card full-width sul mobile */
+    #pd-carousel-track > div,
+    #srv-carousel-track > div {
+      scroll-snap-align: start;
+      width: calc(100vw - 48px) !important;
+      flex-shrink: 0;
+    }
+
+    /* Frecce più piccole, semi-trasparenti, non bloccano lo swipe */
+    #pd-prev, #pd-next, #srv-prev, #srv-next {
+      width: 32px !important;
+      height: 32px !important;
+      opacity: 0.75;
+      box-shadow: 0 2px 8px rgba(3,45,110,0.4) !important;
+    }
+    #pd-prev i, #pd-next i, #srv-prev i, #srv-next i {
+      font-size: 12px !important;
+    }
+  }
 </style>
 <script type="application/ld+json">
 {
@@ -490,6 +555,7 @@
         <i class="fa-solid fa-chevron-right" style="color:#fff;font-size:18px;pointer-events:none;"></i>
       </button>
     </div>
+    <p class="mob-swipe-hint">← Scorri per vedere tutte le foto →</p>
   </div>
 </section>
 
@@ -576,6 +642,7 @@
         <i class="fa-solid fa-chevron-right" style="color:#fff;font-size:18px;pointer-events:none;"></i>
       </button>
     </div>
+    <p class="mob-swipe-hint">← Scorri per vedere tutti i servizi →</p>
   </div>
 </section>
 
@@ -1019,109 +1086,153 @@ class Component extends DCLogic {
       cObs.observe(counterEl);
     }
 
+    // ── Helper mobile detection ───────────────────────────────
+    const isMobile = () => window.innerWidth < 768;
+
     // ── Services carousel ────────────────────────────────────
     const srvWrapper = document.getElementById('srv-carousel-wrapper');
     const srvTrack   = document.getElementById('srv-carousel-track');
     if (srvWrapper && srvTrack) {
-      // Duplicate cards for seamless infinite loop
-      Array.from(srvTrack.children).forEach(card => {
-        srvTrack.appendChild(card.cloneNode(true));
-      });
-
-      let pos = 0;
-      let paused = false;
-      const SPEED = 0.45; // ~27px/s @ 60fps — leggibile comodamente
-
-      const loop = () => {
-        if (!paused) {
-          pos += SPEED;
-          const half = srvTrack.scrollWidth / 2;
-          if (pos >= half) pos -= half;
-        }
-        srvTrack.style.transform = 'translateX(-' + pos + 'px)';
-        requestAnimationFrame(loop);
-      };
-      requestAnimationFrame(loop);
-
-      // Pausa tenendo premuto (mouse o touch)
-      srvWrapper.addEventListener('mousedown',  () => { paused = true;  srvWrapper.style.cursor = 'grabbing'; });
-      srvWrapper.addEventListener('touchstart', () => { paused = true;  }, { passive: true });
-      document.addEventListener('mouseup',  () => { paused = false; srvWrapper.style.cursor = 'grab'; });
-      document.addEventListener('touchend', () => { paused = false; });
-
-      // Bottoni freccia — snap card per card (280px + 20px gap = 300)
-      const CARD_W = 300;
       const prevBtn = document.getElementById('srv-prev');
       const nextBtn = document.getElementById('srv-next');
-      if (prevBtn) prevBtn.addEventListener('click', () => {
-        pos = Math.round(pos / CARD_W) * CARD_W - CARD_W;
-        if (pos < 0) pos += srvTrack.scrollWidth / 2;
-        srvTrack.style.transform = 'translateX(-' + pos + 'px)';
-      });
-      if (nextBtn) nextBtn.addEventListener('click', () => {
-        pos = Math.round(pos / CARD_W) * CARD_W + CARD_W;
-        const half = srvTrack.scrollWidth / 2;
-        if (pos >= half) pos -= half;
-        srvTrack.style.transform = 'translateX(-' + pos + 'px)';
-      });
 
-      // Tasti freccia da tastiera (quando la sezione servizi è visibile)
-      document.addEventListener('keydown', (e) => {
-        if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-        const sec = document.querySelector('[data-screen-label="Servizi"]');
-        if (!sec) return;
-        const r = sec.getBoundingClientRect();
-        if (r.bottom < 0 || r.top > window.innerHeight) return;
-        e.preventDefault();
-        if (e.key === 'ArrowRight') { pos = Math.round(pos / CARD_W) * CARD_W + CARD_W; const h = srvTrack.scrollWidth / 2; if (pos >= h) pos -= h; }
-        if (e.key === 'ArrowLeft')  { pos = Math.round(pos / CARD_W) * CARD_W - CARD_W; if (pos < 0) pos += srvTrack.scrollWidth / 2; }
-        srvTrack.style.transform = 'translateX(-' + pos + 'px)';
-      });
+      if (!isMobile()) {
+        // Desktop: scorrimento automatico infinito
+        Array.from(srvTrack.children).forEach(card => {
+          srvTrack.appendChild(card.cloneNode(true));
+        });
+        let pos = 0;
+        let paused = false;
+        const SPEED = 0.45;
+        const CARD_W = 300;
+        const loop = () => {
+          if (!paused) {
+            pos += SPEED;
+            const half = srvTrack.scrollWidth / 2;
+            if (pos >= half) pos -= half;
+          }
+          srvTrack.style.transform = 'translateX(-' + pos + 'px)';
+          requestAnimationFrame(loop);
+        };
+        requestAnimationFrame(loop);
+        srvWrapper.addEventListener('mousedown', () => { paused = true;  srvWrapper.style.cursor = 'grabbing'; });
+        document.addEventListener('mouseup',     () => { paused = false; srvWrapper.style.cursor = 'grab'; });
+        if (prevBtn) prevBtn.addEventListener('click', () => {
+          pos = Math.round(pos / CARD_W) * CARD_W - CARD_W;
+          if (pos < 0) pos += srvTrack.scrollWidth / 2;
+          srvTrack.style.transform = 'translateX(-' + pos + 'px)';
+        });
+        if (nextBtn) nextBtn.addEventListener('click', () => {
+          pos = Math.round(pos / CARD_W) * CARD_W + CARD_W;
+          const half = srvTrack.scrollWidth / 2;
+          if (pos >= half) pos -= half;
+          srvTrack.style.transform = 'translateX(-' + pos + 'px)';
+        });
+        document.addEventListener('keydown', (e) => {
+          if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+          const sec = document.querySelector('[data-screen-label="Servizi"]');
+          if (!sec) return;
+          const r = sec.getBoundingClientRect();
+          if (r.bottom < 0 || r.top > window.innerHeight) return;
+          e.preventDefault();
+          if (e.key === 'ArrowRight') { pos = Math.round(pos / CARD_W) * CARD_W + CARD_W; const h = srvTrack.scrollWidth / 2; if (pos >= h) pos -= h; }
+          if (e.key === 'ArrowLeft')  { pos = Math.round(pos / CARD_W) * CARD_W - CARD_W; if (pos < 0) pos += srvTrack.scrollWidth / 2; }
+          srvTrack.style.transform = 'translateX(-' + pos + 'px)';
+        });
+      } else {
+        // Mobile: applica stili direttamente via JS per sovrascrivere inline style
+        Object.assign(srvWrapper.style, {
+          overflowX: 'scroll', overflowY: 'hidden',
+          margin: '0', cursor: 'default',
+          scrollSnapType: 'x mandatory',
+          webkitOverflowScrolling: 'touch',
+          scrollbarWidth: 'none',
+          padding: '4px 16px 14px'
+        });
+        Array.from(srvTrack.children).forEach(card => {
+          card.style.width = (window.innerWidth - 48) + 'px';
+          card.style.scrollSnapAlign = 'start';
+          card.style.flexShrink = '0';
+        });
+        if (prevBtn) prevBtn.addEventListener('click', () => {
+          srvWrapper.scrollBy({ left: -srvWrapper.offsetWidth, behavior: 'smooth' });
+        });
+        if (nextBtn) nextBtn.addEventListener('click', () => {
+          srvWrapper.scrollBy({ left: srvWrapper.offsetWidth, behavior: 'smooth' });
+        });
+      }
     }
 
     // ── Prima/Dopo carousel ──────────────────────────────────
     const pdWrapper = document.getElementById('pd-carousel-wrapper');
     const pdTrack   = document.getElementById('pd-carousel-track');
     if (pdWrapper && pdTrack) {
-      Array.from(pdTrack.children).forEach(card => {
-        pdTrack.appendChild(card.cloneNode(true));
-      });
-
-      let posPd = 0;
-      let pausedPd = false;
-      const PD_SPEED  = 0.4;
-      const PD_CARD_W = 380; // 360px + 20px gap
-
-      const pdLoop = () => {
-        if (!pausedPd) {
-          posPd += PD_SPEED;
-          const half = pdTrack.scrollWidth / 2;
-          if (posPd >= half) posPd -= half;
-        }
-        pdTrack.style.transform = 'translateX(-' + posPd + 'px)';
-        requestAnimationFrame(pdLoop);
-      };
-      requestAnimationFrame(pdLoop);
-
-      pdWrapper.addEventListener('mousedown',  () => { pausedPd = true;  pdWrapper.style.cursor = 'grabbing'; });
-      pdWrapper.addEventListener('touchstart', () => { pausedPd = true;  }, { passive: true });
-      document.addEventListener('mouseup',  () => { pausedPd = false; pdWrapper.style.cursor = 'grab'; });
-      document.addEventListener('touchend', () => { pausedPd = false; });
-
       const pdPrevBtn = document.getElementById('pd-prev');
       const pdNextBtn = document.getElementById('pd-next');
-      if (pdPrevBtn) pdPrevBtn.addEventListener('click', () => {
-        posPd = Math.round(posPd / PD_CARD_W) * PD_CARD_W - PD_CARD_W;
-        if (posPd < 0) posPd += pdTrack.scrollWidth / 2;
-        pdTrack.style.transform = 'translateX(-' + posPd + 'px)';
-      });
-      if (pdNextBtn) pdNextBtn.addEventListener('click', () => {
-        posPd = Math.round(posPd / PD_CARD_W) * PD_CARD_W + PD_CARD_W;
-        const half = pdTrack.scrollWidth / 2;
-        if (posPd >= half) posPd -= half;
-        pdTrack.style.transform = 'translateX(-' + posPd + 'px)';
-      });
+
+      if (!isMobile()) {
+        // Desktop: scorrimento automatico infinito
+        Array.from(pdTrack.children).forEach(card => {
+          pdTrack.appendChild(card.cloneNode(true));
+        });
+        let posPd = 0;
+        let pausedPd = false;
+        const PD_SPEED  = 0.4;
+        const PD_CARD_W = 380;
+        const pdLoop = () => {
+          if (!pausedPd) {
+            posPd += PD_SPEED;
+            const half = pdTrack.scrollWidth / 2;
+            if (posPd >= half) posPd -= half;
+          }
+          pdTrack.style.transform = 'translateX(-' + posPd + 'px)';
+          requestAnimationFrame(pdLoop);
+        };
+        requestAnimationFrame(pdLoop);
+        pdWrapper.addEventListener('mousedown', () => { pausedPd = true;  pdWrapper.style.cursor = 'grabbing'; });
+        document.addEventListener('mouseup',    () => { pausedPd = false; pdWrapper.style.cursor = 'grab'; });
+        if (pdPrevBtn) pdPrevBtn.addEventListener('click', () => {
+          posPd = Math.round(posPd / PD_CARD_W) * PD_CARD_W - PD_CARD_W;
+          if (posPd < 0) posPd += pdTrack.scrollWidth / 2;
+          pdTrack.style.transform = 'translateX(-' + posPd + 'px)';
+        });
+        if (pdNextBtn) pdNextBtn.addEventListener('click', () => {
+          posPd = Math.round(posPd / PD_CARD_W) * PD_CARD_W + PD_CARD_W;
+          const half = pdTrack.scrollWidth / 2;
+          if (posPd >= half) posPd -= half;
+          pdTrack.style.transform = 'translateX(-' + posPd + 'px)';
+        });
+      } else {
+        // Mobile: applica stili direttamente via JS per sovrascrivere inline style
+        Object.assign(pdWrapper.style, {
+          overflowX: 'scroll', overflowY: 'hidden',
+          margin: '0', cursor: 'default',
+          scrollSnapType: 'x mandatory',
+          webkitOverflowScrolling: 'touch',
+          scrollbarWidth: 'none',
+          padding: '4px 16px 14px'
+        });
+        Array.from(pdTrack.children).forEach(card => {
+          card.style.width = (window.innerWidth - 48) + 'px';
+          card.style.scrollSnapAlign = 'start';
+          card.style.flexShrink = '0';
+        });
+        if (pdPrevBtn) pdPrevBtn.addEventListener('click', () => {
+          pdWrapper.scrollBy({ left: -pdWrapper.offsetWidth, behavior: 'smooth' });
+        });
+        if (pdNextBtn) pdNextBtn.addEventListener('click', () => {
+          pdWrapper.scrollBy({ left: pdWrapper.offsetWidth, behavior: 'smooth' });
+        });
+      }
     }
+
+    // ── Protezione foto ──────────────────────────────────
+    document.addEventListener('contextmenu', e => {
+      if (e.target.tagName === 'IMG') e.preventDefault();
+    }, true);
+    document.addEventListener('dragstart', e => {
+      if (e.target.tagName === 'IMG') e.preventDefault();
+    }, true);
   }
 
   renderVals() {
