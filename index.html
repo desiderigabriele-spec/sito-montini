@@ -427,23 +427,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <!-- H1 -->
       <div>
-        <h1 style="font-family:'Oswald',sans-serif;font-size:clamp(38px,6vw,62px);font-weight:700;color:#fff;line-height:1.08;letter-spacing:-0.5px;text-transform:uppercase;">Idraulico civile<br><span style="text-transform:none;">Nord Milano</span></h1>
-        <p style="font-family:'Open Sans',sans-serif;font-size:clamp(20px,2.5vw,24px);font-weight:700;color:#E43808;margin-top:12px;">40 anni di esperienza</p>
+        <h1 style="font-family:'Oswald',sans-serif;font-size:clamp(38px,6vw,62px);font-weight:700;color:#fff;line-height:1.08;letter-spacing:-0.5px;">Idraulico civile a<br>Sesto San Giovanni</h1>
+        <p style="font-family:'Open Sans',sans-serif;font-size:17px;font-weight:600;color:rgba(255,255,255,0.6);margin-top:8px;letter-spacing:0.2px;">e Nord Milano</p>
+        <p style="font-family:'Open Sans',sans-serif;font-size:clamp(20px,2.5vw,24px);font-weight:700;color:#E43808;margin-top:10px;">40 anni di esperienza</p>
         <!-- Zone espandibili -->
-        <div style="margin-top:10px;font-family:'Open Sans',sans-serif;font-size:13px;color:rgba(255,255,255,0.62);line-height:1.6;">
-          <!-- Stato chiuso -->
-          <div data-zone-collapsed style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-            <i class="fa-solid fa-location-dot" style="color:#E43808;font-size:11px;flex-shrink:0;"></i>
-            <span style="color:#fff;font-weight:700;font-size:14px;">Sesto San Giovanni</span>
-            <button data-zone-btn style="background:transparent;border:none;color:rgba(255,255,255,0.5);font-family:'Open Sans',sans-serif;font-size:12px;font-weight:600;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:2px;">+ altre zone</button>
-          </div>
+        <div style="margin-top:14px;font-family:'Open Sans',sans-serif;">
+          <!-- Stato chiuso: pulsante evidente -->
+          <button data-zone-btn style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.22);color:rgba(255,255,255,0.9);font-family:'Open Sans',sans-serif;font-size:13px;font-weight:600;padding:8px 16px;border-radius:8px;cursor:pointer;letter-spacing:0.2px;" data-zone-collapsed>
+            <i class="fa-solid fa-location-dot" style="color:#E43808;font-size:12px;"></i>
+            Vedi zone coperte
+            <i class="fa-solid fa-chevron-down" style="font-size:10px;opacity:0.7;"></i>
+          </button>
           <!-- Stato aperto -->
-          <div data-zone-expanded style="display:none;align-items:flex-start;gap:5px;flex-wrap:wrap;">
-            <i class="fa-solid fa-location-dot" style="color:#E43808;font-size:11px;flex-shrink:0;margin-top:3px;"></i>
-            <div style="flex:1;">
-              <span>Sesto San Giovanni · Cinisello Balsamo · Cologno Monzese · Bresso · Cusano Milanino · Paderno Dugnano · Muggiò · Nova Milanese · Monza · Brugherio · Segrate · Vimodrone · Milano</span>
-              <button data-zone-close style="display:block;margin-top:5px;background:transparent;border:none;color:rgba(255,255,255,0.45);font-family:'Open Sans',sans-serif;font-size:12px;font-weight:600;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:2px;">− chiudi</button>
+          <div data-zone-expanded style="display:none;margin-top:4px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:12px 14px;">
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
+              <i class="fa-solid fa-location-dot" style="color:#E43808;font-size:11px;"></i>
+              <span style="font-size:12px;font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:1px;text-transform:uppercase;">Zone coperte</span>
             </div>
+            <p style="font-size:13px;color:rgba(255,255,255,0.82);line-height:1.7;margin:0 0 10px;">Sesto San Giovanni · Cinisello Balsamo · Cologno Monzese · Bresso · Cusano Milanino · Paderno Dugnano · Muggiò · Nova Milanese · Monza · Brugherio · Segrate · Vimodrone · Milano</p>
+            <button data-zone-close style="background:transparent;border:none;color:rgba(255,255,255,0.45);font-family:'Open Sans',sans-serif;font-size:12px;font-weight:600;padding:0;cursor:pointer;display:flex;align-items:center;gap:5px;">
+              <i class="fa-solid fa-chevron-up" style="font-size:10px;"></i> chiudi
+            </button>
           </div>
         </div>
       </div>
