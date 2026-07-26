@@ -47,6 +47,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
+  /* Offset per header sticky: le sezioni raggiunte via anchor (#servizi, #lavori,
+     #zone, #recensioni, #contatti) non finiscono sotto l'header. */
+  section[id] { scroll-margin-top: 76px; }
+  @media (min-width: 768px) { section[id] { scroll-margin-top: 96px; } }
   body { font-family: 'Open Sans', sans-serif; color: #16213C; background: #fff; padding-bottom: 80px; }
   a { transition: opacity 0.15s; }
   a:hover { opacity: 0.86; }
