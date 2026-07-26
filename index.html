@@ -430,11 +430,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <h1 style="font-family:'Oswald',sans-serif;font-size:clamp(38px,6vw,62px);font-weight:700;color:#fff;line-height:1.08;letter-spacing:-0.5px;">Idraulico civile —<br>Nord Milano</h1>
         <p style="font-family:'Open Sans',sans-serif;font-size:clamp(20px,2.5vw,24px);font-weight:700;color:#E43808;margin-top:12px;">40 anni di esperienza</p>
         <!-- Zone espandibili -->
-        <div style="margin-top:10px;font-family:'Open Sans',sans-serif;font-size:13px;color:rgba(255,255,255,0.62);display:flex;align-items:center;flex-wrap:wrap;gap:4px 6px;line-height:1.6;">
-          <i class="fa-solid fa-location-dot" style="color:#E43808;font-size:11px;flex-shrink:0;"></i>
-          <span>Sesto SG · Cinisello Balsamo · Cologno Monzese · Monza</span>
-          <button id="zone-btn" onclick="document.getElementById('zone-btn').style.display='none';document.getElementById('zone-extra').style.display='inline';" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.22);color:rgba(255,255,255,0.75);font-family:'Open Sans',sans-serif;font-size:11px;font-weight:700;padding:2px 9px;border-radius:100px;cursor:pointer;letter-spacing:0.3px;">+ altre zone</button>
-          <span id="zone-extra" style="display:none;">· Bresso · Cusano Milanino · Paderno Dugnano · Muggiò · Nova Milanese · Brugherio · Segrate · Vimodrone · Milano</span>
+        <div style="margin-top:10px;font-family:'Open Sans',sans-serif;font-size:13px;color:rgba(255,255,255,0.62);line-height:1.6;">
+          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px 6px;">
+            <i class="fa-solid fa-location-dot" style="color:#E43808;font-size:11px;flex-shrink:0;"></i>
+            <span>Sesto SG · Cinisello Balsamo · Cologno Monzese · Monza</span>
+            <button id="zone-btn" onclick="document.getElementById('zone-btn').style.display='none';document.getElementById('zone-all').style.display='flex';" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.22);color:rgba(255,255,255,0.75);font-family:'Open Sans',sans-serif;font-size:11px;font-weight:700;padding:2px 9px;border-radius:100px;cursor:pointer;letter-spacing:0.3px;">+ altre zone</button>
+          </div>
+          <div id="zone-all" style="display:none;flex-wrap:wrap;gap:6px;margin-top:8px;">
+            <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.8);padding:3px 10px;border-radius:100px;font-size:12px;">Sesto San Giovanni</span>
+            <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.8);padding:3px 10px;border-radius:100px;font-size:12px;">Cinisello Balsamo</span>
+            <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.8);padding:3px 10px;border-radius:100px;font-size:12px;">Cologno Monzese</span>
+            <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.8);padding:3px 10px;border-radius:100px;font-size:12px;">Monza</span>
+            <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.8);padding:3px 10px;border-radius:100px;font-size:12px;">Bresso</span>
+            <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.8);padding:3px 10px;border-radius:100px;font-size:12px;">Cusano Milanino</span>
+            <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.8);padding:3px 10px;border-radius:100px;font-size:12px;">Paderno Dugnano</span>
+            <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.8);padding:3px 10px;border-radius:100px;font-size:12px;">Muggiò</span>
+            <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.8);padding:3px 10px;border-radius:100px;font-size:12px;">Nova Milanese</span>
+            <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.8);padding:3px 10px;border-radius:100px;font-size:12px;">Brugherio</span>
+            <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.8);padding:3px 10px;border-radius:100px;font-size:12px;">Segrate</span>
+            <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.8);padding:3px 10px;border-radius:100px;font-size:12px;">Vimodrone</span>
+            <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.8);padding:3px 10px;border-radius:100px;font-size:12px;">Milano</span>
+          </div>
         </div>
       </div>
 
