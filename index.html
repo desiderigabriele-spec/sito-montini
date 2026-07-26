@@ -1087,6 +1087,18 @@ class Component extends DCLogic {
   state = { counterVal: 0, counterStarted: false };
 
   componentDidMount() {
+    // ── Scroll all'anchor iniziale (es. #servizi) dopo la splash ──
+    // Il browser tenta lo scroll all'hash prima che React abbia renderizzato
+    // le sezioni: fallisce e non viene ritentato. Lo rifacciamo a mano
+    // dopo che la splash screen (2.9s + 0.8s) è terminata.
+    if (window.location.hash) {
+      const targetId = window.location.hash.slice(1);
+      setTimeout(() => {
+        const target = document.getElementById(targetId);
+        if (target) target.scrollIntoView({ behavior: 'instant', block: 'start' });
+      }, 3800);
+    }
+
     // ── Zone toggle ──────────────────────────────────────────
     const zoneToggle  = document.querySelector('[data-zone-toggle]');
     const zoneList    = document.querySelector('[data-zone-list]');
