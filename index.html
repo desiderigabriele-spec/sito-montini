@@ -1237,11 +1237,17 @@ class Component extends DCLogic {
           card.style.flexShrink = '0';
         });
         const srvStep = () => srvTrack.children[0].offsetWidth + 20;
+        // Ciclico, come il carosello Prima/Dopo.
+        const srvMax   = () => srvWrapper.scrollWidth - srvWrapper.clientWidth;
+        const srvAtEnd = () => srvWrapper.scrollLeft >= srvMax() - 4;
+        const srvAtTop = () => srvWrapper.scrollLeft <= 4;
         if (prevBtn) prevBtn.addEventListener('click', () => {
-          srvWrapper.scrollBy({ left: -srvStep(), behavior: 'smooth' });
+          if (srvAtTop()) srvWrapper.scrollTo({ left: srvMax(), behavior: 'auto' });
+          else            srvWrapper.scrollBy({ left: -srvStep(), behavior: 'smooth' });
         });
         if (nextBtn) nextBtn.addEventListener('click', () => {
-          srvWrapper.scrollBy({ left: srvStep(), behavior: 'smooth' });
+          if (srvAtEnd()) srvWrapper.scrollTo({ left: 0, behavior: 'auto' });
+          else            srvWrapper.scrollBy({ left: srvStep(), behavior: 'smooth' });
         });
       }
     }
@@ -1306,11 +1312,21 @@ class Component extends DCLogic {
           card.style.flexShrink = '0';
         });
         const pdStep = () => pdTrack.children[0].offsetWidth + 20;
+        // Ciclico: dall'ultima foto si torna alla prima e viceversa, invece di
+        // restare bloccati a fondo scorrimento con le frecce che non fanno nulla.
+        // Il rientro e' istantaneo e non 'smooth': ripercorrere all'indietro
+        // tutte le foto durerebbe secondi, e un click durante l'animazione
+        // ripartirebbe in avanti da meta' strada.
+        const pdMax   = () => pdWrapper.scrollWidth - pdWrapper.clientWidth;
+        const pdAtEnd = () => pdWrapper.scrollLeft >= pdMax() - 4;
+        const pdAtTop = () => pdWrapper.scrollLeft <= 4;
         if (pdPrevBtn) pdPrevBtn.addEventListener('click', () => {
-          pdWrapper.scrollBy({ left: -pdStep(), behavior: 'smooth' });
+          if (pdAtTop()) pdWrapper.scrollTo({ left: pdMax(), behavior: 'auto' });
+          else           pdWrapper.scrollBy({ left: -pdStep(), behavior: 'smooth' });
         });
         if (pdNextBtn) pdNextBtn.addEventListener('click', () => {
-          pdWrapper.scrollBy({ left: pdStep(), behavior: 'smooth' });
+          if (pdAtEnd()) pdWrapper.scrollTo({ left: 0, behavior: 'auto' });
+          else           pdWrapper.scrollBy({ left: pdStep(), behavior: 'smooth' });
         });
       }
     }
