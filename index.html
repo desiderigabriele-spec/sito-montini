@@ -1097,6 +1097,30 @@ class Component extends DCLogic {
   state = { counterVal: 0, counterStarted: false };
 
   componentDidMount() {
+    // ── Conferma chiamata reale (per Google Ads) ──────────────
+    // Un tap sul numero apre il dialer, ma spesso la persona annulla subito
+    // senza chiamare davvero: Google Ads però registra il tap come
+    // conversione, gonfiando il numero rispetto alle chiamate reali.
+    // Misuriamo quanto la pagina resta nascosta dopo il tap: se la persona
+    // torna prima di MIN_CALL_MS probabilmente ha annullato, se torna dopo
+    // probabilmente ha parlato davvero. Solo in quel caso mandiamo l'evento
+    // a GTM, che lo inoltra come conversione ad hoc (vedi 'chiamata_confermata').
+    const MIN_CALL_MS = 15000;
+    let telClickAt = null;
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a[href^="tel:"]');
+      if (link) telClickAt = Date.now();
+    });
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState !== 'visible' || telClickAt === null) return;
+      const elapsed = Date.now() - telClickAt;
+      telClickAt = null;
+      if (elapsed >= MIN_CALL_MS) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: 'chiamata_confermata', durata_fuori_ms: elapsed });
+      }
+    });
+
     // ── Scroll all'anchor iniziale (es. #servizi) dopo la splash ──
     // Il browser tenta lo scroll all'hash prima che React abbia renderizzato
     // le sezioni: fallisce e non viene ritentato. Lo rifacciamo a mano
