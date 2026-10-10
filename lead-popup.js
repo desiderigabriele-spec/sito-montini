@@ -436,11 +436,11 @@
   window.lmPopup = { open: open, close: close };
 
   // Quando compare: la prima che accade tra
-  //  · 5 secondi dopo la fine della splash (2.8s)
+  //  · 5 secondi dopo la fine della splash (circa 1s)
   //  · scroll oltre il 35% della pagina (interesse reale)
   //  · desktop: il mouse esce verso l'alto (sta per chiudere la scheda)
   // Mai prima della fine della splash e mai sopra il banner cookie (aspetta la scelta).
-  var SPLASH_MS = 2800, WAIT_MS = 5000, fired = false;
+  var SPLASH_MS = 1100, WAIT_MS = 5000, fired = false;
   function trigger() {
     if (fired) return;
     fired = true;
