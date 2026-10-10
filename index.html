@@ -1134,6 +1134,7 @@ class Component extends DCLogic {
       if (elapsed >= MIN_CALL_MS) {
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push({ event: 'chiamata_confermata', durata_fuori_ms: elapsed });
+        if (window.lmTrack) window.lmTrack('Contact', { method: 'phone' });
       }
     });
 
