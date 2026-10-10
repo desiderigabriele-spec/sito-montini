@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="format-detection" content="telephone=no,date=no,address=no,email=no,url=no">
+<script>try{if(sessionStorage.getItem('lm_splash'))document.documentElement.classList.add('no-splash');else sessionStorage.setItem('lm_splash','1')}catch(e){}</script>
+<link rel="preload" as="image" href="luigi.webp" fetchpriority="high">
 <link rel="icon" type="image/png" href="/favicon-logo.png">
 <link rel="apple-touch-icon" href="/favicon-logo.png">
-<!-- SEO / social: devono stare nella <head> STATICA. I crawler di WhatsApp,
-     Facebook, Telegram e X non eseguono JavaScript, quindi non vedrebbero mai
-     i tag iniettati dal runtime DC (<helmet> è dentro <body>). -->
+<!-- SEO / social -->
 <title>Montini Luigino — Idraulico civile e Installatore | Sesto San Giovanni</title>
 <meta name="description" content="Idraulico a Sesto San Giovanni e Nord Milano: pronto intervento, rifacimento bagni, impianti e caldaie. 40 anni di esperienza. Sopralluogo gratuito.">
 <meta name="robots" content="index, follow">
@@ -42,19 +42,11 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-KM9CVGBV');</script>
-<script src="./support.js"></script>
+
 <script src="./cookie-consent.js" defer></script>
 <script src="./lead-form.js" defer></script>
 <script src="./lead-popup.js" defer></script>
-</head>
-<body>
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KM9CVGBV"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<x-dc>
-<helmet>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- title, description, robots, og:* e twitter:* stanno nella <head> statica
-     in cima al file: i crawler social non eseguono JS e non vedrebbero questi. -->
+<script src="./site.js" defer></script>
 <meta name="geo.region" content="IT-MI">
 <meta name="geo.placename" content="Sesto San Giovanni">
 <meta name="geo.position" content="45.5349;9.2360">
@@ -66,7 +58,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&amp;family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<script src="image-slot.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
@@ -221,6 +212,91 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     #pd-prev i, #pd-next i, #srv-prev i, #srv-next i {
       font-size: 12px !important;
     }
+  }
+
+  /* ═══ Migliorie grafiche e leggibilità ═══ */
+  html.no-splash [data-splash] { display: none !important; }
+  body { -webkit-text-size-adjust: 100%; }
+  a:focus-visible, button:focus-visible, [tabindex]:focus-visible { outline: 3px solid #E43808; outline-offset: 3px; }
+  .btn-lift { transition: transform .18s ease, box-shadow .18s ease, filter .18s ease; }
+  .btn-lift:hover { transform: translateY(-2px); filter: brightness(1.05); }
+
+  /* Fascia di fiducia */
+  .trust-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .trust-tile { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 12px; color: #fff; font-family: 'Open Sans', sans-serif; }
+  .trust-tile b { display: block; font-size: 15px; line-height: 1.25; }
+  .trust-tile small { display: block; font-size: 12.5px; color: rgba(255,255,255,0.78); line-height: 1.3; margin-top: 2px; }
+  .trust-ic { width: 38px; height: 38px; border-radius: 50%; background: #E43808; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; }
+  @media (min-width: 900px) { .trust-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; } .trust-tile { padding: 14px 16px; } .trust-tile b { font-size: 16px; } }
+
+  /* Prima / dopo */
+  .pd-wrap { overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; margin: 0 64px; scroll-behavior: smooth; overscroll-behavior-x: contain; }
+  .pd-wrap::-webkit-scrollbar { display: none; }
+  .pd-card { flex-shrink: 0; width: 360px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(3,45,110,0.1); scroll-snap-align: start; cursor: zoom-in; position: relative; background: #fff; }
+  .pd-card::after { content: "\f00e"; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; top: 172px; right: 10px; width: 38px; height: 38px; border-radius: 50%; background: rgba(3,45,110,0.85); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 16px; pointer-events: none; }
+  .pd-card:hover img { transform: scale(1.03); }
+  .pd-card img { transition: transform .3s ease; }
+  .pd-arrow { position: absolute; top: 110px; transform: translateY(-50%); z-index: 10; width: 52px; height: 52px; border-radius: 50%; background: #032D6E; border: 3px solid #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(3,45,110,0.35); }
+  .pd-arrow i { color: #fff; font-size: 18px; pointer-events: none; }
+  #pd-prev { left: 0; } #pd-next { right: 0; }
+  .pd-count { text-align: center; margin-top: 16px; font-family: 'Open Sans', sans-serif; font-size: 15px; font-weight: 600; color: #475569; }
+
+  /* Lightbox */
+  .lb { position: fixed; inset: 0; z-index: 9500; background: rgba(1,12,36,0.97); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 64px 12px 24px; }
+  .lb[hidden] { display: none; }
+  .lb img { max-width: min(1100px, 100%); max-height: calc(100vh - 190px); object-fit: contain; border-radius: 10px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+  .lb-cap { color: #fff; font-family: 'Open Sans', sans-serif; font-size: 18px; font-weight: 700; margin-top: 16px; text-align: center; }
+  .lb-cap small { display: block; font-weight: 400; font-size: 15px; color: rgba(255,255,255,0.75); margin-top: 2px; }
+  .lb-btn { position: absolute; width: 56px; height: 56px; border-radius: 50%; border: 0; background: #fff; color: #032D6E; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 20px rgba(0,0,0,0.35); }
+  .lb-close { top: 14px; right: 14px; background: #E43808; color: #fff; }
+  .lb-prev { left: 14px; top: 50%; transform: translateY(-50%); }
+  .lb-next { right: 14px; top: 50%; transform: translateY(-50%); }
+  .lb-close span { position: absolute; right: 64px; white-space: nowrap; font-family: 'Open Sans', sans-serif; font-size: 15px; font-weight: 700; color: #fff; }
+
+  /* Servizi */
+  .srv-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 26px; }
+  .srv-tabs button { font-family: 'Open Sans', sans-serif; font-size: 16px; font-weight: 700; color: #032D6E; background: #fff; border: 2px solid #c9d6ea; border-radius: 100px; padding: 11px 20px; cursor: pointer; transition: background .18s, border-color .18s, color .18s; }
+  .srv-tabs button:hover { border-color: #032D6E; }
+  .srv-tabs button[aria-pressed="true"] { background: #032D6E; border-color: #032D6E; color: #fff; }
+  .srv-list { display: grid; grid-template-columns: 1fr; gap: 14px; }
+  .srv-item { display: flex; gap: 16px; align-items: flex-start; background: #fff; border-radius: 14px; padding: 20px; box-shadow: 0 2px 16px rgba(3,45,110,0.07); border: 1px solid #e3e9f3; transition: transform .2s ease, box-shadow .2s ease, opacity .25s ease; }
+  .srv-item:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(3,45,110,0.14); }
+  .srv-item[hidden] { display: none; }
+  .srv-ic { width: 52px; height: 52px; border-radius: 14px; background: #032D6E; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .srv-item h3 { font-family: 'Open Sans', sans-serif; font-size: 18px; font-weight: 700; color: #032D6E; margin-bottom: 6px; }
+  .srv-item p { font-family: 'Open Sans', sans-serif; font-size: 16px; color: #475569; line-height: 1.6; }
+  .srv-cta { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; font-family: 'Open Sans', sans-serif; font-size: 15px; font-weight: 700; color: #E43808; text-decoration: none; }
+  .srv-cta:hover { text-decoration: underline; }
+  @media (min-width: 700px) { .srv-list { grid-template-columns: 1fr 1fr; gap: 18px; } }
+  @media (min-width: 1100px) { .srv-list { gap: 20px; } .srv-item { padding: 24px; } }
+
+  /* Come lavoro */
+  .steps { list-style: none; display: grid; grid-template-columns: 1fr; gap: 18px; counter-reset: none; }
+  .step { position: relative; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); border-radius: 16px; padding: 30px 24px 26px; text-align: center; }
+  .step-n { position: absolute; top: -16px; left: 50%; transform: translateX(-50%); width: 34px; height: 34px; border-radius: 50%; background: #E43808; color: #fff; font-family: 'Oswald', sans-serif; font-size: 18px; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(228,56,8,0.4); }
+  .step-ic { width: 64px; height: 64px; border-radius: 50%; background: #fff; color: #032D6E; display: inline-flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 14px; }
+  .step h3 { font-family: 'Oswald', sans-serif; font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .step p { font-family: 'Open Sans', sans-serif; font-size: 16.5px; color: rgba(255,255,255,0.88); line-height: 1.65; }
+  @media (min-width: 860px) { .steps { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
+
+  /* Recensioni */
+  .rev-g { position: absolute; top: 18px; right: 18px; width: 34px; height: 34px; border-radius: 50%; background: #fff; border: 1px solid #e3e9f3; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #4285F4; }
+
+  /* Barra mobile a 3 pulsanti */
+  .mb-btn { flex: 1; color: #fff; text-decoration: none; font-family: 'Open Sans', sans-serif; font-size: 15px; font-weight: 700; padding: 9px 4px 8px; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; line-height: 1.1; }
+  .mb-btn i { font-size: 20px; }
+
+  @media (max-width: 767px) {
+    .pd-wrap { margin: 0 -24px; padding: 0 24px; scroll-padding: 0 24px; }
+    .pd-card { width: 84vw; }
+    .pd-arrow { width: 48px; height: 48px; }
+    #pd-prev { left: -8px; } #pd-next { right: -8px; }
+    .lb-prev, .lb-next { top: auto; bottom: 22px; transform: none; }
+    .lb { padding-bottom: 96px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; animation-delay: 0s !important; transition: none !important; scroll-behavior: auto !important; }
+    [data-splash] { display: none !important; }
   }
 </style>
 <script type="application/ld+json">
@@ -415,20 +491,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   ]
 }
 </script>
-<link rel="canonical" href="https://luigi-idraulico.it">
-<meta property="og:url" content="https://luigi-idraulico.it">
-<script>document.documentElement.lang = 'it';</script>
-</helmet>
-
-<!-- ─── SPLASH SCREEN ────────────────────────────────────────────────── -->
-<div style="position:fixed;inset:0;z-index:9999;background:linear-gradient(160deg,#0d3e90 0%,#032D6E 55%,#011848 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;padding:40px;animation:splash-exit 0.6s ease-in 2.2s forwards;">
-  <img src="logo.png" alt="Montini Luigino" style="width:clamp(200px,45vw,300px);height:auto;filter:brightness(0) invert(1);animation:splash-el 0.7s ease-out 0.15s both;">
-  <div style="text-align:center;animation:splash-el 0.65s ease-out 0.65s both;">
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KM9CVGBV"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- ─── SPLASH SCREEN (circa 1 secondo, solo alla prima pagina della visita) ── -->
+<div data-splash aria-hidden="true" style="position:fixed;inset:0;z-index:9999;background:linear-gradient(160deg,#0d3e90 0%,#032D6E 55%,#011848 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:40px;animation:splash-exit 0.3s ease-in 0.8s forwards;">
+  <img src="logo.png" alt="" width="300" height="104" style="width:clamp(200px,45vw,300px);height:auto;filter:brightness(0) invert(1);animation:splash-el 0.35s ease-out both;">
+  <div style="text-align:center;animation:splash-el 0.35s ease-out 0.12s both;">
     <p style="font-family:'Oswald',sans-serif;font-size:clamp(30px,6vw,52px);font-weight:700;color:#fff;line-height:1.15;">Tranquillo.</p>
     <p style="font-family:'Oswald',sans-serif;font-size:clamp(30px,6vw,52px);font-weight:700;color:#E43808;line-height:1.15;margin-top:4px;">Ci penso io.</p>
   </div>
-  <div style="width:220px;max-width:60vw;height:3px;background:rgba(255,255,255,0.15);border-radius:2px;overflow:hidden;animation:splash-el 0.4s ease-out 0.2s both;">
-    <div style="height:100%;background:#E43808;border-radius:2px;animation:bar-fill 1.9s cubic-bezier(.4,0,.2,1) 0.2s both;"></div>
+  <div style="width:220px;max-width:60vw;height:3px;background:rgba(255,255,255,0.15);border-radius:2px;overflow:hidden;">
+    <div style="height:100%;background:#E43808;border-radius:2px;animation:bar-fill 0.8s cubic-bezier(.4,0,.2,1) both;"></div>
   </div>
 </div>
 
@@ -438,13 +513,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" aria-label="Torna su" style="display:flex;align-items:center;text-decoration:none;flex-shrink:0;">
       <img src="logo.png" alt="Montini Luigino — Idraulico e Installatore" style="width:220px;height:auto;display:block;max-height:72px;object-fit:contain;">
     </a>
-    <!-- Desktop: phone pill -->
-    <a href="{{ phoneHref }}" class="hdr-tel" style="gap:10px;color:#16213C;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;border:2px solid #e0e6f0;padding:10px 20px;border-radius:100px;white-space:nowrap;flex-shrink:0;">
-      <i class="fa-solid fa-phone" style="color:#E43808;font-size:15px;"></i>
-      {{ phone }}
-    </a>
+    <!-- Desktop: telefono + preventivo -->
+    <div class="hdr-tel" style="gap:12px;align-items:center;flex-shrink:0;">
+      <a href="tel:+393664366759" class="btn-lift" style="display:flex;align-items:center;gap:10px;color:#16213C;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;border:2px solid #e0e6f0;padding:10px 20px;border-radius:100px;white-space:nowrap;">
+        <i class="fa-solid fa-phone" style="color:#E43808;font-size:15px;"></i>
+        +39 366 436 6759
+      </a>
+      <a href="#preventivo" data-open-popup class="btn-lift" style="display:flex;align-items:center;gap:8px;background:#E43808;color:#fff;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;padding:12px 20px;border-radius:100px;white-space:nowrap;box-shadow:0 4px 14px rgba(228,56,8,0.3);">
+        <i class="fa-solid fa-clipboard-list"></i> Preventivo gratuito
+      </a>
+    </div>
     <!-- Mobile: CTA -->
-    <a href="{{ phoneHref }}" class="hdr-cta" style="background:#E43808;color:#fff;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;padding:10px 20px;border-radius:8px;white-space:nowrap;flex-shrink:0;gap:8px;">
+    <a href="tel:+393664366759" class="hdr-cta" style="background:#E43808;color:#fff;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;padding:10px 20px;border-radius:8px;white-space:nowrap;flex-shrink:0;gap:8px;">
       <i class="fa-solid fa-phone"></i> Chiama ora
     </a>
   </div>
@@ -487,20 +567,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <!-- CTAs -->
       <div class="hero-cta">
       <div class="hero-btns">
-        <a href="{{ phoneHref }}" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;background:#E43808;color:#fff;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;padding:16px 32px;border-radius:8px;white-space:nowrap;box-shadow:0 4px 20px rgba(228,56,8,0.4);">
+        <a class="btn-lift" href="tel:+393664366759" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;background:#E43808;color:#fff;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;padding:16px 32px;border-radius:8px;white-space:nowrap;box-shadow:0 4px 20px rgba(228,56,8,0.4);">
           <i class="fa-solid fa-phone"></i> CHIAMA ORA
         </a>
-        <a href="{{ whatsappHref }}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;background:#25D366;color:#fff;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;padding:16px 32px;border-radius:8px;white-space:nowrap;box-shadow:0 4px 20px rgba(37,211,102,0.35);">
+        <a class="btn-lift" href="https://wa.me/393664366759?text=Salve%2C%20ho%20bisogno%20di%20un%20idraulico.%20Pu%C3%B2%20aiutarmi%3F" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;background:#25D366;color:#fff;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;padding:16px 32px;border-radius:8px;white-space:nowrap;box-shadow:0 4px 20px rgba(37,211,102,0.35);">
           <i class="fa-brands fa-whatsapp"></i> SCRIVI SU WHATSAPP
         </a>
       </div>
-      <a href="#preventivo" data-open-popup style="display:flex;align-items:center;justify-content:center;gap:10px;background:#fff;color:#032D6E;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;padding:16px 32px;border-radius:8px;box-shadow:0 4px 20px rgba(1,24,72,0.35);">
+      <a class="btn-lift" href="#preventivo" data-open-popup style="display:flex;align-items:center;justify-content:center;gap:10px;background:#fff;color:#032D6E;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;padding:16px 32px;border-radius:8px;box-shadow:0 4px 20px rgba(1,24,72,0.35);">
         <i class="fa-solid fa-clipboard-list"></i> RICHIEDI UN PREVENTIVO GRATUITO
       </a>
       </div>
 
       <!-- Note -->
-      <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:8px;">
+      <p style="font-family:'Open Sans',sans-serif;font-size:16px;color:rgba(255,255,255,0.88);display:flex;align-items:center;gap:8px;">
         <span style="color:#25D366;font-size:11px;display:inline-block;animation:dot-blink 1.2s ease-in-out infinite;">●</span>
         Pronto intervento per i guasti · Sopralluogo gratuito per ristrutturazioni e nuovi impianti
       </p>
@@ -509,29 +589,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- Foto Luigi -->
     <div style="display:flex;align-items:flex-end;justify-content:center;position:relative;overflow:hidden;">
       <div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(100,180,255,0.2) 0%,rgba(100,180,255,0) 70%);pointer-events:none;"></div>
-      <img src="luigi.webp" alt="Luigino Montini — Idraulico civile" style="width:100%;max-width:380px;height:auto;display:block;margin:0 auto;position:relative;z-index:1;">
+      <img src="luigi.webp" alt="Luigino Montini — Idraulico civile" width="720" height="953" fetchpriority="high" style="width:100%;max-width:380px;height:auto;display:block;margin:0 auto;position:relative;z-index:1;">
     </div>
   </div>
 </section>
 
-<!-- ─── TRUST STRIP ────────────────────────────────────────────────────── -->
-<section data-screen-label="Trust strip" style="background:#1a3f82;padding:16px 24px;">
-  <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 28px;">
-    <span style="display:flex;align-items:center;gap:8px;color:#fff;font-family:'Open Sans',sans-serif;font-size:15px;font-weight:600;white-space:nowrap;">
-      <i class="fa-solid fa-check" style="color:#6ee7b7;font-size:13px;"></i> 40 anni di mestiere
-    </span>
-    <span style="color:rgba(255,255,255,0.25);">·</span>
-    <span style="display:flex;align-items:center;gap:8px;color:#fff;font-family:'Open Sans',sans-serif;font-size:15px;font-weight:600;white-space:nowrap;">
-      <i class="fa-solid fa-check" style="color:#6ee7b7;font-size:13px;"></i> Idraulico civile e installatore
-    </span>
-    <span style="color:rgba(255,255,255,0.25);">·</span>
-    <span style="display:flex;align-items:center;gap:8px;color:#fff;font-family:'Open Sans',sans-serif;font-size:15px;font-weight:600;white-space:nowrap;">
-      <i class="fa-solid fa-check" style="color:#6ee7b7;font-size:13px;"></i> Patentino F-Gas
-    </span>
-    <span style="color:rgba(255,255,255,0.25);">·</span>
-    <span style="display:flex;align-items:center;gap:8px;color:#fff;font-family:'Open Sans',sans-serif;font-size:15px;font-weight:600;white-space:nowrap;">
-      <i class="fa-solid fa-check" style="color:#6ee7b7;font-size:13px;"></i> Sesto San Giovanni e hinterland nord Milano
-    </span>
+<!-- ─── FASCIA DI FIDUCIA ─────────────────────────────────────────────── -->
+<section data-screen-label="Trust strip" style="background:#1a3f82;padding:18px 16px;">
+  <div class="trust-grid">
+    <div class="trust-tile">
+      <span class="trust-ic"><i class="fa-solid fa-star" aria-hidden="true"></i></span>
+      <span><b>4,9 su Google</b><small>Recensioni reali dei clienti</small></span>
+    </div>
+    <div class="trust-tile">
+      <span class="trust-ic"><i class="fa-solid fa-medal" aria-hidden="true"></i></span>
+      <span><b>40 anni di mestiere</b><small>Idraulico e installatore</small></span>
+    </div>
+    <div class="trust-tile">
+      <span class="trust-ic"><i class="fa-solid fa-house-circle-check" aria-hidden="true"></i></span>
+      <span><b>Sopralluogo gratuito</b><small>E preventivo chiaro</small></span>
+    </div>
+    <div class="trust-tile">
+      <span class="trust-ic"><i class="fa-solid fa-file-shield" aria-hidden="true"></i></span>
+      <span><b>Lavori a norma</b><small>Dichiarazione di conformità</small></span>
+    </div>
   </div>
 </section>
 
@@ -540,93 +621,93 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div style="max-width:1200px;margin:0 auto;">
     <p style="font-family:'Open Sans',sans-serif;font-size:12px;font-weight:700;color:#E43808;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;">I LAVORI PARLANO DA SOLI</p>
     <h2 style="font-family:'Oswald',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:700;color:#032D6E;margin-bottom:12px;">Prima e dopo</h2>
-    <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#64748b;max-width:600px;line-height:1.7;margin-bottom:44px;">Foto dei lavori eseguiti.</p>
+    <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#475569;max-width:600px;line-height:1.7;margin-bottom:36px;">Foto reali dei lavori eseguiti. <b style="color:#032D6E;">Tocca una foto per ingrandirla.</b></p>
     <div style="position:relative;">
-      <button id="pd-prev" aria-label="Precedente" style="position:absolute;left:0;top:50%;transform:translateY(-50%);z-index:10;width:44px;height:44px;border-radius:50%;background:#032D6E;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(3,45,110,0.3);">
+      <button id="pd-prev" class="pd-arrow" aria-label="Foto precedente" data-x="position:absolute;left:0;top:50%;transform:translateY(-50%);z-index:10;width:44px;height:44px;border-radius:50%;background:#032D6E;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(3,45,110,0.3);">
         <i class="fa-solid fa-chevron-left" style="color:#fff;font-size:18px;pointer-events:none;"></i>
       </button>
-      <div id="pd-carousel-wrapper" style="overflow:hidden;cursor:grab;margin:0 56px;user-select:none;-webkit-user-select:none;">
+      <div id="pd-carousel-wrapper" class="pd-wrap">
         <div id="pd-carousel-track" style="display:flex;gap:20px;padding:4px 2px 14px;">
 
-          <div style="flex-shrink:0;width:360px;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(3,45,110,0.1);">
+          <div class="pd-card" data-lb tabindex="0" role="button" aria-label="Ingrandisci la foto">
             <img src="pd-impianto-idraulico.webp" alt="Rifacimento impianto idraulico datato in abitazione — Sesto San Giovanni" loading="lazy" decoding="async" style="width:100%;height:220px;object-fit:cover;object-position:top;display:block;">
             <div style="padding:14px 18px;background:#F2F6FC;border-top:3px solid #032D6E;">
-              <p style="font-family:'Open Sans',sans-serif;font-size:15px;font-weight:700;color:#032D6E;margin-bottom:2px;">Rifacimento impianto idraulico</p>
-              <p style="font-family:'Open Sans',sans-serif;font-size:13px;color:#64748b;">Impianti idraulici civili</p>
+              <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#032D6E;margin-bottom:2px;">Rifacimento impianto idraulico</p>
+              <p style="font-family:'Open Sans',sans-serif;font-size:14px;color:#475569;">Impianti idraulici civili</p>
             </div>
           </div>
 
-          <div style="flex-shrink:0;width:360px;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(3,45,110,0.1);">
+          <div class="pd-card" data-lb tabindex="0" role="button" aria-label="Ingrandisci la foto">
             <img src="pd-scarico-intasato.png" alt="Scarico doccia intasato sbloccato — idraulico a Sesto San Giovanni" loading="lazy" decoding="async" style="width:100%;height:220px;object-fit:cover;object-position:top;display:block;">
             <div style="padding:14px 18px;background:#F2F6FC;border-top:3px solid #032D6E;">
-              <p style="font-family:'Open Sans',sans-serif;font-size:15px;font-weight:700;color:#032D6E;margin-bottom:2px;">Sblocco scarico doccia</p>
-              <p style="font-family:'Open Sans',sans-serif;font-size:13px;color:#64748b;">Pronto intervento</p>
+              <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#032D6E;margin-bottom:2px;">Sblocco scarico doccia</p>
+              <p style="font-family:'Open Sans',sans-serif;font-size:14px;color:#475569;">Pronto intervento</p>
             </div>
           </div>
 
-          <div style="flex-shrink:0;width:360px;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(3,45,110,0.1);">
+          <div class="pd-card" data-lb tabindex="0" role="button" aria-label="Ingrandisci la foto">
             <img src="pd-pompa-di-calore.webp" alt="Sostituzione vecchio impianto gas con pompa di calore aria-acqua — Sesto San Giovanni" loading="lazy" decoding="async" style="width:100%;height:220px;object-fit:cover;object-position:top;display:block;">
             <div style="padding:14px 18px;background:#F2F6FC;border-top:3px solid #032D6E;">
-              <p style="font-family:'Open Sans',sans-serif;font-size:15px;font-weight:700;color:#032D6E;margin-bottom:2px;">Installazione pompa di calore</p>
-              <p style="font-family:'Open Sans',sans-serif;font-size:13px;color:#64748b;">Pompe di calore</p>
+              <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#032D6E;margin-bottom:2px;">Installazione pompa di calore</p>
+              <p style="font-family:'Open Sans',sans-serif;font-size:14px;color:#475569;">Pompe di calore</p>
             </div>
           </div>
 
-          <div style="flex-shrink:0;width:360px;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(3,45,110,0.1);">
+          <div class="pd-card" data-lb tabindex="0" role="button" aria-label="Ingrandisci la foto">
             <img src="pd-miscelatore-doccia.png" alt="Miscelatore doccia rotto e usurato sostituito — idraulico a Sesto San Giovanni" loading="lazy" decoding="async" style="width:100%;height:220px;object-fit:cover;object-position:top;display:block;">
             <div style="padding:14px 18px;background:#F2F6FC;border-top:3px solid #032D6E;">
-              <p style="font-family:'Open Sans',sans-serif;font-size:15px;font-weight:700;color:#032D6E;margin-bottom:2px;">Sostituzione miscelatore doccia</p>
-              <p style="font-family:'Open Sans',sans-serif;font-size:13px;color:#64748b;">Sanitari e rubinetteria</p>
+              <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#032D6E;margin-bottom:2px;">Sostituzione miscelatore doccia</p>
+              <p style="font-family:'Open Sans',sans-serif;font-size:14px;color:#475569;">Sanitari e rubinetteria</p>
             </div>
           </div>
 
-          <div style="flex-shrink:0;width:360px;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(3,45,110,0.1);">
+          <div class="pd-card" data-lb tabindex="0" role="button" aria-label="Ingrandisci la foto">
             <img src="pd-riscaldamento-pavimento.webp" alt="Installazione riscaldamento a pavimento radiante — idraulico a Sesto San Giovanni" loading="lazy" decoding="async" style="width:100%;height:220px;object-fit:cover;object-position:top;display:block;">
             <div style="padding:14px 18px;background:#F2F6FC;border-top:3px solid #032D6E;">
-              <p style="font-family:'Open Sans',sans-serif;font-size:15px;font-weight:700;color:#032D6E;margin-bottom:2px;">Riscaldamento a pavimento</p>
-              <p style="font-family:'Open Sans',sans-serif;font-size:13px;color:#64748b;">Impianti idronici</p>
+              <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#032D6E;margin-bottom:2px;">Riscaldamento a pavimento</p>
+              <p style="font-family:'Open Sans',sans-serif;font-size:14px;color:#475569;">Impianti idronici</p>
             </div>
           </div>
 
-          <div style="flex-shrink:0;width:360px;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(3,45,110,0.1);">
+          <div class="pd-card" data-lb tabindex="0" role="button" aria-label="Ingrandisci la foto">
             <img src="pd-rubinetto-lavabo.png" alt="Sostituzione rubinetto lavabo usurato — idraulico a Sesto San Giovanni" loading="lazy" decoding="async" style="width:100%;height:220px;object-fit:cover;object-position:top;display:block;">
             <div style="padding:14px 18px;background:#F2F6FC;border-top:3px solid #032D6E;">
-              <p style="font-family:'Open Sans',sans-serif;font-size:15px;font-weight:700;color:#032D6E;margin-bottom:2px;">Sostituzione rubinetto lavabo</p>
-              <p style="font-family:'Open Sans',sans-serif;font-size:13px;color:#64748b;">Sanitari e rubinetteria</p>
+              <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#032D6E;margin-bottom:2px;">Sostituzione rubinetto lavabo</p>
+              <p style="font-family:'Open Sans',sans-serif;font-size:14px;color:#475569;">Sanitari e rubinetteria</p>
             </div>
           </div>
 
-          <div style="flex-shrink:0;width:360px;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(3,45,110,0.1);">
+          <div class="pd-card" data-lb tabindex="0" role="button" aria-label="Ingrandisci la foto">
             <img src="pd-caldaia.png" alt="Sostituzione caldaia vecchia con caldaia a condensazione — Sesto San Giovanni" loading="lazy" decoding="async" style="width:100%;height:220px;object-fit:cover;object-position:top;display:block;">
             <div style="padding:14px 18px;background:#F2F6FC;border-top:3px solid #032D6E;">
-              <p style="font-family:'Open Sans',sans-serif;font-size:15px;font-weight:700;color:#032D6E;margin-bottom:2px;">Sostituzione caldaia</p>
-              <p style="font-family:'Open Sans',sans-serif;font-size:13px;color:#64748b;">Caldaie e riscaldamento</p>
+              <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#032D6E;margin-bottom:2px;">Sostituzione caldaia</p>
+              <p style="font-family:'Open Sans',sans-serif;font-size:14px;color:#475569;">Caldaie e riscaldamento</p>
             </div>
           </div>
 
-          <div style="flex-shrink:0;width:360px;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(3,45,110,0.1);">
+          <div class="pd-card" data-lb tabindex="0" role="button" aria-label="Ingrandisci la foto">
             <img src="pd-cassetta-wc.webp" alt="Cassetta WC incassata rotta riparata — idraulico a Sesto San Giovanni" loading="lazy" decoding="async" style="width:100%;height:220px;object-fit:cover;object-position:top;display:block;">
             <div style="padding:14px 18px;background:#F2F6FC;border-top:3px solid #032D6E;">
-              <p style="font-family:'Open Sans',sans-serif;font-size:15px;font-weight:700;color:#032D6E;margin-bottom:2px;">Riparazione cassetta WC incassata</p>
-              <p style="font-family:'Open Sans',sans-serif;font-size:13px;color:#64748b;">Sanitari e rubinetteria</p>
+              <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#032D6E;margin-bottom:2px;">Riparazione cassetta WC incassata</p>
+              <p style="font-family:'Open Sans',sans-serif;font-size:14px;color:#475569;">Sanitari e rubinetteria</p>
             </div>
           </div>
 
-          <div style="flex-shrink:0;width:360px;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(3,45,110,0.1);">
+          <div class="pd-card" data-lb tabindex="0" role="button" aria-label="Ingrandisci la foto">
             <img src="pd-tubazioni.webp" alt="Tubazioni vecchie e arrugginite rifatte — idraulico a Sesto San Giovanni" loading="lazy" decoding="async" style="width:100%;height:220px;object-fit:cover;object-position:top;display:block;">
             <div style="padding:14px 18px;background:#F2F6FC;border-top:3px solid #032D6E;">
-              <p style="font-family:'Open Sans',sans-serif;font-size:15px;font-weight:700;color:#032D6E;margin-bottom:2px;">Rifacimento tubazioni</p>
-              <p style="font-family:'Open Sans',sans-serif;font-size:13px;color:#64748b;">Impianti idraulici civili</p>
+              <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#032D6E;margin-bottom:2px;">Rifacimento tubazioni</p>
+              <p style="font-family:'Open Sans',sans-serif;font-size:14px;color:#475569;">Impianti idraulici civili</p>
             </div>
           </div>
 
         </div>
       </div>
-      <button id="pd-next" aria-label="Successivo" style="position:absolute;right:0;top:50%;transform:translateY(-50%);z-index:10;width:44px;height:44px;border-radius:50%;background:#032D6E;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(3,45,110,0.3);">
+      <button id="pd-next" class="pd-arrow" aria-label="Foto successiva" data-x="position:absolute;right:0;top:50%;transform:translateY(-50%);z-index:10;width:44px;height:44px;border-radius:50%;background:#032D6E;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(3,45,110,0.3);">
         <i class="fa-solid fa-chevron-right" style="color:#fff;font-size:18px;pointer-events:none;"></i>
       </button>
     </div>
-    <p class="mob-swipe-hint">← Scorri per vedere tutte le foto →</p>
+    <p class="pd-count" data-pd-count aria-live="polite"></p>
   </div>
 </section>
 
@@ -635,101 +716,129 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div style="max-width:1200px;margin:0 auto;">
     <p style="font-family:'Open Sans',sans-serif;font-size:12px;font-weight:700;color:#E43808;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;">COSA FACCIO</p>
     <h2 style="font-family:'Oswald',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:700;color:#032D6E;margin-bottom:12px;">Dal pronto intervento all'impianto completo</h2>
-    <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#4a5568;max-width:680px;line-height:1.7;margin-bottom:44px;">Mi occupo di impianti civili e residenziali — case, appartamenti e uffici. Dal guasto da sistemare subito alla ristrutturazione completa: un solo professionista, dal sopralluogo gratuito alla dichiarazione di conformità.</p>
-    <div style="position:relative;">
-      <button id="srv-prev" aria-label="Precedente" style="position:absolute;left:0;top:50%;transform:translateY(-50%);z-index:10;width:44px;height:44px;border-radius:50%;background:#032D6E;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(3,45,110,0.3);">
-        <i class="fa-solid fa-chevron-left" style="color:#fff;font-size:18px;pointer-events:none;"></i>
-      </button>
-      <div id="srv-carousel-wrapper" style="overflow:hidden;cursor:grab;margin:0 56px;user-select:none;-webkit-user-select:none;">
-        <div id="srv-carousel-track" style="display:flex;gap:20px;padding:4px 2px 14px;">
-
-          <div style="background:#fff;border-radius:14px;padding:28px 24px;display:flex;flex-direction:column;gap:12px;box-shadow:0 2px 16px rgba(3,45,110,0.07);flex-shrink:0;width:280px;">
-            <div style="width:56px;height:56px;background:#032D6E;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <i class="fa-solid fa-bolt" style="color:#fff;font-size:24px;"></i>
-            </div>
-            <h3 style="font-family:'Open Sans',sans-serif;font-size:18px;font-weight:700;color:#032D6E;">Pronto intervento</h3>
-            <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:#64748b;line-height:1.65;">Se sono disponibile intervengo subito, altrimenti entro 24 ore. Perdite, allagamenti e guasti improvvisi.</p>
-          </div>
-
-          <div style="background:#fff;border-radius:14px;padding:28px 24px;display:flex;flex-direction:column;gap:12px;box-shadow:0 2px 16px rgba(3,45,110,0.07);flex-shrink:0;width:280px;">
-            <div style="width:56px;height:56px;background:#032D6E;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <i class="fa-solid fa-bath" style="color:#fff;font-size:22px;"></i>
-            </div>
-            <h3 style="font-family:'Open Sans',sans-serif;font-size:18px;font-weight:700;color:#032D6E;">Rifacimento bagno completo</h3>
-            <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:#64748b;line-height:1.65;">Dalla demolizione alle piastrelle, dalla muratura all'impianto idraulico e ai sanitari: ti consegno il bagno finito, con un unico referente.</p>
-          </div>
-
-          <div style="background:#fff;border-radius:14px;padding:28px 24px;display:flex;flex-direction:column;gap:12px;box-shadow:0 2px 16px rgba(3,45,110,0.07);flex-shrink:0;width:280px;">
-            <div style="width:56px;height:56px;background:#032D6E;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <i class="fa-solid fa-right-left" style="color:#fff;font-size:22px;"></i>
-            </div>
-            <h3 style="font-family:'Open Sans',sans-serif;font-size:18px;font-weight:700;color:#032D6E;">Ricerca e riparazione perdite</h3>
-            <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:#64748b;line-height:1.65;">Individuo e riparo perdite su tubazioni e impianti, anche quelle nascoste.</p>
-          </div>
-
-          <div style="background:#fff;border-radius:14px;padding:28px 24px;display:flex;flex-direction:column;gap:12px;box-shadow:0 2px 16px rgba(3,45,110,0.07);flex-shrink:0;width:280px;">
-            <div style="width:56px;height:56px;background:#032D6E;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <i class="fa-solid fa-wrench" style="color:#fff;font-size:22px;"></i>
-            </div>
-            <h3 style="font-family:'Open Sans',sans-serif;font-size:18px;font-weight:700;color:#032D6E;">Impianti idraulici civili</h3>
-            <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:#64748b;line-height:1.65;">Realizzazione e rifacimento di impianti idraulici, anche completi, per appartamenti, case e uffici.</p>
-          </div>
-
-          <div style="background:#fff;border-radius:14px;padding:28px 24px;display:flex;flex-direction:column;gap:12px;box-shadow:0 2px 16px rgba(3,45,110,0.07);flex-shrink:0;width:280px;">
-            <div style="width:56px;height:56px;background:#032D6E;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <i class="fa-solid fa-shower" style="color:#fff;font-size:22px;"></i>
-            </div>
-            <h3 style="font-family:'Open Sans',sans-serif;font-size:18px;font-weight:700;color:#032D6E;">Sanitari e rubinetteria</h3>
-            <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:#64748b;line-height:1.65;">Sostituzione di sanitari, rubinetti e miscelatori a regola d'arte.</p>
-          </div>
-
-          <div style="background:#fff;border-radius:14px;padding:28px 24px;display:flex;flex-direction:column;gap:12px;box-shadow:0 2px 16px rgba(3,45,110,0.07);flex-shrink:0;width:280px;">
-            <div style="width:56px;height:56px;background:#032D6E;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <i class="fa-solid fa-hammer" style="color:#fff;font-size:22px;"></i>
-            </div>
-            <h3 style="font-family:'Open Sans',sans-serif;font-size:18px;font-weight:700;color:#032D6E;">Ristrutturazioni e nuove realizzazioni</h3>
-            <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:#64748b;line-height:1.65;">Impianti e opere murarie per appartamenti e case da ristrutturare o realizzare, coordinati da un solo professionista. Sopralluogo gratuito.</p>
-          </div>
-
-          <div style="background:#fff;border-radius:14px;padding:28px 24px;display:flex;flex-direction:column;gap:12px;box-shadow:0 2px 16px rgba(3,45,110,0.07);flex-shrink:0;width:280px;">
-            <div style="width:56px;height:56px;background:#032D6E;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <i class="fa-solid fa-layer-group" style="color:#fff;font-size:22px;"></i>
-            </div>
-            <h3 style="font-family:'Open Sans',sans-serif;font-size:18px;font-weight:700;color:#032D6E;">Caldaie e riscaldamento</h3>
-            <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:#64748b;line-height:1.65;">Installazione, sostituzione e manutenzione di caldaie e impianti di riscaldamento, anche a pavimento.</p>
-          </div>
-
-          <div style="background:#fff;border-radius:14px;padding:28px 24px;display:flex;flex-direction:column;gap:12px;box-shadow:0 2px 16px rgba(3,45,110,0.07);flex-shrink:0;width:280px;">
-            <div style="width:56px;height:56px;background:#032D6E;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <i class="fa-regular fa-clock" style="color:#fff;font-size:24px;"></i>
-            </div>
-            <h3 style="font-family:'Open Sans',sans-serif;font-size:18px;font-weight:700;color:#032D6E;">Pompe di calore e impianti idronici</h3>
-            <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:#64748b;line-height:1.65;">Collegamento e installazione di sistemi aria/acqua e impianti idronici efficienti.</p>
-          </div>
-
-          <div style="background:#fff;border-radius:14px;padding:28px 24px;display:flex;flex-direction:column;gap:12px;box-shadow:0 2px 16px rgba(3,45,110,0.07);flex-shrink:0;width:280px;">
-            <div style="width:56px;height:56px;background:#E43808;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <i class="fa-solid fa-fire" style="color:#fff;font-size:24px;"></i>
-            </div>
-            <h3 style="font-family:'Open Sans',sans-serif;font-size:18px;font-weight:700;color:#032D6E;">Impianti gas</h3>
-            <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:#64748b;line-height:1.65;">Installazione, manutenzione e messa a norma di impianti a gas.</p>
-          </div>
-
-          <div style="background:#fff;border-radius:14px;padding:28px 24px;display:flex;flex-direction:column;gap:12px;box-shadow:0 2px 16px rgba(3,45,110,0.07);flex-shrink:0;width:280px;">
-            <div style="width:56px;height:56px;background:#E43808;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <i class="fa-solid fa-snowflake" style="color:#fff;font-size:24px;"></i>
-            </div>
-            <h3 style="font-family:'Open Sans',sans-serif;font-size:18px;font-weight:700;color:#032D6E;">Condizionamento</h3>
-            <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:#64748b;line-height:1.65;">Installazione e manutenzione di climatizzatori, con gestione dei gas refrigeranti.</p>
-          </div>
-
-        </div>
-      </div>
-      <button id="srv-next" aria-label="Successivo" style="position:absolute;right:0;top:50%;transform:translateY(-50%);z-index:10;width:44px;height:44px;border-radius:50%;background:#032D6E;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(3,45,110,0.3);">
-        <i class="fa-solid fa-chevron-right" style="color:#fff;font-size:18px;pointer-events:none;"></i>
-      </button>
+    <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#4a5568;max-width:680px;line-height:1.7;margin-bottom:28px;">Mi occupo di impianti civili e residenziali — case, appartamenti e uffici. Dal guasto da sistemare subito alla ristrutturazione completa: un solo professionista, dal sopralluogo gratuito alla dichiarazione di conformità.</p>
+    <div class="srv-tabs" role="group" aria-label="Mostra i servizi">
+      <button type="button" data-srv-filter="all" aria-pressed="true">Tutti</button>
+      <button type="button" data-srv-filter="rip" aria-pressed="false">🔧 Riparazioni</button>
+      <button type="button" data-srv-filter="lav" aria-pressed="false">🏗️ Lavori completi</button>
     </div>
-    <p class="mob-swipe-hint">← Scorri per vedere tutti i servizi →</p>
+    <div class="srv-list">
+      <article class="srv-item" data-cat="rip">
+        <span class="srv-ic"><i class="fa-solid fa-bolt" aria-hidden="true"></i></span>
+        <div>
+          <h3>Pronto intervento</h3>
+          <p>Se sono disponibile intervengo subito, altrimenti entro 24 ore. Perdite, allagamenti e guasti improvvisi.</p>
+          <a href="#preventivo" data-open-popup class="srv-cta">Chiedi un preventivo <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
+      </article>
+      <article class="srv-item" data-cat="lav">
+        <span class="srv-ic"><i class="fa-solid fa-bath" aria-hidden="true"></i></span>
+        <div>
+          <h3>Rifacimento bagno completo</h3>
+          <p>Dalla demolizione alle piastrelle, dalla muratura all'impianto idraulico e ai sanitari: ti consegno il bagno finito, con un unico referente.</p>
+          <a href="#preventivo" data-open-popup class="srv-cta">Chiedi un preventivo <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
+      </article>
+      <article class="srv-item" data-cat="rip">
+        <span class="srv-ic"><i class="fa-solid fa-right-left" aria-hidden="true"></i></span>
+        <div>
+          <h3>Ricerca e riparazione perdite</h3>
+          <p>Individuo e riparo perdite su tubazioni e impianti, anche quelle nascoste.</p>
+          <a href="#preventivo" data-open-popup class="srv-cta">Chiedi un preventivo <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
+      </article>
+      <article class="srv-item" data-cat="lav">
+        <span class="srv-ic"><i class="fa-solid fa-wrench" aria-hidden="true"></i></span>
+        <div>
+          <h3>Impianti idraulici civili</h3>
+          <p>Realizzazione e rifacimento di impianti idraulici, anche completi, per appartamenti, case e uffici.</p>
+          <a href="#preventivo" data-open-popup class="srv-cta">Chiedi un preventivo <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
+      </article>
+      <article class="srv-item" data-cat="rip">
+        <span class="srv-ic"><i class="fa-solid fa-shower" aria-hidden="true"></i></span>
+        <div>
+          <h3>Sanitari e rubinetteria</h3>
+          <p>Sostituzione di sanitari, rubinetti e miscelatori a regola d'arte.</p>
+          <a href="#preventivo" data-open-popup class="srv-cta">Chiedi un preventivo <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
+      </article>
+      <article class="srv-item" data-cat="lav">
+        <span class="srv-ic"><i class="fa-solid fa-hammer" aria-hidden="true"></i></span>
+        <div>
+          <h3>Ristrutturazioni e nuove realizzazioni</h3>
+          <p>Impianti e opere murarie per appartamenti e case da ristrutturare o realizzare, coordinati da un solo professionista. Sopralluogo gratuito.</p>
+          <a href="#preventivo" data-open-popup class="srv-cta">Chiedi un preventivo <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
+      </article>
+      <article class="srv-item" data-cat="rip lav">
+        <span class="srv-ic"><i class="fa-solid fa-layer-group" aria-hidden="true"></i></span>
+        <div>
+          <h3>Caldaie e riscaldamento</h3>
+          <p>Installazione, sostituzione e manutenzione di caldaie e impianti di riscaldamento, anche a pavimento.</p>
+          <a href="#preventivo" data-open-popup class="srv-cta">Chiedi un preventivo <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
+      </article>
+      <article class="srv-item" data-cat="lav">
+        <span class="srv-ic"><i class="fa-regular fa-clock" aria-hidden="true"></i></span>
+        <div>
+          <h3>Pompe di calore e impianti idronici</h3>
+          <p>Collegamento e installazione di sistemi aria/acqua e impianti idronici efficienti.</p>
+          <a href="#preventivo" data-open-popup class="srv-cta">Chiedi un preventivo <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
+      </article>
+      <article class="srv-item" data-cat="rip lav">
+        <span class="srv-ic"><i class="fa-solid fa-fire" aria-hidden="true"></i></span>
+        <div>
+          <h3>Impianti gas</h3>
+          <p>Installazione, manutenzione e messa a norma di impianti a gas.</p>
+          <a href="#preventivo" data-open-popup class="srv-cta">Chiedi un preventivo <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
+      </article>
+      <article class="srv-item" data-cat="rip lav">
+        <span class="srv-ic"><i class="fa-solid fa-snowflake" aria-hidden="true"></i></span>
+        <div>
+          <h3>Condizionamento</h3>
+          <p>Installazione e manutenzione di climatizzatori, con gestione dei gas refrigeranti.</p>
+          <a href="#preventivo" data-open-popup class="srv-cta">Chiedi un preventivo <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ─── COME LAVORO ────────────────────────────────────────────────────── -->
+<section id="come-lavoro" data-screen-label="Come lavoro" style="background:linear-gradient(155deg,#0d3e90 0%,#032D6E 55%,#011848 100%);padding:80px 24px;">
+  <div style="max-width:1100px;margin:0 auto;text-align:center;">
+    <p style="font-family:'Open Sans',sans-serif;font-size:12px;font-weight:700;color:#ff8a5c;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;">COME LAVORO</p>
+    <h2 style="font-family:'Oswald',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:700;color:#fff;margin-bottom:12px;">Semplice, in 3 passi</h2>
+    <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:rgba(255,255,255,0.85);max-width:620px;margin:0 auto 40px;line-height:1.7;">Che sia un guasto o un lavoro da progettare, funziona sempre così.</p>
+    <ol class="steps">
+      <li class="step">
+        <span class="step-n">1</span>
+        <span class="step-ic"><i class="fa-solid fa-phone-volume" aria-hidden="true"></i></span>
+        <h3>Mi chiami o mi scrivi</h3>
+        <p>Al telefono, su WhatsApp o dal sito. Mi racconti cosa ti serve, anche con una foto.</p>
+      </li>
+      <li class="step">
+        <span class="step-n">2</span>
+        <span class="step-ic"><i class="fa-solid fa-house-circle-check" aria-hidden="true"></i></span>
+        <h3>Sopralluogo gratuito</h3>
+        <p>Vengo a vedere di persona e ti do un preventivo chiaro. Gli eventuali extra li concordiamo sempre prima.</p>
+      </li>
+      <li class="step">
+        <span class="step-n">3</span>
+        <span class="step-ic"><i class="fa-solid fa-circle-check" aria-hidden="true"></i></span>
+        <h3>Lavoro fatto bene</h3>
+        <p>Lavoro pulito e a norma, con dichiarazione di conformità quando prevista. Lascio tutto in ordine.</p>
+      </li>
+    </ol>
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:14px 22px;margin-top:40px;">
+      <a href="#preventivo" data-open-popup class="btn-lift" style="display:inline-flex;align-items:center;gap:10px;background:#E43808;color:#fff;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;padding:16px 30px;border-radius:8px;box-shadow:0 4px 20px rgba(228,56,8,0.4);">
+        <i class="fa-solid fa-clipboard-list"></i> RICHIEDI IL SOPRALLUOGO GRATUITO
+      </a>
+      <a href="tel:+393664366759" style="font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;color:#fff;text-decoration:underline;text-underline-offset:5px;">oppure chiama 366 436 6759</a>
+    </div>
   </div>
 </section>
 
@@ -740,7 +849,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div style="display:flex;flex-direction:column;gap:20px;">
       <p style="font-family:'Open Sans',sans-serif;font-size:12px;font-weight:700;color:#E43808;letter-spacing:2.5px;text-transform:uppercase;">ESPERIENZA</p>
       <h2 style="font-family:'Oswald',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:700;color:#032D6E;line-height:1.1;">Dal vecchio al moderno: 40 anni sul campo</h2>
-      <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#64748b;line-height:1.7;">
+      <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#475569;line-height:1.7;">
         In quarant'anni ho visto cambiare tutto: materiali, tecniche e impianti. Conosco a fondo i sistemi di una volta e padroneggio quelli di oggi.
       </p>
       <ul style="list-style:none;display:flex;flex-direction:column;gap:14px;margin-top:4px;">
@@ -760,7 +869,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <div style="background:#032D6E;border-radius:16px;padding:48px 32px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
-      <div style="font-family:'Oswald',sans-serif;font-size:clamp(88px,13vw,128px);font-weight:700;color:#fff;line-height:1;letter-spacing:-6px;">{{ counterTens }}<span style="color:#E43808;">{{ counterUnits }}</span></div>
+      <div style="font-family:'Oswald',sans-serif;font-size:clamp(88px,13vw,128px);font-weight:700;color:#fff;line-height:1;letter-spacing:-6px;" data-counter><span data-c-tens>4</span><span data-c-units style="color:#E43808;">0</span></div>
       <p style="font-family:'Oswald',sans-serif;font-size:18px;font-weight:700;color:rgba(255,255,255,0.8);letter-spacing:3px;text-transform:uppercase;margin-top:4px;">ANNI DI ESPERIENZA</p>
       <p style="font-family:'Open Sans',sans-serif;font-size:14px;color:rgba(255,255,255,0.5);margin-top:2px;">Idraulico e installatore</p>
     </div>
@@ -778,13 +887,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="card" style="background:#fff;border-radius:14px;padding:32px 24px;box-shadow:0 2px 16px rgba(3,45,110,0.07);display:flex;flex-direction:column;gap:10px;text-align:center;align-items:center;">
         <div style="font-family:'Oswald',sans-serif;font-size:48px;font-weight:700;color:#E43808;line-height:1;margin-bottom:4px;">40</div>
         <h3 style="font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;color:#032D6E;">Anni di esperienza</h3>
-        <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:#64748b;line-height:1.6;">Un mestiere imparato sul campo, non sui libri.</p>
+        <p style="font-family:'Open Sans',sans-serif;font-size:16px;color:#475569;line-height:1.6;">Un mestiere imparato sul campo, non sui libri.</p>
       </div>
 
       <div class="card" style="background:#fff;border-radius:14px;padding:32px 24px;box-shadow:0 2px 16px rgba(3,45,110,0.07);display:flex;flex-direction:column;gap:10px;text-align:center;align-items:center;">
         <div style="font-family:'Oswald',sans-serif;font-size:48px;font-weight:700;color:#E43808;line-height:1;margin-bottom:4px;">€</div>
         <h3 style="font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;color:#032D6E;">Preventivo onesto</h3>
-        <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:#64748b;line-height:1.6;">Valuto sul posto e concordo i costi con te prima di procedere.</p>
+        <p style="font-family:'Open Sans',sans-serif;font-size:16px;color:#475569;line-height:1.6;">Valuto sul posto e concordo i costi con te prima di procedere.</p>
       </div>
 
       <div class="card" style="background:#fff;border-radius:14px;padding:32px 24px;box-shadow:0 2px 16px rgba(3,45,110,0.07);display:flex;flex-direction:column;gap:10px;text-align:center;align-items:center;">
@@ -792,18 +901,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <i class="fa-regular fa-clock" style="font-size:42px;"></i>
         </div>
         <h3 style="font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;color:#032D6E;">Puntuale</h3>
-        <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:#64748b;line-height:1.6;">Rispetto gli orari e ci sono quando serve davvero.</p>
+        <p style="font-family:'Open Sans',sans-serif;font-size:16px;color:#475569;line-height:1.6;">Rispetto gli orari e ci sono quando serve davvero.</p>
       </div>
 
       <div class="card" style="background:#fff;border-radius:14px;padding:32px 24px;box-shadow:0 2px 16px rgba(3,45,110,0.07);display:flex;flex-direction:column;gap:10px;text-align:center;align-items:center;">
         <div style="font-family:'Oswald',sans-serif;font-size:48px;font-weight:700;color:#E43808;line-height:1;margin-bottom:4px;">✓</div>
         <h3 style="font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;color:#032D6E;">Lavoro pulito</h3>
-        <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:#64748b;line-height:1.6;">Curo i dettagli e lascio tutto in ordine.</p>
+        <p style="font-family:'Open Sans',sans-serif;font-size:16px;color:#475569;line-height:1.6;">Curo i dettagli e lascio tutto in ordine.</p>
       </div>
 
     </div>
 
-    <p style="font-family:'Open Sans',sans-serif;font-size:16px;color:#64748b;line-height:1.75;text-align:center;max-width:760px;margin:36px auto 0;font-style:italic;">
+    <p style="font-family:'Open Sans',sans-serif;font-size:16px;color:#475569;line-height:1.75;text-align:center;max-width:760px;margin:36px auto 0;font-style:italic;">
       Il sopralluogo è gratuito e il preventivo preciso lo do dopo aver visto l'impianto di persona: prima di smontare non sempre si conosce l'esatto guasto. Eventuali extra te li comunico e li concordo sul posto, sempre prima di procedere.
     </p>
   </div>
@@ -814,7 +923,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div style="max-width:1200px;margin:0 auto;">
     <p style="font-family:'Open Sans',sans-serif;font-size:12px;font-weight:700;color:#E43808;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;">ABILITAZIONI</p>
     <h2 style="font-family:'Oswald',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:700;color:#032D6E;margin-bottom:12px;">Certificazioni e abilitazioni</h2>
-    <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#64748b;max-width:560px;line-height:1.7;margin-bottom:44px;">Lavoro a norma e rilascio le certificazioni di conformità previste per gli impianti realizzati.</p>
+    <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#475569;max-width:560px;line-height:1.7;margin-bottom:44px;">Lavoro a norma e rilascio le certificazioni di conformità previste per gli impianti realizzati.</p>
     <div class="cert-grid">
 
       <div style="background:#fff;border-radius:14px;padding:28px 24px;display:flex;flex-direction:column;gap:12px;box-shadow:0 2px 16px rgba(3,45,110,0.07);border:1px solid #e8ecf2;">
@@ -822,7 +931,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <i class="fa-solid fa-shield-halved" style="color:#fff;font-size:24px;"></i>
         </div>
         <h3 style="font-family:'Open Sans',sans-serif;font-size:18px;font-weight:700;color:#032D6E;">Patentino F-Gas</h3>
-        <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:#64748b;line-height:1.65;">Abilitato a operare sui gas refrigeranti di condizionatori e pompe di calore.</p>
+        <p style="font-family:'Open Sans',sans-serif;font-size:16px;color:#475569;line-height:1.65;">Abilitato a operare sui gas refrigeranti di condizionatori e pompe di calore.</p>
       </div>
 
       <div style="background:#fff;border-radius:14px;padding:28px 24px;display:flex;flex-direction:column;gap:12px;box-shadow:0 2px 16px rgba(3,45,110,0.07);border:1px solid #e8ecf2;">
@@ -830,7 +939,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <i class="fa-solid fa-fire" style="color:#fff;font-size:24px;"></i>
         </div>
         <h3 style="font-family:'Open Sans',sans-serif;font-size:18px;font-weight:700;color:#032D6E;">Impianti gas a norma</h3>
-        <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:#64748b;line-height:1.65;">Installazione, manutenzione e messa a norma di impianti a gas.</p>
+        <p style="font-family:'Open Sans',sans-serif;font-size:16px;color:#475569;line-height:1.65;">Installazione, manutenzione e messa a norma di impianti a gas.</p>
       </div>
 
       <div style="background:#fff;border-radius:14px;padding:28px 24px;display:flex;flex-direction:column;gap:12px;box-shadow:0 2px 16px rgba(3,45,110,0.07);border:1px solid #e8ecf2;">
@@ -838,7 +947,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <i class="fa-solid fa-file-lines" style="color:#fff;font-size:24px;"></i>
         </div>
         <h3 style="font-family:'Open Sans',sans-serif;font-size:18px;font-weight:700;color:#032D6E;">Dichiarazione di conformità</h3>
-        <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:#64748b;line-height:1.65;">Rilascio le certificazioni di conformità per impianti gas, idrici, di riscaldamento e di condizionamento.</p>
+        <p style="font-family:'Open Sans',sans-serif;font-size:16px;color:#475569;line-height:1.65;">Rilascio le certificazioni di conformità per impianti gas, idrici, di riscaldamento e di condizionamento.</p>
       </div>
 
     </div>
@@ -850,7 +959,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div style="max-width:1200px;margin:0 auto;text-align:center;">
     <p style="font-family:'Open Sans',sans-serif;font-size:12px;font-weight:700;color:#E43808;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;">COLLABORAZIONI</p>
     <h2 style="font-family:'Oswald',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:700;color:#032D6E;margin-bottom:14px;">Lavoro al fianco dei professionisti</h2>
-    <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#64748b;max-width:580px;margin:0 auto 32px;line-height:1.7;">Su richiesta collaboro con imprese edili e studi di progettazione per cantieri, ristrutturazioni e nuove realizzazioni.</p>
+    <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#475569;max-width:580px;margin:0 auto 32px;line-height:1.7;">Su richiesta collaboro con imprese edili e studi di progettazione per cantieri, ristrutturazioni e nuove realizzazioni.</p>
     <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:12px;">
       <span style="border:2px solid #032D6E;color:#032D6E;font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;padding:10px 24px;border-radius:100px;">Imprese edili</span>
       <span style="border:2px solid #032D6E;color:#032D6E;font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;padding:10px 24px;border-radius:100px;">Geometri</span>
@@ -867,93 +976,99 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div>
         <p style="font-family:'Open Sans',sans-serif;font-size:12px;font-weight:700;color:#E43808;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;">RECENSIONI</p>
         <h2 style="font-family:'Oswald',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:700;color:#032D6E;margin-bottom:10px;">Cosa dicono i clienti</h2>
-        <p style="font-family:'Open Sans',sans-serif;font-size:16px;color:#64748b;">Recensioni reali, verificabili direttamente sulla scheda Google.</p>
+        <p style="font-family:'Open Sans',sans-serif;font-size:16px;color:#475569;">Recensioni reali, verificabili direttamente sulla scheda Google.</p>
       </div>
       <div style="background:#F2F6FC;border-radius:16px;padding:24px 28px;text-align:center;flex-shrink:0;min-width:200px;">
         <div style="font-family:'Oswald',sans-serif;font-size:52px;font-weight:700;color:#032D6E;line-height:1;">4,9</div>
         <div style="color:#FFC107;font-size:20px;letter-spacing:2px;margin:4px 0;">★★★★★</div>
-        <p style="font-family:'Open Sans',sans-serif;font-size:13px;color:#64748b;font-weight:600;">su Google</p>
+        <p style="font-family:'Open Sans',sans-serif;font-size:13px;color:#475569;font-weight:600;">su Google</p>
       </div>
     </div>
 
     <div class="rev-grid" style="margin-bottom:40px;">
 
-      <div style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 2px 16px rgba(3,45,110,0.08);border:1px solid #e8ecf2;">
+      <div class="rev-card" style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 2px 16px rgba(3,45,110,0.08);border:1px solid #e8ecf2;position:relative;">
+        <span class="rev-g" aria-label="Recensione Google"><i class="fa-brands fa-google" aria-hidden="true"></i></span>
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
           <div style="width:48px;height:48px;border-radius:50%;background:#032D6E;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
             <span style="color:#fff;font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;">L</span>
           </div>
           <div>
             <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#16213C;">Lame Nuredikaj</p>
-            <p style="color:#FFC107;font-size:14px;letter-spacing:1px;">★★★★★</p>
+            <p style="color:#F5B301;font-size:19px;letter-spacing:2px;line-height:1.2;">★★★★★</p>
           </div>
         </div>
-        <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:#4a5568;line-height:1.7;font-style:italic;">"Molto gentile e disponibile negli interventi d'urgenza. Attento e preciso sul lavoro."</p>
+        <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#334155;line-height:1.7;">"Molto gentile e disponibile negli interventi d'urgenza. Attento e preciso sul lavoro."</p>
       </div>
 
-      <div style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 2px 16px rgba(3,45,110,0.08);border:1px solid #e8ecf2;">
+      <div class="rev-card" style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 2px 16px rgba(3,45,110,0.08);border:1px solid #e8ecf2;position:relative;">
+        <span class="rev-g" aria-label="Recensione Google"><i class="fa-brands fa-google" aria-hidden="true"></i></span>
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
           <div style="width:48px;height:48px;border-radius:50%;background:#032D6E;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
             <span style="color:#fff;font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;">E</span>
           </div>
           <div>
             <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#16213C;">Elisa Gramegna</p>
-            <p style="color:#FFC107;font-size:14px;letter-spacing:1px;">★★★★★</p>
+            <p style="color:#F5B301;font-size:19px;letter-spacing:2px;line-height:1.2;">★★★★★</p>
           </div>
         </div>
-        <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:#4a5568;line-height:1.7;font-style:italic;">"Artigiano serio, puntuale e preciso. Non ho mai avuto motivo di lamentarmi."</p>
+        <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#334155;line-height:1.7;">"Artigiano serio, puntuale e preciso. Non ho mai avuto motivo di lamentarmi."</p>
       </div>
 
-      <div style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 2px 16px rgba(3,45,110,0.08);border:1px solid #e8ecf2;">
+      <div class="rev-card" style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 2px 16px rgba(3,45,110,0.08);border:1px solid #e8ecf2;position:relative;">
+        <span class="rev-g" aria-label="Recensione Google"><i class="fa-brands fa-google" aria-hidden="true"></i></span>
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
           <div style="width:48px;height:48px;border-radius:50%;background:#032D6E;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
             <span style="color:#fff;font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;">A</span>
           </div>
           <div>
             <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#16213C;">Antonio Artuso</p>
-            <p style="color:#FFC107;font-size:14px;letter-spacing:1px;">★★★★☆</p>
+            <p style="color:#F5B301;font-size:19px;letter-spacing:2px;line-height:1.2;">★★★★☆</p>
           </div>
         </div>
-        <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:#4a5568;line-height:1.7;font-style:italic;">"Bravo e onesto idraulico. Molto attento e preciso."</p>
+        <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#334155;line-height:1.7;">"Bravo e onesto idraulico. Molto attento e preciso."</p>
       </div>
 
-      <div style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 2px 16px rgba(3,45,110,0.08);border:1px solid #e8ecf2;">
+      <div class="rev-card" style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 2px 16px rgba(3,45,110,0.08);border:1px solid #e8ecf2;position:relative;">
+        <span class="rev-g" aria-label="Recensione Google"><i class="fa-brands fa-google" aria-hidden="true"></i></span>
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
           <div style="width:48px;height:48px;border-radius:50%;background:#032D6E;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
             <span style="color:#fff;font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;">M</span>
           </div>
           <div>
             <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#16213C;">Marina Bonandin</p>
-            <p style="color:#FFC107;font-size:14px;letter-spacing:1px;">★★★★★</p>
+            <p style="color:#F5B301;font-size:19px;letter-spacing:2px;line-height:1.2;">★★★★★</p>
           </div>
         </div>
-        <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:#4a5568;line-height:1.7;font-style:italic;">"Servizio efficiente e preciso a prezzi competitivi."</p>
+        <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#334155;line-height:1.7;">"Servizio efficiente e preciso a prezzi competitivi."</p>
       </div>
 
-      <div style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 2px 16px rgba(3,45,110,0.08);border:1px solid #e8ecf2;">
+      <div class="rev-card" style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 2px 16px rgba(3,45,110,0.08);border:1px solid #e8ecf2;position:relative;">
+        <span class="rev-g" aria-label="Recensione Google"><i class="fa-brands fa-google" aria-hidden="true"></i></span>
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
           <div style="width:48px;height:48px;border-radius:50%;background:#032D6E;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
             <span style="color:#fff;font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;">F</span>
           </div>
           <div>
             <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#16213C;">Fabio Bonarini</p>
-            <p style="color:#FFC107;font-size:14px;letter-spacing:1px;">★★★★★</p>
+            <p style="color:#F5B301;font-size:19px;letter-spacing:2px;line-height:1.2;">★★★★★</p>
           </div>
         </div>
-        <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:#4a5568;line-height:1.7;font-style:italic;">"Ottimo professionista, esperto e competente. Consigliato."</p>
+        <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#334155;line-height:1.7;">"Ottimo professionista, esperto e competente. Consigliato."</p>
       </div>
 
-      <div style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 2px 16px rgba(3,45,110,0.08);border:1px solid #e8ecf2;">
+      <div class="rev-card" style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 2px 16px rgba(3,45,110,0.08);border:1px solid #e8ecf2;position:relative;">
+        <span class="rev-g" aria-label="Recensione Google"><i class="fa-brands fa-google" aria-hidden="true"></i></span>
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
           <div style="width:48px;height:48px;border-radius:50%;background:#032D6E;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
             <span style="color:#fff;font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;">G</span>
           </div>
           <div>
             <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#16213C;">Giovanna Marcone</p>
-            <p style="color:#FFC107;font-size:14px;letter-spacing:1px;">★★★★★</p>
+            <p style="color:#F5B301;font-size:19px;letter-spacing:2px;line-height:1.2;">★★★★★</p>
           </div>
         </div>
-        <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:#4a5568;line-height:1.7;font-style:italic;">"Persona squisita, gentile e molto preparata. Lo consiglio vivamente."</p>
+        <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#334155;line-height:1.7;">"Persona squisita, gentile e molto preparata. Lo consiglio vivamente."</p>
       </div>
 
     </div>
@@ -1008,7 +1123,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span style="font-family:'Open Sans',sans-serif;font-size:18px;font-weight:700;color:#16213C;">Quanto costa un intervento?</span>
         <span class="faq-icon">+</span>
       </summary>
-      <p style="font-family:'Open Sans',sans-serif;font-size:16px;color:#4a5568;line-height:1.8;padding:4px 0 24px;">Dipende dal lavoro. Valuto sempre sul posto prima di procedere e concordo il costo con te. Non inizio mai un intervento senza che siamo d'accordo sul preventivo.</p>
+      <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#334155;line-height:1.8;padding:4px 0 24px;">Dipende dal lavoro. Valuto sempre sul posto prima di procedere e concordo il costo con te. Non inizio mai un intervento senza che siamo d'accordo sul preventivo.</p>
     </details>
 
     <details class="faq-item">
@@ -1016,7 +1131,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span style="font-family:'Open Sans',sans-serif;font-size:18px;font-weight:700;color:#16213C;">Intervenite anche il sabato?</span>
         <span class="faq-icon">+</span>
       </summary>
-      <p style="font-family:'Open Sans',sans-serif;font-size:16px;color:#4a5568;line-height:1.8;padding:4px 0 24px;">Per le urgenze sì — il sabato sono disponibile per pronto intervento. I lavori programmati li organizziamo dal lunedì al venerdì.</p>
+      <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#334155;line-height:1.8;padding:4px 0 24px;">Per le urgenze sì — il sabato sono disponibile per pronto intervento. I lavori programmati li organizziamo dal lunedì al venerdì.</p>
     </details>
 
     <details class="faq-item">
@@ -1024,7 +1139,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span style="font-family:'Open Sans',sans-serif;font-size:18px;font-weight:700;color:#16213C;">Ho una perdita in casa: cosa faccio subito?</span>
         <span class="faq-icon">+</span>
       </summary>
-      <p style="font-family:'Open Sans',sans-serif;font-size:16px;color:#4a5568;line-height:1.8;padding:4px 0 24px;">Chiudi subito l'acqua dal contatore generale (di solito vicino all'ingresso o nel locale contatori). Poi chiamami: ti guido per telefono e vengo il prima possibile.</p>
+      <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#334155;line-height:1.8;padding:4px 0 24px;">Chiudi subito l'acqua dal contatore generale (di solito vicino all'ingresso o nel locale contatori). Poi chiamami: ti guido per telefono e vengo il prima possibile.</p>
     </details>
 
     <details class="faq-item">
@@ -1032,7 +1147,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span style="font-family:'Open Sans',sans-serif;font-size:18px;font-weight:700;color:#16213C;">Lavorate solo a Sesto San Giovanni?</span>
         <span class="faq-icon">+</span>
       </summary>
-      <p style="font-family:'Open Sans',sans-serif;font-size:16px;color:#4a5568;line-height:1.8;padding:4px 0 24px;">No, opero su tutta la zona nord Milano: Sesto San Giovanni, Cinisello Balsamo, Cologno Monzese, Bresso, Cusano Milanino, Paderno Dugnano, Muggiò, Nova Milanese, Monza, Brugherio, Segrate, Vimodrone e comuni limitrofi. Su richiesta mi sposto anche in altre province d'Italia.</p>
+      <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#334155;line-height:1.8;padding:4px 0 24px;">No, opero su tutta la zona nord Milano: Sesto San Giovanni, Cinisello Balsamo, Cologno Monzese, Bresso, Cusano Milanino, Paderno Dugnano, Muggiò, Nova Milanese, Monza, Brugherio, Segrate, Vimodrone e comuni limitrofi. Su richiesta mi sposto anche in altre province d'Italia.</p>
     </details>
 
     <details class="faq-item">
@@ -1040,7 +1155,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span style="font-family:'Open Sans',sans-serif;font-size:18px;font-weight:700;color:#16213C;">Fate anche il rifacimento completo del bagno o di tutto l'impianto?</span>
         <span class="faq-icon">+</span>
       </summary>
-      <p style="font-family:'Open Sans',sans-serif;font-size:16px;color:#4a5568;line-height:1.8;padding:4px 0 24px;">Sì. Oltre alle riparazioni mi occupo di lavori completi: rifacimento del bagno (demolizione, muratura, impianto idraulico, piastrelle e sanitari), nuovi impianti idraulici e di riscaldamento, ristrutturazioni, sostituzione di caldaie, pompe di calore e climatizzatori. Faccio un sopralluogo gratuito e ti do un preventivo chiaro.</p>
+      <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#334155;line-height:1.8;padding:4px 0 24px;">Sì. Oltre alle riparazioni mi occupo di lavori completi: rifacimento del bagno (demolizione, muratura, impianto idraulico, piastrelle e sanitari), nuovi impianti idraulici e di riscaldamento, ristrutturazioni, sostituzione di caldaie, pompe di calore e climatizzatori. Faccio un sopralluogo gratuito e ti do un preventivo chiaro.</p>
     </details>
 
     <details class="faq-item" style="border-bottom:none;">
@@ -1048,7 +1163,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span style="font-family:'Open Sans',sans-serif;font-size:18px;font-weight:700;color:#16213C;">Il preventivo è gratuito?</span>
         <span class="faq-icon">+</span>
       </summary>
-      <p style="font-family:'Open Sans',sans-serif;font-size:16px;color:#4a5568;line-height:1.8;padding:4px 0 24px;">Il sopralluogo è sempre gratuito e senza impegno. Vedo di persona cosa serve, ti do un preventivo chiaro e concordiamo tutto prima di iniziare. Per i piccoli interventi spesso basta una foto su WhatsApp.</p>
+      <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#334155;line-height:1.8;padding:4px 0 24px;">Il sopralluogo è sempre gratuito e senza impegno. Vedo di persona cosa serve, ti do un preventivo chiaro e concordiamo tutto prima di iniziare. Per i piccoli interventi spesso basta una foto su WhatsApp.</p>
     </details>
 
   </div>
@@ -1058,27 +1173,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div style="max-width:800px;margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center;gap:28px;">
     <p style="font-family:'Open Sans',sans-serif;font-size:12px;font-weight:700;color:#E43808;letter-spacing:2.5px;text-transform:uppercase;">CONTATTI</p>
     <h2 style="font-family:'Oswald',sans-serif;font-size:clamp(30px,5vw,50px);font-weight:700;color:#032D6E;line-height:1.1;">Un guasto da sistemare o un lavoro da progettare? Parliamone.</h2>
-    <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#64748b;">Una telefonata o un messaggio e capiamo subito come procedere. Il sopralluogo è gratuito.</p>
+    <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#475569;">Una telefonata o un messaggio e capiamo subito come procedere. Il sopralluogo è gratuito.</p>
 
-    <a href="{{ phoneHref }}" style="display:inline-flex;align-items:center;gap:14px;text-decoration:none;margin:8px 0;">
+    <a href="tel:+393664366759" style="display:inline-flex;align-items:center;gap:14px;text-decoration:none;margin:8px 0;">
       <i class="fa-solid fa-phone" style="color:#E43808;font-size:28px;"></i>
-      <span style="font-family:'Oswald',sans-serif;font-size:clamp(36px,7vw,56px);font-weight:700;color:#032D6E;letter-spacing:0.5px;text-decoration:underline;text-underline-offset:6px;text-decoration-color:#e0e6f0;">{{ phone }}</span>
+      <span style="font-family:'Oswald',sans-serif;font-size:clamp(36px,7vw,56px);font-weight:700;color:#032D6E;letter-spacing:0.5px;text-decoration:underline;text-underline-offset:6px;text-decoration-color:#e0e6f0;">+39 366 436 6759</span>
     </a>
 
     <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;">
-      <a href="{{ phoneHref }}" style="display:inline-flex;align-items:center;gap:10px;background:#E43808;color:#fff;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:18px;font-weight:700;padding:16px 36px;border-radius:8px;box-shadow:0 4px 16px rgba(228,56,8,0.3);">
+      <a href="tel:+393664366759" style="display:inline-flex;align-items:center;gap:10px;background:#E43808;color:#fff;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:18px;font-weight:700;padding:16px 36px;border-radius:8px;box-shadow:0 4px 16px rgba(228,56,8,0.3);">
         <i class="fa-solid fa-phone"></i> CHIAMA ORA
       </a>
-      <a href="{{ whatsappHref }}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:18px;font-weight:700;padding:16px 36px;border-radius:8px;box-shadow:0 4px 16px rgba(37,211,102,0.3);">
+      <a href="https://wa.me/393664366759?text=Salve%2C%20ho%20bisogno%20di%20un%20idraulico.%20Pu%C3%B2%20aiutarmi%3F" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:18px;font-weight:700;padding:16px 36px;border-radius:8px;box-shadow:0 4px 16px rgba(37,211,102,0.3);">
         <i class="fa-brands fa-whatsapp"></i> WHATSAPP
       </a>
     </div>
 
-    <p style="font-family:'Open Sans',sans-serif;font-size:16px;color:#64748b;margin-top:8px;">
+    <p style="font-family:'Open Sans',sans-serif;font-size:16px;color:#475569;margin-top:8px;">
       Dal lunedì al venerdì · Pronto intervento per urgenze il sabato
     </p>
-    <a href="{{ emailHref }}" style="font-family:'Open Sans',sans-serif;font-size:16px;color:#64748b;text-decoration:none;display:flex;align-items:center;gap:8px;margin-top:8px;">
-      <i class="fa-solid fa-envelope" style="color:#032D6E;"></i> {{ email }}
+    <a href="mailto:info@luigi-idraulico.it" style="font-family:'Open Sans',sans-serif;font-size:16px;color:#475569;text-decoration:none;display:flex;align-items:center;gap:8px;margin-top:8px;">
+      <i class="fa-solid fa-envelope" style="color:#032D6E;"></i> info@luigi-idraulico.it
     </a>
 
     <div style="width:100%;max-width:560px;margin-top:20px;padding:26px 24px;background:linear-gradient(135deg,#0d3e90 0%,#032D6E 60%,#011848 100%);border-radius:16px;text-align:left;display:flex;align-items:center;gap:18px;flex-wrap:wrap;box-shadow:0 12px 36px rgba(3,45,110,0.28);">
@@ -1094,7 +1209,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div style="width:100%;max-width:560px;margin-top:4px;padding:28px 24px;background:#f5f7fb;border-radius:16px;text-align:left;">
       <h3 style="font-family:'Oswald',sans-serif;font-size:24px;font-weight:700;color:#032D6E;margin-bottom:6px;">Preferisci lasciarmi i dati qui?</h3>
-      <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:#64748b;margin-bottom:18px;">Lasciami i tuoi dati e dimmi cosa serve: ti contatto io come preferisci.</p>
+      <p style="font-family:'Open Sans',sans-serif;font-size:16px;color:#475569;margin-bottom:18px;">Lasciami i tuoi dati e dimmi cosa serve: ti contatto io come preferisci.</p>
       <form data-lead-form style="display:flex;flex-direction:column;gap:12px;">
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
           <input type="text" name="nome" required autocomplete="given-name" placeholder="Nome *" aria-label="Nome" style="font-family:'Open Sans',sans-serif;font-size:16px;color:#1e293b;width:100%;padding:13px 14px;border:1.5px solid #cbd5e1;border-radius:8px;background:#fff;flex:1;min-width:140px;width:auto;">
@@ -1113,7 +1228,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </select>
         </label>
         <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;width:1px;height:1px;">
-        <p style="font-family:'Open Sans',sans-serif;font-size:13px;color:#64748b;line-height:1.5;">Inviando acconsenti al trattamento dei dati per essere ricontattato. Vedi l'<a href="privacy.html" style="color:#032D6E;font-weight:600;">informativa privacy</a>.</p>
+        <p style="font-family:'Open Sans',sans-serif;font-size:13px;color:#475569;line-height:1.5;">Inviando acconsenti al trattamento dei dati per essere ricontattato. Vedi l'<a href="privacy.html" style="color:#032D6E;font-weight:600;">informativa privacy</a>.</p>
         <button type="submit" style="font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;color:#fff;background:#E43808;border:none;border-radius:8px;padding:15px 24px;cursor:pointer;box-shadow:0 4px 16px rgba(228,56,8,0.3);">INVIA RICHIESTA</button>
         <p data-lead-status role="status" aria-live="polite" style="font-family:'Open Sans',sans-serif;font-size:15px;font-weight:600;min-height:20px;"></p>
       </form>
@@ -1131,32 +1246,32 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="foot-div" style="width:1px;height:60px;background:#e0e6f0;flex-shrink:0;"></div>
       <div style="display:flex;flex-direction:column;gap:4px;flex:1;">
         <p style="font-family:'Oswald',sans-serif;font-size:19px;font-weight:700;color:#032D6E;">Montini Luigino</p>
-        <p style="font-family:'Open Sans',sans-serif;font-size:13px;color:#64748b;line-height:1.5;">Idraulico civile e Installatore<br>Sesto San Giovanni (MI) · Milano e hinterland</p>
-        <p style="font-family:'Open Sans',sans-serif;font-size:12px;color:#94a3b8;margin-top:3px;">P.IVA {{ piva }}</p>
+        <p style="font-family:'Open Sans',sans-serif;font-size:13px;color:#475569;line-height:1.5;">Idraulico civile e Installatore<br>Sesto San Giovanni (MI) · Milano e hinterland</p>
+        <p style="font-family:'Open Sans',sans-serif;font-size:12px;color:#475569;margin-top:3px;">P.IVA 14558870961</p>
       </div>
       <div class="foot-div" style="width:1px;height:60px;background:#e0e6f0;flex-shrink:0;"></div>
       <div style="display:flex;flex-direction:column;gap:10px;flex-shrink:0;">
-        <a href="{{ phoneHref }}" style="display:flex;align-items:center;gap:9px;color:#E43808;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;">
-          <i class="fa-solid fa-phone"></i> {{ phone }}
+        <a href="tel:+393664366759" style="display:flex;align-items:center;gap:9px;color:#E43808;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;">
+          <i class="fa-solid fa-phone"></i> +39 366 436 6759
         </a>
-        <a href="{{ whatsappHref }}" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:9px;color:#25D366;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:15px;font-weight:600;">
+        <a href="https://wa.me/393664366759?text=Salve%2C%20ho%20bisogno%20di%20un%20idraulico.%20Pu%C3%B2%20aiutarmi%3F" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:9px;color:#25D366;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:15px;font-weight:600;">
           <i class="fa-brands fa-whatsapp"></i> WhatsApp
         </a>
-        <a href="{{ emailHref }}" style="display:flex;align-items:center;gap:9px;color:#64748b;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:14px;">
-          <i class="fa-solid fa-envelope"></i> {{ email }}
+        <a href="mailto:info@luigi-idraulico.it" style="display:flex;align-items:center;gap:9px;color:#475569;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:14px;">
+          <i class="fa-solid fa-envelope"></i> info@luigi-idraulico.it
         </a>
       </div>
     </div>
 
     <!-- Copyright -->
     <div style="text-align:center;display:flex;flex-direction:column;gap:5px;">
-      <p style="font-family:'Open Sans',sans-serif;font-size:12px;color:rgba(255,255,255,0.3);">
-        © {{ year }} {{ ragioneSociale }} &nbsp;·&nbsp; Tutti i diritti riservati.
+      <p style="font-family:'Open Sans',sans-serif;font-size:13px;color:rgba(255,255,255,0.65);">
+        © <span data-year>2026</span> IMPIANTI IDRAULICI DI MONTINI LUIGINO &nbsp;·&nbsp; Tutti i diritti riservati.
       </p>
       <p style="font-family:'Open Sans',sans-serif;font-size:12px;">
-        <a href="privacy.html" style="color:rgba(255,255,255,0.55);text-decoration:underline;">Privacy e cookie</a>
-        <span style="color:rgba(255,255,255,0.3);"> &nbsp;·&nbsp; </span>
-        <a href="#" data-cookie-settings style="color:rgba(255,255,255,0.55);text-decoration:underline;">Gestisci cookie</a>
+        <a href="privacy.html" style="color:rgba(255,255,255,0.8);text-decoration:underline;">Privacy e cookie</a>
+        <span style="color:rgba(255,255,255,0.5);"> &nbsp;·&nbsp; </span>
+        <a href="#" data-cookie-settings style="color:rgba(255,255,255,0.8);text-decoration:underline;">Gestisci cookie</a>
       </p>
     </div>
 
@@ -1164,322 +1279,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </footer>
 
 <!-- ─── WHATSAPP FLOAT (desktop) ──────────────────────────────────────── -->
-<a href="{{ whatsappHref }}" target="_blank" rel="noopener noreferrer" class="wa-float wa-cta-btn" title="Parla con Luigi su WhatsApp" style="position:fixed;bottom:32px;right:32px;z-index:200;height:60px;background:#25D366;align-items:center;justify-content:flex-start;padding:0 18px 0 16px;gap:20px;text-decoration:none;overflow:hidden;">
+<a href="https://wa.me/393664366759?text=Salve%2C%20ho%20bisogno%20di%20un%20idraulico.%20Pu%C3%B2%20aiutarmi%3F" target="_blank" rel="noopener noreferrer" class="wa-float wa-cta-btn" title="Parla con Luigi su WhatsApp" style="position:fixed;bottom:32px;right:32px;z-index:200;height:60px;background:#25D366;align-items:center;justify-content:flex-start;padding:0 18px 0 16px;gap:20px;text-decoration:none;overflow:hidden;">
   <i class="fa-brands fa-whatsapp" style="color:#fff;font-size:28px;flex-shrink:0;"></i>
   <span style="color:#fff;font-family:'Open Sans',sans-serif;font-size:15px;font-weight:700;white-space:nowrap;letter-spacing:0.2px;">Parla con Luigi</span>
 </a>
 
 <!-- ─── MOBILE BOTTOM BAR ─────────────────────────────────────────────── -->
-<div class="mob-bar" style="position:fixed;bottom:0;left:0;right:0;z-index:200;background:#fff;border-top:1px solid #dde3ee;padding:10px 14px;gap:10px;">
-  <a href="{{ phoneHref }}" style="flex:1;background:#E43808;color:#fff;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;padding:14px 8px;border-radius:8px;text-align:center;display:flex;align-items:center;justify-content:center;gap:8px;">
-    <i class="fa-solid fa-phone"></i> CHIAMA
-  </a>
-  <a href="{{ whatsappHref }}" target="_blank" rel="noopener noreferrer" style="flex:1;background:#25D366;color:#fff;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;padding:14px 8px;border-radius:8px;text-align:center;display:flex;align-items:center;justify-content:center;gap:8px;">
-    <i class="fa-brands fa-whatsapp"></i> WHATSAPP
-  </a>
-</div>
-</x-dc>
-<script type="text/x-dc" data-dc-script data-props="{
-  &quot;$preview&quot;: { &quot;width&quot;: 390, &quot;height&quot;: 844 },
-  &quot;phoneNumber&quot;:    { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;+39 366 436 6759&quot;,             &quot;section&quot;: &quot;Contatti&quot; },
-  &quot;whatsappNumber&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;393664366759&quot;,                  &quot;section&quot;: &quot;Contatti&quot; },
-  &quot;email&quot;:          { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;info@luigi-idraulico.it&quot;,       &quot;section&quot;: &quot;Contatti&quot; },
-  &quot;partitaIva&quot;:     { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;14558870961&quot;,                   &quot;section&quot;: &quot;Info legale&quot; },
-  &quot;ragioneSociale&quot;: { &quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;IMPIANTI IDRAULICI DI MONTINI LUIGINO&quot;, &quot;section&quot;: &quot;Info legale&quot; }
-}">
-class Component extends DCLogic {
-  state = { counterVal: 0, counterStarted: false };
-
-  componentDidMount() {
-    // ── Conferma chiamata reale (per Google Ads) ──────────────
-    // Un tap sul numero apre il dialer, ma spesso la persona annulla subito
-    // senza chiamare davvero: Google Ads però registra il tap come
-    // conversione, gonfiando il numero rispetto alle chiamate reali.
-    // Misuriamo quanto la pagina resta nascosta dopo il tap: se la persona
-    // torna prima di MIN_CALL_MS probabilmente ha annullato, se torna dopo
-    // probabilmente ha parlato davvero. Solo in quel caso mandiamo l'evento
-    // a GTM, che lo inoltra come conversione ad hoc (vedi 'chiamata_confermata').
-    const MIN_CALL_MS = 15000;
-    let telClickAt = null;
-    document.addEventListener('click', (e) => {
-      const link = e.target.closest('a[href^="tel:"]');
-      if (link) telClickAt = Date.now();
-    });
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState !== 'visible' || telClickAt === null) return;
-      const elapsed = Date.now() - telClickAt;
-      telClickAt = null;
-      if (elapsed >= MIN_CALL_MS) {
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({ event: 'chiamata_confermata', durata_fuori_ms: elapsed });
-        if (window.lmTrack) window.lmTrack('Contact', { method: 'phone' });
-      }
-    });
-
-    // ── Scroll all'anchor iniziale (es. #servizi) dopo la splash ──
-    // Il browser tenta lo scroll all'hash prima che React abbia renderizzato
-    // le sezioni: fallisce e non viene ritentato. Lo rifacciamo a mano
-    // dopo che la splash screen (2.2s + 0.6s) è terminata.
-    if (window.location.hash) {
-      const targetId = window.location.hash.slice(1);
-      setTimeout(() => {
-        const target = document.getElementById(targetId);
-        if (target) target.scrollIntoView({ behavior: 'instant', block: 'start' });
-      }, 3000);
-    }
-
-    // ── Zone toggle ──────────────────────────────────────────
-    const zoneToggle  = document.querySelector('[data-zone-toggle]');
-    const zoneList    = document.querySelector('[data-zone-list]');
-    const zoneLabel   = document.querySelector('[data-zone-label]');
-    const zoneChevron = document.querySelector('[data-zone-chevron]');
-    if (zoneToggle && zoneList) {
-      let zoneOpen = false;
-      zoneToggle.addEventListener('click', () => {
-        zoneOpen = !zoneOpen;
-        zoneList.style.display = zoneOpen ? 'block' : 'none';
-        if (zoneChevron) zoneChevron.style.transform = zoneOpen ? 'rotate(180deg)' : 'rotate(0deg)';
-        if (zoneLabel)   zoneLabel.textContent = zoneOpen ? 'Nascondi zone' : 'Vedi zone coperte';
-      });
-    }
-
-    // ── Scroll fade-up on sections ───────────────────────────
-    const fadeObs = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.style.opacity = '1';
-          e.target.style.transform = 'none';
-          fadeObs.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.07, rootMargin: '0px 0px -40px 0px' });
-
-    document.querySelectorAll('section[data-screen-label] > div').forEach(el => {
-      const label = el.closest('section')?.dataset?.screenLabel ?? '';
-      if (label === 'Hero' || label === 'Trust strip') return;
-      const rect = el.getBoundingClientRect();
-      if (rect.top >= window.innerHeight * 0.88) {
-        Object.assign(el.style, {
-          opacity: '0',
-          transform: 'translateY(22px)',
-          transition: 'opacity 0.65s ease, transform 0.65s ease',
-        });
-        fadeObs.observe(el);
-      }
-    });
-
-    // ── Counter 0 → 40 ───────────────────────────────────────
-    const counterEl = document.querySelector('.exp-grid > div:last-child > div:first-child');
-    if (counterEl) {
-      const cObs = new IntersectionObserver(entries => {
-        if (!entries[0].isIntersecting || this.state.counterStarted) return;
-        this.setState({ counterStarted: true });
-        let val = 0;
-        const tick = setInterval(() => {
-          val++;
-          this.setState({ counterVal: val });
-          if (val >= 40) clearInterval(tick);
-        }, 37);
-      }, { threshold: 0.5 });
-      cObs.observe(counterEl);
-    }
-
-    // ── Helper mobile detection ───────────────────────────────
-    const isMobile = () => window.innerWidth < 768;
-
-    // ── Services carousel ────────────────────────────────────
-    const srvWrapper = document.getElementById('srv-carousel-wrapper');
-    const srvTrack   = document.getElementById('srv-carousel-track');
-    if (srvWrapper && srvTrack) {
-      const prevBtn = document.getElementById('srv-prev');
-      const nextBtn = document.getElementById('srv-next');
-
-      if (!isMobile()) {
-        // Desktop: scorrimento automatico infinito.
-        // will-change solo su desktop, per lo stesso motivo del carosello
-        // Prima/Dopo (vedi commento più sotto).
-        srvTrack.style.willChange = 'transform';
-        Array.from(srvTrack.children).forEach(card => {
-          srvTrack.appendChild(card.cloneNode(true));
-        });
-        let pos = 0;
-        let paused = false;
-        const SPEED = 0.45;
-        const CARD_W = 300;
-        const loop = () => {
-          if (!paused) {
-            pos += SPEED;
-            const half = srvTrack.scrollWidth / 2;
-            if (pos >= half) pos -= half;
-          }
-          srvTrack.style.transform = 'translateX(-' + pos + 'px)';
-          requestAnimationFrame(loop);
-        };
-        requestAnimationFrame(loop);
-        srvWrapper.addEventListener('mousedown', () => { paused = true;  srvWrapper.style.cursor = 'grabbing'; });
-        document.addEventListener('mouseup',     () => { paused = false; srvWrapper.style.cursor = 'grab'; });
-        if (prevBtn) prevBtn.addEventListener('click', () => {
-          pos = Math.round(pos / CARD_W) * CARD_W - CARD_W;
-          if (pos < 0) pos += srvTrack.scrollWidth / 2;
-          srvTrack.style.transform = 'translateX(-' + pos + 'px)';
-        });
-        if (nextBtn) nextBtn.addEventListener('click', () => {
-          pos = Math.round(pos / CARD_W) * CARD_W + CARD_W;
-          const half = srvTrack.scrollWidth / 2;
-          if (pos >= half) pos -= half;
-          srvTrack.style.transform = 'translateX(-' + pos + 'px)';
-        });
-        document.addEventListener('keydown', (e) => {
-          if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-          const sec = document.querySelector('[data-screen-label="Servizi"]');
-          if (!sec) return;
-          const r = sec.getBoundingClientRect();
-          if (r.bottom < 0 || r.top > window.innerHeight) return;
-          e.preventDefault();
-          if (e.key === 'ArrowRight') { pos = Math.round(pos / CARD_W) * CARD_W + CARD_W; const h = srvTrack.scrollWidth / 2; if (pos >= h) pos -= h; }
-          if (e.key === 'ArrowLeft')  { pos = Math.round(pos / CARD_W) * CARD_W - CARD_W; if (pos < 0) pos += srvTrack.scrollWidth / 2; }
-          srvTrack.style.transform = 'translateX(-' + pos + 'px)';
-        });
-      } else {
-        // Mobile: applica stili direttamente via JS per sovrascrivere inline style
-        Object.assign(srvWrapper.style, {
-          overflowX: 'scroll', overflowY: 'hidden',
-          margin: '0', cursor: 'default',
-          scrollSnapType: 'x mandatory',
-          webkitOverflowScrolling: 'touch',
-          scrollbarWidth: 'none',
-          padding: '4px 0 14px'
-        });
-        Array.from(srvTrack.children).forEach(card => {
-          card.style.width = Math.round(window.innerWidth * 0.86) + 'px';
-          card.style.scrollSnapAlign = 'center';
-          card.style.flexShrink = '0';
-        });
-        const srvStep = () => srvTrack.children[0].offsetWidth + 20;
-        // Ciclico, come il carosello Prima/Dopo.
-        const srvMax   = () => srvWrapper.scrollWidth - srvWrapper.clientWidth;
-        const srvAtEnd = () => srvWrapper.scrollLeft >= srvMax() - 4;
-        const srvAtTop = () => srvWrapper.scrollLeft <= 4;
-        if (prevBtn) prevBtn.addEventListener('click', () => {
-          if (srvAtTop()) srvWrapper.scrollTo({ left: srvMax(), behavior: 'auto' });
-          else            srvWrapper.scrollBy({ left: -srvStep(), behavior: 'smooth' });
-        });
-        if (nextBtn) nextBtn.addEventListener('click', () => {
-          if (srvAtEnd()) srvWrapper.scrollTo({ left: 0, behavior: 'auto' });
-          else            srvWrapper.scrollBy({ left: srvStep(), behavior: 'smooth' });
-        });
-      }
-    }
-
-    // ── Prima/Dopo carousel ──────────────────────────────────
-    const pdWrapper = document.getElementById('pd-carousel-wrapper');
-    const pdTrack   = document.getElementById('pd-carousel-track');
-    if (pdWrapper && pdTrack) {
-      const pdPrevBtn = document.getElementById('pd-prev');
-      const pdNextBtn = document.getElementById('pd-next');
-
-      if (!isMobile()) {
-        // Desktop: scorrimento automatico infinito.
-        // will-change solo qui: promuove il track a layer di compositing, utile
-        // per l'animazione translateX. Su mobile il track non viene mai
-        // trasformato (scroll nativo sul wrapper) e il layer promosso con dentro
-        // tutte le foto veniva scartato da Safari iOS -> carosello vuoto.
-        pdTrack.style.willChange = 'transform';
-        Array.from(pdTrack.children).forEach(card => {
-          pdTrack.appendChild(card.cloneNode(true));
-        });
-        let posPd = 0;
-        let pausedPd = false;
-        const PD_SPEED  = 0.4;
-        const PD_CARD_W = 380;
-        const pdLoop = () => {
-          if (!pausedPd) {
-            posPd += PD_SPEED;
-            const half = pdTrack.scrollWidth / 2;
-            if (posPd >= half) posPd -= half;
-          }
-          pdTrack.style.transform = 'translateX(-' + posPd + 'px)';
-          requestAnimationFrame(pdLoop);
-        };
-        requestAnimationFrame(pdLoop);
-        pdWrapper.addEventListener('mousedown', () => { pausedPd = true;  pdWrapper.style.cursor = 'grabbing'; });
-        document.addEventListener('mouseup',    () => { pausedPd = false; pdWrapper.style.cursor = 'grab'; });
-        if (pdPrevBtn) pdPrevBtn.addEventListener('click', () => {
-          posPd = Math.round(posPd / PD_CARD_W) * PD_CARD_W - PD_CARD_W;
-          if (posPd < 0) posPd += pdTrack.scrollWidth / 2;
-          pdTrack.style.transform = 'translateX(-' + posPd + 'px)';
-        });
-        if (pdNextBtn) pdNextBtn.addEventListener('click', () => {
-          posPd = Math.round(posPd / PD_CARD_W) * PD_CARD_W + PD_CARD_W;
-          const half = pdTrack.scrollWidth / 2;
-          if (posPd >= half) posPd -= half;
-          pdTrack.style.transform = 'translateX(-' + posPd + 'px)';
-        });
-      } else {
-        // Mobile: applica stili direttamente via JS per sovrascrivere inline style
-        Object.assign(pdWrapper.style, {
-          overflowX: 'scroll', overflowY: 'hidden',
-          margin: '0', cursor: 'default',
-          scrollSnapType: 'x mandatory',
-          webkitOverflowScrolling: 'touch',
-          scrollbarWidth: 'none',
-          padding: '4px 0 14px'
-        });
-        Array.from(pdTrack.children).forEach(card => {
-          card.style.width = Math.round(window.innerWidth * 0.86) + 'px';
-          card.style.scrollSnapAlign = 'center';
-          card.style.flexShrink = '0';
-        });
-        const pdStep = () => pdTrack.children[0].offsetWidth + 20;
-        // Ciclico: dall'ultima foto si torna alla prima e viceversa, invece di
-        // restare bloccati a fondo scorrimento con le frecce che non fanno nulla.
-        // Il rientro e' istantaneo e non 'smooth': ripercorrere all'indietro
-        // tutte le foto durerebbe secondi, e un click durante l'animazione
-        // ripartirebbe in avanti da meta' strada.
-        const pdMax   = () => pdWrapper.scrollWidth - pdWrapper.clientWidth;
-        const pdAtEnd = () => pdWrapper.scrollLeft >= pdMax() - 4;
-        const pdAtTop = () => pdWrapper.scrollLeft <= 4;
-        if (pdPrevBtn) pdPrevBtn.addEventListener('click', () => {
-          if (pdAtTop()) pdWrapper.scrollTo({ left: pdMax(), behavior: 'auto' });
-          else           pdWrapper.scrollBy({ left: -pdStep(), behavior: 'smooth' });
-        });
-        if (pdNextBtn) pdNextBtn.addEventListener('click', () => {
-          if (pdAtEnd()) pdWrapper.scrollTo({ left: 0, behavior: 'auto' });
-          else           pdWrapper.scrollBy({ left: pdStep(), behavior: 'smooth' });
-        });
-      }
-    }
-
-    // ── Protezione foto ──────────────────────────────────
-    document.addEventListener('contextmenu', e => {
-      if (e.target.tagName === 'IMG') e.preventDefault();
-    }, true);
-    document.addEventListener('dragstart', e => {
-      if (e.target.tagName === 'IMG') e.preventDefault();
-    }, true);
-  }
-
-  renderVals() {
-    const phone = this.props.phoneNumber ?? '+39 366 436 6759';
-    const wNum  = this.props.whatsappNumber ?? '393664366759';
-    const piva  = this.props.partitaIva ?? '14558870961';
-    const email = this.props.email ?? 'info@luigi-idraulico.it';
-    const ragioneSociale = this.props.ragioneSociale ?? 'IMPIANTI IDRAULICI DI MONTINI LUIGINO';
-    const v = this.state.counterVal;
-    return {
-      phone,
-      phoneHref:       `tel:${phone.replace(/\s/g, '')}`,
-      whatsappHref:    `https://wa.me/${wNum}?text=${encodeURIComponent('Salve, ho bisogno di un idraulico. Può aiutarmi?')}`,
-      piva,
-      email,
-      emailHref:       `mailto:${email}`,
-      ragioneSociale,
-      year:            new Date().getFullYear(),
-      counterTens:     Math.floor(v / 10).toString(),
-      counterUnits:    (v % 10).toString(),
-    };
-  }
-}
-</script>
+<nav class="mob-bar" aria-label="Contatti rapidi" style="position:fixed;bottom:0;left:0;right:0;z-index:200;background:#fff;border-top:1px solid #dde3ee;padding:8px 10px calc(8px + env(safe-area-inset-bottom));gap:8px;box-shadow:0 -6px 20px rgba(1,24,72,0.12);">
+  <a href="tel:+393664366759" class="mb-btn" style="background:#E43808;"><i class="fa-solid fa-phone" aria-hidden="true"></i><span>Chiama</span></a>
+  <a href="https://wa.me/393664366759?text=Salve%2C%20ho%20bisogno%20di%20un%20idraulico.%20Pu%C3%B2%20aiutarmi%3F" target="_blank" rel="noopener noreferrer" class="mb-btn" style="background:#25D366;"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i><span>WhatsApp</span></a>
+  <a href="#preventivo" data-open-popup class="mb-btn" style="background:#032D6E;"><i class="fa-solid fa-clipboard-list" aria-hidden="true"></i><span>Preventivo</span></a>
+</nav>
 </body>
 </html>

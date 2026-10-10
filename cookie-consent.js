@@ -164,7 +164,7 @@
     var c0 = read();
     if (c0 && c0.marketing) loadPixel();
     if (window.__lmNoAutoBanner) return;
-    if (!read()) setTimeout(open, 3000); // dopo la splash (2.8s)
+    if (!read()) setTimeout(open, 1200); // dopo la splash (circa 1s)
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
