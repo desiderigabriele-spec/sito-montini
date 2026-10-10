@@ -1,4 +1,4 @@
-/* Popup di benvenuto "Ti richiamo io": 3 passi a tocchi (problema → urgenza → contatti).
+/* Popup di benvenuto "Ti richiamo io": 4 passi (problema → urgenza → dove → contatti).
  * Vanilla JS fuori dal runtime DC. Compare dopo la splash e, al primo accesso,
  * dopo la scelta sul banner cookie (mai sovrapposto). Invio con window.lmSendLead.
  * Frequenza (localStorage lm_popup): chiuso → ricompare dopo 3 giorni; inviato → dopo 60. */
@@ -17,6 +17,8 @@
     ['❄️', 'Clima o pompa di calore'],
     ['🛠️', 'Altro / lavoro nuovo']
   ];
+  var COMUNI = ['Sesto San Giovanni', 'Cinisello Balsamo', 'Cologno Monzese', 'Monza', 'Bresso', 'Cusano Milanino',
+    'Paderno Dugnano', 'Muggiò', 'Nova Milanese', 'Brugherio', 'Segrate', 'Milano'];
   var URGENCY = [
     ['🚨', 'È un\'emergenza', 'Acqua che esce, niente riscaldamento, scarico bloccato', 'urgent'],
     ['📅', 'Nei prossimi giorni', 'Il problema c\'è, ma può aspettare un attimo', 'soon'],
@@ -86,6 +88,12 @@
     '#lm-pop .lp-f input,#lm-pop .lp-f textarea{width:100%;padding:14px;border:1.5px solid #cbd5e1;border-radius:12px;background:#fff;color:#1e293b;font:16px/1.4 "Open Sans",system-ui,sans-serif;transition:border-color .18s,box-shadow .18s}' +
     '#lm-pop .lp-f input:focus,#lm-pop .lp-f textarea:focus{outline:0;border-color:#032D6E;box-shadow:0 0 0 4px rgba(3,45,110,.12)}' +
     '#lm-pop .lp-f textarea{resize:vertical;min-height:70px}' +
+    '#lm-pop .lp-two{display:grid;grid-template-columns:1fr 1fr;gap:10px}' +
+    '#lm-pop .lp-q{font-size:13.5px;font-weight:700;color:#032D6E;margin:4px 0 -2px}' +
+    '#lm-pop .lp-seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}' +
+    '#lm-pop .lp-seg .lp-chip{min-height:48px;padding:10px 8px;justify-content:center;text-align:center;font-size:13.5px;gap:6px}' +
+    '#lm-pop .lp-seg .lp-chip em{font-size:18px}' +
+    '#lm-pop .lp-geo{font-size:13.5px;font-weight:600;color:#15803d}' +
     '#lm-pop .lp-hp{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}' +
     '#lm-pop .lp-priv{font-size:12.5px;line-height:1.5;color:#64748b}' +
     '#lm-pop .lp-priv a{color:#032D6E;font-weight:600}' +
@@ -108,6 +116,7 @@
     '@keyframes lp-rot{to{transform:rotate(360deg)}}' +
     '@keyframes lp-draw{to{stroke-dashoffset:0}}' +
     '@keyframes lp-wave{0%,100%{transform:rotate(0)}25%{transform:rotate(18deg)}75%{transform:rotate(-12deg)}}' +
+    '@media(max-width:420px){#lm-pop .lp-seg .lp-chip em{display:none}#lm-pop .lp-two{grid-template-columns:1fr}}' +
     '@media(max-width:600px){' +
       '#lm-pop{align-items:flex-end;padding:0}' +
       '#lm-pop .lp-card{width:100%;max-height:92vh;max-height:92dvh;border-radius:22px 22px 0 0;padding-bottom:env(safe-area-inset-bottom);animation-name:lp-up}' +
@@ -127,7 +136,7 @@
       '<em aria-hidden="true">' + e + '</em><span>' + label + (sub ? '<small>' + sub + '</small>' : '') + '</span></button>';
   }
 
-  var root, lastFocus, state = { problem: '', urgency: '', urgencyKey: '' };
+  var root, lastFocus, state = { problem: '', urgency: '', urgencyKey: '', canale: 'WhatsApp', fascia: 'Appena possibile', lat: null, lon: null };
 
   function build() {
     var st = document.createElement('style');
@@ -148,7 +157,7 @@
           '<p class="lp-sub">Il tuo idraulico di fiducia da 40 anni<br><span class="lp-stars">★★★★★</span> 4,9 su Google</p></div>' +
           '<button type="button" class="lp-x" data-close aria-label="Chiudi">×</button>' +
         '</div>' +
-        '<div class="lp-prog" aria-hidden="true"><span><b></b></span><span><b></b></span><span><b></b></span></div>' +
+        '<div class="lp-prog" aria-hidden="true"><span><b></b></span><span><b></b></span><span><b></b></span><span><b></b></span></div>' +
         '<div class="lp-body">' +
 
           '<section class="lp-step" data-step="1">' +
@@ -173,26 +182,53 @@
           '</section>' +
 
           '<section class="lp-step" data-step="3" hidden>' +
-            '<h2>Perfetto, ci penso io.</h2>' +
-            '<p class="lp-p">Lasciami nome e numero: ti richiamo per capire meglio e darti un prezzo chiaro prima di iniziare.</p>' +
-            '<form class="lp-f" data-pop-form novalidate>' +
-              '<input name="name" required autocomplete="name" placeholder="Il tuo nome *" aria-label="Il tuo nome">' +
-              '<input name="phone" type="tel" required inputmode="tel" autocomplete="tel" placeholder="Il tuo numero di telefono *" aria-label="Numero di telefono">' +
-              '<input name="zona" autocomplete="address-level2" placeholder="Comune (facoltativo)" aria-label="Comune">' +
-              '<textarea name="note" rows="2" placeholder="Vuoi aggiungere qualcosa? (facoltativo)" aria-label="Note"></textarea>' +
-              '<input class="lp-hp" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">' +
-              '<p class="lp-priv">Uso i tuoi dati solo per richiamarti. <a href="privacy.html" target="_blank" rel="noopener">Informativa privacy</a></p>' +
-              '<button type="submit" class="lp-btn">Richiamami 📞</button>' +
-              '<p class="lp-err" data-err role="alert" hidden></p>' +
-            '</form>' +
-            '<p class="lp-me">Niente call center: ti chiamo io, Luigi.</p>' +
+            '<h2>Dove devo venire?</h2>' +
+            '<p class="lp-p">Mi serve per sapere in quanto tempo posso arrivare e per prepararti un preventivo preciso.</p>' +
+            '<div class="lp-f" data-where>' +
+              '<input name="comune" list="lp-comuni" required autocomplete="address-level2" placeholder="Comune *" aria-label="Comune">' +
+              '<datalist id="lp-comuni">' + COMUNI.map(function (c) { return '<option value="' + c + '">'; }).join('') + '</datalist>' +
+              '<input name="indirizzo" autocomplete="street-address" placeholder="Via e numero civico (facoltativo)" aria-label="Indirizzo">' +
+              '<button type="button" class="lp-btn lp-ghost" style="margin-top:2px" data-geo>📍 Usa la mia posizione</button>' +
+              '<p class="lp-geo" data-geo-msg role="status" aria-live="polite" hidden></p>' +
+              '<p class="lp-err" data-err3 role="alert" hidden></p>' +
+              '<button type="button" class="lp-btn" data-next4>Avanti →</button>' +
+            '</div>' +
             '<div class="lp-nav"><button type="button" class="lp-link" data-go="2">← Indietro</button><span></span></div>' +
           '</section>' +
 
-          '<section class="lp-step lp-ok" data-step="4" hidden>' +
+          '<section class="lp-step" data-step="4" hidden>' +
+            '<h2>Perfetto, ci penso io.</h2>' +
+            '<p class="lp-p">Ultimo passo: come ti chiami e dove ti mando il preventivo? Poi ti contatto io.</p>' +
+            '<form class="lp-f" data-pop-form novalidate>' +
+              '<div class="lp-two"><input name="nome" required autocomplete="given-name" placeholder="Nome *" aria-label="Nome"><input name="cognome" required autocomplete="family-name" placeholder="Cognome *" aria-label="Cognome"></div>' +
+              '<input name="phone" type="tel" required inputmode="tel" autocomplete="tel" placeholder="Telefono *" aria-label="Numero di telefono">' +
+              '<input name="email" type="email" autocomplete="email" placeholder="Email (facoltativa)" aria-label="Email">' +
+              '<p class="lp-q" id="lp-q1">Come preferisci ricevere il preventivo?</p>' +
+              '<div class="lp-seg" data-group="canale" role="group" aria-labelledby="lp-q1">' +
+                '<button type="button" class="lp-chip" aria-pressed="true" data-val="WhatsApp"><em aria-hidden="true">💬</em><span>WhatsApp</span></button>' +
+                '<button type="button" class="lp-chip" aria-pressed="false" data-val="Chiamata"><em aria-hidden="true">📞</em><span>Chiamata</span></button>' +
+                '<button type="button" class="lp-chip" aria-pressed="false" data-val="Email"><em aria-hidden="true">✉️</em><span>Email</span></button>' +
+              '</div>' +
+              '<p class="lp-q" id="lp-q2">Quando ti va bene essere contattato?</p>' +
+              '<div class="lp-seg" data-group="fascia" role="group" aria-labelledby="lp-q2">' +
+                '<button type="button" class="lp-chip" aria-pressed="true" data-val="Appena possibile"><span>Appena possibile</span></button>' +
+                '<button type="button" class="lp-chip" aria-pressed="false" data-val="Mattina"><span>Mattina</span></button>' +
+                '<button type="button" class="lp-chip" aria-pressed="false" data-val="Pomeriggio"><span>Pomeriggio</span></button>' +
+              '</div>' +
+              '<textarea name="note" rows="2" placeholder="Vuoi aggiungere qualcosa? (facoltativo)" aria-label="Note"></textarea>' +
+              '<input class="lp-hp" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">' +
+              '<p class="lp-priv">Uso i tuoi dati solo per contattarti. <a href="privacy.html" target="_blank" rel="noopener">Informativa privacy</a></p>' +
+              '<button type="submit" class="lp-btn">Richiedi il preventivo 📩</button>' +
+              '<p class="lp-err" data-err role="alert" hidden></p>' +
+            '</form>' +
+            '<p class="lp-me">Niente call center: ti contatto io, Luigi.</p>' +
+            '<div class="lp-nav"><button type="button" class="lp-link" data-go="3">← Indietro</button><span></span></div>' +
+          '</section>' +
+
+          '<section class="lp-step lp-ok" data-step="5" hidden>' +
             '<svg viewBox="0 0 90 90" aria-hidden="true"><circle cx="45" cy="45" r="40"/><path d="M27 46 l12 12 l24 -26"/></svg>' +
             '<h2 data-ok-title tabindex="-1">Ricevuto! 🙌</h2>' +
-            '<p class="lp-p">Ti richiamo appena sono libero: tieni il telefono a portata di mano.</p>' +
+            '<p class="lp-p" data-ok-msg>Ti contatto appena sono libero.</p>' +
             '<p class="lp-p">Se nel frattempo la situazione peggiora, chiamami pure al <a href="' + TEL + '" style="color:#032D6E;font-weight:700">' + PHONE + '</a>.</p>' +
             '<button type="button" class="lp-btn lp-ghost" data-close>Torna al sito</button>' +
           '</section>' +
@@ -204,6 +240,7 @@
     root.addEventListener('click', onClick);
     root.querySelector('[data-pop-form]').addEventListener('submit', onSubmit);
     root.querySelector('[data-pop-form]').addEventListener('input', function () { root.querySelector('[data-err]').hidden = true; });
+    root.querySelector('[data-where]').addEventListener('input', function () { root.querySelector('[data-err3]').hidden = true; });
     root.addEventListener('keydown', onKey);
   }
 
@@ -211,13 +248,13 @@
     var steps = root.querySelectorAll('[data-step]');
     for (var i = 0; i < steps.length; i++) steps[i].hidden = steps[i].getAttribute('data-step') !== String(n);
     var bars = root.querySelectorAll('.lp-prog b');
-    for (var j = 0; j < bars.length; j++) bars[j].style.width = (j < Math.min(n, 3)) ? '100%' : '0';
-    root.querySelector('.lp-prog').style.visibility = n === 4 ? 'hidden' : '';
+    for (var j = 0; j < bars.length; j++) bars[j].style.width = (j < Math.min(n, 4)) ? '100%' : '0';
+    root.querySelector('.lp-prog').style.visibility = n === 5 ? 'hidden' : '';
     var cur = root.querySelector('[data-step="' + n + '"]');
     root.setAttribute('aria-labelledby', '');
     var h = cur.querySelector('h2');
     if (h) { if (!h.id) h.id = 'lp-t' + n; root.setAttribute('aria-labelledby', h.id); }
-    var first = n === 3 ? cur.querySelector('input[name="name"]') : n === 4 ? cur.querySelector('[data-ok-title]') : cur.querySelector('.lp-chip[aria-pressed="true"]') || cur.querySelector('.lp-chip');
+    var first = n === 3 ? cur.querySelector('input[name="comune"]') : n === 4 ? cur.querySelector('input[name="nome"]') : n === 5 ? cur.querySelector('[data-ok-title]') : cur.querySelector('.lp-chip[aria-pressed="true"]') || cur.querySelector('.lp-chip');
     if (first) setTimeout(function () { try { first.focus({ preventScroll: true }); } catch (e) { first.focus(); } }, 60);
     root.querySelector('.lp-card').scrollTop = 0;
   }
@@ -230,6 +267,8 @@
       var all = c.parentNode.querySelectorAll('.lp-chip');
       for (var i = 0; i < all.length; i++) all[i].setAttribute('aria-pressed', all[i] === c ? 'true' : 'false');
       var label = c.querySelector('span').firstChild.textContent;
+      if (group === 'canale') { state.canale = c.getAttribute('data-val'); return; }
+      if (group === 'fascia') { state.fascia = c.getAttribute('data-val'); return; }
       if (group === 'problem') {
         state.problem = label;
         setTimeout(function () { go(2); }, 260);
@@ -242,6 +281,8 @@
       }
       return;
     }
+    if (t.closest('[data-geo]')) { geo(); return; }
+    if (t.closest('[data-next4]')) { next4(); return; }
     var g = t.closest('[data-go]');
     if (g) { go(+g.getAttribute('data-go')); return; }
     if (t.closest('[data-sos-call]')) { track('popup_call_click', {}); return; }
@@ -259,33 +300,65 @@
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   }
 
+  function geo() {
+    var msg = root.querySelector('[data-geo-msg]'), btn = root.querySelector('[data-geo]');
+    msg.hidden = false;
+    if (!navigator.geolocation) { msg.style.color = '#b91c1c'; msg.textContent = 'Il tuo browser non permette di condividere la posizione: scrivi il comune qui sopra.'; return; }
+    msg.style.color = '#475569'; msg.textContent = 'Un attimo…';
+    btn.disabled = true;
+    navigator.geolocation.getCurrentPosition(function (p) {
+      state.lat = p.coords.latitude; state.lon = p.coords.longitude;
+      msg.style.color = '#15803d'; msg.textContent = '✓ Posizione ricevuta. Scrivi comunque il comune qui sopra.';
+      btn.disabled = false;
+    }, function () {
+      msg.style.color = '#b91c1c'; msg.textContent = 'Non riesco a leggere la posizione: nessun problema, scrivi il comune qui sopra.';
+      btn.disabled = false;
+    }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 });
+  }
+
+  function next4() {
+    var w = root.querySelector('[data-where]'), err = root.querySelector('[data-err3]');
+    var comune = w.querySelector('[name="comune"]');
+    if (!comune.value.trim()) { err.textContent = 'Scrivimi il comune, così so se riesco ad arrivare in fretta.'; err.hidden = false; comune.focus(); return; }
+    err.hidden = true;
+    go(4);
+  }
+
   function onSubmit(e) {
     e.preventDefault();
     var f = e.target, err = root.querySelector('[data-err]'), btn = f.querySelector('button[type="submit"]');
     if (f.elements.botcheck.checked) return;
-    var name = f.elements.name.value.trim(), phone = f.elements.phone.value.trim();
+    var nome = f.elements.nome.value.trim(), cognome = f.elements.cognome.value.trim(), phone = f.elements.phone.value.trim(), email = f.elements.email.value.trim();
+    function bad(el, m) { el.focus(); err.textContent = m; err.hidden = false; }
     err.hidden = true;
-    if (!name) { f.elements.name.focus(); err.textContent = 'Scrivimi il tuo nome, così so chi richiamare.'; err.hidden = false; return; }
-    if (phone.replace(/\D/g, '').length < 6) { f.elements.phone.focus(); err.textContent = 'Controlla il numero di telefono: mi serve per richiamarti.'; err.hidden = false; return; }
+    if (!nome) return bad(f.elements.nome, 'Scrivimi il tuo nome, così so chi contattare.');
+    if (!cognome) return bad(f.elements.cognome, 'Mi serve anche il cognome per il preventivo.');
+    if (phone.replace(/\D/g, '').length < 6) return bad(f.elements.phone, 'Controlla il numero di telefono: mi serve per contattarti.');
+    if (state.canale === 'Email' && !/^\S+@\S+\.\S+$/.test(email)) return bad(f.elements.email, 'Per ricevere il preventivo via email mi serve la tua email.');
+    if (email && !/^\S+@\S+\.\S+$/.test(email)) return bad(f.elements.email, 'Controlla l\'email: sembra incompleta.');
 
-    var lines = ['Problema: ' + (state.problem || '-'), 'Urgenza: ' + (state.urgency || '-')];
-    if (f.elements.note.value.trim()) lines.push('Note: ' + f.elements.note.value.trim());
-
+    var w = root.querySelector('[data-where]');
     btn.disabled = true;
     btn.innerHTML = '<span class="lp-spin" aria-hidden="true"></span> Invio…';
     window.lmSendLead({
-      name: name, phone: phone, zona: f.elements.zona.value, message: lines.join('\n'), source: 'popup'
+      nome: nome, cognome: cognome, telefono: phone, email: email,
+      comune: w.querySelector('[name="comune"]').value, indirizzo: w.querySelector('[name="indirizzo"]').value,
+      lat: state.lat, lon: state.lon,
+      tipo: state.problem, urgenza: state.urgency, canale: state.canale, fascia: state.fascia,
+      messaggio: f.elements.note.value, source: 'popup'
     }).then(function (ok) {
       btn.disabled = false;
-      btn.innerHTML = 'Richiamami 📞';
+      btn.innerHTML = 'Richiedi il preventivo 📩';
       if (!ok) {
         err.innerHTML = 'Ops, la richiesta non è partita. Riprova oppure chiamami al <a href="' + TEL + '">' + PHONE + '</a>.';
         err.hidden = false;
         return;
       }
       suppress(60);
-      root.querySelector('[data-ok-title]').textContent = 'Ricevuto, ' + name.split(/\s+/)[0] + '! 🙌';
-      go(4);
+      var how = { WhatsApp: 'Ti scrivo su WhatsApp', Chiamata: 'Ti chiamo', Email: 'Ti scrivo via email' }[state.canale] || 'Ti contatto';
+      root.querySelector('[data-ok-title]').textContent = 'Ricevuto, ' + nome + '! 🙌';
+      root.querySelector('[data-ok-msg]').textContent = how + ' appena sono libero: tieni il telefono a portata di mano.';
+      go(5);
     });
   }
 
@@ -309,14 +382,35 @@
 
   window.lmPopup = { open: open, close: close };
 
+  // Quando compare: la prima che accade tra
+  //  · 8 secondi dopo la fine della splash (2.8s)
+  //  · scroll oltre il 35% della pagina (interesse reale)
+  //  · desktop: il mouse esce verso l'alto (sta per chiudere la scheda)
+  // Mai prima della fine della splash e mai sopra il banner cookie (aspetta la scelta).
+  var SPLASH_MS = 2800, WAIT_MS = 8000, fired = false;
+  function trigger() {
+    if (fired) return;
+    fired = true;
+    window.removeEventListener('scroll', onScroll);
+    document.removeEventListener('mouseout', onLeave);
+    if (suppressed()) return;
+    if (window.lmCookie && window.lmCookie.pending()) {
+      document.addEventListener('lm:cookie-closed', function () { setTimeout(open, 700); }, { once: true });
+    } else open();
+  }
+  function onScroll() {
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    if (h > 0 && window.pageYOffset / h > 0.35 && Date.now() - t0 > SPLASH_MS) trigger();
+  }
+  function onLeave(e) {
+    if (!e.relatedTarget && e.clientY <= 0 && Date.now() - t0 > SPLASH_MS + 1500) trigger();
+  }
+  var t0 = Date.now();
   function schedule() {
     if (window.__lmNoAutoBanner || suppressed()) return;
-    setTimeout(function () {
-      if (suppressed()) return;
-      if (window.lmCookie && window.lmCookie.pending()) {
-        document.addEventListener('lm:cookie-closed', function () { setTimeout(open, 700); }, { once: true });
-      } else open();
-    }, 3900); // dopo la splash (2.9s + 0.8s)
+    setTimeout(trigger, SPLASH_MS + WAIT_MS);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    document.addEventListener('mouseout', onLeave);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', schedule);
   else schedule();
