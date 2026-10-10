@@ -30,7 +30,7 @@
 
   function clean(d) {
     var o = {};
-    ['nome', 'cognome', 'telefono', 'email', 'comune', 'indirizzo', 'tipo', 'urgenza', 'canale', 'fascia', 'messaggio', 'source'].forEach(function (k) {
+    ['nome', 'cognome', 'telefono', 'email', 'comune', 'indirizzo', 'tipo', 'urgenza', 'canale', 'fascia', 'messaggio', 'source', 'categoria', 'immobile'].forEach(function (k) {
       o[k] = String(d[k] == null ? '' : d[k]).trim();
     });
     if (d.lat && d.lon) { o.lat = d.lat; o.lon = d.lon; }
@@ -50,7 +50,9 @@
   function sendEmail(d) {
     var righe = [
       'Provenienza: ' + (d.source === 'popup' ? 'Popup' : 'Modulo Contatti'),
-      'Problema: ' + (d.tipo || '-'), 'Urgenza: ' + (d.urgenza || '-'),
+      'Categoria: ' + (d.categoria === 'progetto' ? 'Lavoro da realizzare' : 'Da riparare'),
+      'Problema: ' + (d.tipo || '-'), 'Urgenza / tempi: ' + (d.urgenza || '-'),
+      d.immobile ? 'Immobile: ' + d.immobile : '',
       'Comune: ' + d.comune + (d.indirizzo ? ' — ' + d.indirizzo : ''),
       d.lat ? 'Posizione: https://www.google.com/maps?q=' + Number(d.lat).toFixed(5) + ',' + Number(d.lon).toFixed(5) : '',
       'Preventivo via: ' + (d.canale || '-') + (d.fascia ? ' (' + d.fascia + ')' : ''),

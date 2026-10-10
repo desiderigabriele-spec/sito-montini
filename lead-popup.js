@@ -9,14 +9,24 @@
   var PHONE = '366 436 6759';
   var TEL = 'tel:+393664366759';
 
-  var PROBLEMS = [
+  var REPAIR = [
     ['💧', 'Perdita d\'acqua'],
     ['🚽', 'Scarico o WC intasato'],
-    ['🔥', 'Caldaia o riscaldamento'],
-    ['🚿', 'Bagno o rubinetti'],
-    ['❄️', 'Clima o pompa di calore'],
-    ['🛠️', 'Altro / lavoro nuovo']
+    ['🔥', 'Caldaia o riscaldamento guasti'],
+    ['🚿', 'Rubinetti e sanitari']
   ];
+  var PROJECTS = [
+    ['🛁', 'Rifacimento bagno'],
+    ['🏠', 'Nuovo impianto o ristrutturazione'],
+    ['♨️', 'Nuova caldaia o pompa di calore'],
+    ['❄️', 'Climatizzatore']
+  ];
+  var TIMING = [
+    ['⚡', 'Il prima possibile', 'Ho già deciso, voglio partire presto', 'asap'],
+    ['🗓️', 'Nei prossimi 1-3 mesi', 'Sto organizzando i lavori', 'soon3'],
+    ['🧮', 'Sto valutando', 'Mi serve un preventivo per decidere', 'eval']
+  ];
+  var IMMOBILI = ['Appartamento', 'Casa indipendente', 'Ufficio o negozio', 'Condominio'];
   var COMUNI = ['Sesto San Giovanni', 'Cinisello Balsamo', 'Cologno Monzese', 'Monza', 'Bresso', 'Cusano Milanino',
     'Paderno Dugnano', 'Muggiò', 'Nova Milanese', 'Brugherio', 'Segrate', 'Milano'];
   var URGENCY = [
@@ -46,7 +56,7 @@
   }
 
   var css = '' +
-    '#lm-pop{position:fixed;inset:0;z-index:8500;display:flex;align-items:center;justify-content:center;padding:16px;font-family:"Open Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#1e293b}' +
+    '#lm-pop{position:fixed;inset:0;z-index:9100;display:flex;align-items:center;justify-content:center;padding:16px;font-family:"Open Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#1e293b}' +
     '#lm-pop[hidden]{display:none}' +
     '#lm-pop *{box-sizing:border-box;margin:0}' +
     '#lm-pop .lp-bg{position:absolute;inset:0;background:rgba(1,24,72,.55);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);animation:lp-fade .3s ease both}' +
@@ -88,8 +98,12 @@
     '#lm-pop .lp-f input,#lm-pop .lp-f textarea{width:100%;padding:14px;border:1.5px solid #cbd5e1;border-radius:12px;background:#fff;color:#1e293b;font:16px/1.4 "Open Sans",system-ui,sans-serif;transition:border-color .18s,box-shadow .18s}' +
     '#lm-pop .lp-f input:focus,#lm-pop .lp-f textarea:focus{outline:0;border-color:#032D6E;box-shadow:0 0 0 4px rgba(3,45,110,.12)}' +
     '#lm-pop .lp-f textarea{resize:vertical;min-height:70px}' +
+    '#lm-pop .lp-gl{font-size:12.5px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#E43808;margin:14px 0 8px}' +
+    '#lm-pop .lp-gl:first-of-type{margin-top:0}' +
+    '#lm-pop .lp-other{display:block;margin:8px auto 0}' +
+    '#lm-pop .lp-seg.lp-seg2{grid-template-columns:1fr 1fr}' +
     '#lm-pop .lp-two{display:grid;grid-template-columns:1fr 1fr;gap:10px}' +
-    '#lm-pop .lp-q{font-size:13.5px;font-weight:700;color:#032D6E;margin:4px 0 -2px}' +
+    '#lm-pop .lp-q{font-size:13.5px;font-weight:700;color:#032D6E;margin:6px 0 2px}' +
     '#lm-pop .lp-seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}' +
     '#lm-pop .lp-seg .lp-chip{min-height:48px;padding:10px 8px;justify-content:center;text-align:center;font-size:13.5px;gap:6px}' +
     '#lm-pop .lp-seg .lp-chip em{font-size:18px}' +
@@ -136,7 +150,7 @@
       '<em aria-hidden="true">' + e + '</em><span>' + label + (sub ? '<small>' + sub + '</small>' : '') + '</span></button>';
   }
 
-  var root, lastFocus, state = { problem: '', urgency: '', urgencyKey: '', canale: 'WhatsApp', fascia: 'Appena possibile', lat: null, lon: null };
+  var root, lastFocus, state = { problem: '', kind: 'repair', immobile: '', urgency: '', urgencyKey: '', canale: 'WhatsApp', fascia: 'Appena possibile', lat: null, lon: null };
 
   function build() {
     var st = document.createElement('style');
@@ -161,29 +175,38 @@
         '<div class="lp-body">' +
 
           '<section class="lp-step" data-step="1">' +
-            '<h2 id="lp-t1">Cosa sta succedendo in casa?</h2>' +
-            '<p class="lp-p">Un guasto mette sempre un po\' d\'ansia, lo so. Raccontami con due tocchi e ti richiamo io, senza impegno.</p>' +
-            '<div class="lp-grid" data-group="problem">' + PROBLEMS.map(function (p) { return chip(p[0], p[1]); }).join('') + '</div>' +
-            '<div class="lp-trust"><span>Senza impegno</span><span>Prezzo chiaro prima di iniziare</span><span>Nord Milano</span></div>' +
+            '<h2 id="lp-t1">Come posso aiutarti?</h2>' +
+            '<p class="lp-p">Che sia un guasto da sistemare o un lavoro da progettare, raccontamelo in due tocchi: poi ti contatto io, senza impegno.</p>' +
+            '<p class="lp-gl">🔧 Qualcosa da riparare</p>' +
+            '<div class="lp-grid" data-group="problem" data-kind="repair">' + REPAIR.map(function (p) { return chip(p[0], p[1]); }).join('') + '</div>' +
+            '<p class="lp-gl">🏗️ Un lavoro da realizzare</p>' +
+            '<div class="lp-grid" data-group="problem" data-kind="project">' + PROJECTS.map(function (p) { return chip(p[0], p[1]); }).join('') + '</div>' +
+            '<button type="button" class="lp-link lp-other" data-other>Altro, non so come descriverlo</button>' +
+            '<div class="lp-trust"><span>Senza impegno</span><span>Sopralluogo gratuito</span><span>Prezzo chiaro prima di iniziare</span></div>' +
             '<div class="lp-nav"><span></span><button type="button" class="lp-link" data-close>Non ora, do solo un\'occhiata</button></div>' +
           '</section>' +
 
           '<section class="lp-step" data-step="2" hidden>' +
-            '<h2>Quanto è urgente?</h2>' +
-            '<p class="lp-p">Così so come organizzarmi per te.</p>' +
-            '<div class="lp-list" data-group="urgency">' + URGENCY.map(function (u) { return chip(u[0], u[1], u[2], u[3]); }).join('') + '</div>' +
-            '<div class="lp-sos" data-sos hidden>' +
-              '<p><b>Per un\'emergenza fai prima a chiamarmi:</b> se sono libero rispondo subito.</p>' +
-              '<p>Intanto, se c\'è una perdita, chiudi il rubinetto generale dell\'acqua.</p>' +
-              '<a class="lp-btn" href="' + TEL + '" data-sos-call>📞 Chiama ' + PHONE + '</a>' +
-              '<button type="button" class="lp-btn lp-ghost" data-go="3">Preferisco lasciarti il numero</button>' +
+            '<h2 data-s2-title>Quanto è urgente?</h2>' +
+            '<p class="lp-p" data-s2-sub>Così so come organizzarmi per te.</p>' +
+            '<div data-s2="repair">' +
+              '<div class="lp-list" data-group="urgency">' + URGENCY.map(function (u) { return chip(u[0], u[1], u[2], u[3]); }).join('') + '</div>' +
+              '<div class="lp-sos" data-sos hidden>' +
+                '<p><b>Per un\'emergenza fai prima a chiamarmi:</b> se sono libero rispondo subito.</p>' +
+                '<p>Intanto, se c\'è una perdita, chiudi il rubinetto generale dell\'acqua.</p>' +
+                '<a class="lp-btn" href="' + TEL + '" data-sos-call>📞 Chiama ' + PHONE + '</a>' +
+                '<button type="button" class="lp-btn lp-ghost" data-go="3">Preferisco lasciarti il numero</button>' +
+              '</div>' +
+            '</div>' +
+            '<div data-s2="project" hidden>' +
+              '<div class="lp-list" data-group="timing">' + TIMING.map(function (u) { return chip(u[0], u[1], u[2], u[3]); }).join('') + '</div>' +
             '</div>' +
             '<div class="lp-nav"><button type="button" class="lp-link" data-go="1">← Indietro</button><span></span></div>' +
           '</section>' +
 
           '<section class="lp-step" data-step="3" hidden>' +
             '<h2>Dove devo venire?</h2>' +
-            '<p class="lp-p">Mi serve per sapere in quanto tempo posso arrivare e per prepararti un preventivo preciso.</p>' +
+            '<p class="lp-p">Mi serve per organizzare l\'intervento o il sopralluogo gratuito e per prepararti un preventivo preciso.</p>' +
             '<div class="lp-f" data-where>' +
               '<input name="comune" list="lp-comuni" required autocomplete="address-level2" placeholder="Comune *" aria-label="Comune">' +
               '<datalist id="lp-comuni">' + COMUNI.map(function (c) { return '<option value="' + c + '">'; }).join('') + '</datalist>' +
@@ -203,6 +226,10 @@
               '<div class="lp-two"><input name="nome" required autocomplete="given-name" placeholder="Nome *" aria-label="Nome"><input name="cognome" required autocomplete="family-name" placeholder="Cognome *" aria-label="Cognome"></div>' +
               '<input name="phone" type="tel" required inputmode="tel" autocomplete="tel" placeholder="Telefono *" aria-label="Numero di telefono">' +
               '<input name="email" type="email" autocomplete="email" placeholder="Email (facoltativa)" aria-label="Email">' +
+              '<div data-immobile hidden>' +
+                '<p class="lp-q" id="lp-q0">Che tipo di immobile è? (facoltativo)</p>' +
+                '<div class="lp-seg lp-seg2" data-group="immobile" role="group" aria-labelledby="lp-q0">' + IMMOBILI.map(function (i) { return '<button type="button" class="lp-chip" aria-pressed="false" data-val="' + i + '"><span>' + i + '</span></button>'; }).join('') + '</div>' +
+              '</div>' +
               '<p class="lp-q" id="lp-q1">Come preferisci ricevere il preventivo?</p>' +
               '<div class="lp-seg" data-group="canale" role="group" aria-labelledby="lp-q1">' +
                 '<button type="button" class="lp-chip" aria-pressed="true" data-val="WhatsApp"><em aria-hidden="true">💬</em><span>WhatsApp</span></button>' +
@@ -244,6 +271,17 @@
     root.addEventListener('keydown', onKey);
   }
 
+  // Passo 2 e passo 4 si adattano: guasto da riparare o lavoro da realizzare
+  function setKind(kind) {
+    var proj = kind === 'project';
+    var boxes = root.querySelectorAll('[data-s2]');
+    for (var i = 0; i < boxes.length; i++) boxes[i].hidden = boxes[i].getAttribute('data-s2') !== kind;
+    root.querySelector('[data-s2-title]').textContent = proj ? 'Quando vorresti iniziare?' : 'Quanto è urgente?';
+    root.querySelector('[data-s2-sub]').textContent = proj ? 'Così organizzo il sopralluogo gratuito al momento giusto.' : 'Così so come organizzarmi per te.';
+    root.querySelector('[data-immobile]').hidden = !proj;
+    root.querySelector('[data-sos]').hidden = true;
+  }
+
   function go(n) {
     var steps = root.querySelectorAll('[data-step]');
     for (var i = 0; i < steps.length; i++) steps[i].hidden = steps[i].getAttribute('data-step') !== String(n);
@@ -265,13 +303,26 @@
     if (c) {
       var group = c.parentNode.getAttribute('data-group');
       var all = c.parentNode.querySelectorAll('.lp-chip');
+      if (group === 'immobile') {
+        var was = c.getAttribute('aria-pressed') === 'true';
+        for (var k = 0; k < all.length; k++) all[k].setAttribute('aria-pressed', 'false');
+        state.immobile = was ? '' : c.getAttribute('data-val');
+        if (!was) c.setAttribute('aria-pressed', 'true');
+        return;
+      }
       for (var i = 0; i < all.length; i++) all[i].setAttribute('aria-pressed', all[i] === c ? 'true' : 'false');
       var label = c.querySelector('span').firstChild.textContent;
       if (group === 'canale') { state.canale = c.getAttribute('data-val'); return; }
       if (group === 'fascia') { state.fascia = c.getAttribute('data-val'); return; }
       if (group === 'problem') {
         state.problem = label;
+        state.kind = c.parentNode.getAttribute('data-kind') || 'repair';
+        setKind(state.kind);
         setTimeout(function () { go(2); }, 260);
+      } else if (group === 'timing') {
+        state.urgency = label;
+        state.urgencyKey = c.getAttribute('data-val');
+        setTimeout(function () { go(3); }, 260);
       } else {
         state.urgency = label;
         state.urgencyKey = c.getAttribute('data-val');
@@ -281,6 +332,7 @@
       }
       return;
     }
+    if (t.closest('[data-other]')) { state.problem = 'Altro'; state.kind = 'repair'; setKind('repair'); go(2); return; }
     if (t.closest('[data-geo]')) { geo(); return; }
     if (t.closest('[data-next4]')) { next4(); return; }
     var g = t.closest('[data-go]');
@@ -345,6 +397,7 @@
       comune: w.querySelector('[name="comune"]').value, indirizzo: w.querySelector('[name="indirizzo"]').value,
       lat: state.lat, lon: state.lon,
       tipo: state.problem, urgenza: state.urgency, canale: state.canale, fascia: state.fascia,
+      categoria: state.kind === 'project' ? 'progetto' : 'riparazione', immobile: state.kind === 'project' ? state.immobile : '',
       messaggio: f.elements.note.value, source: 'popup'
     }).then(function (ok) {
       btn.disabled = false;
@@ -357,25 +410,25 @@
       suppress(60);
       var how = { WhatsApp: 'Ti scrivo su WhatsApp', Chiamata: 'Ti chiamo', Email: 'Ti scrivo via email' }[state.canale] || 'Ti contatto';
       root.querySelector('[data-ok-title]').textContent = 'Ricevuto, ' + nome + '! 🙌';
-      root.querySelector('[data-ok-msg]').textContent = how + ' appena sono libero: tieni il telefono a portata di mano.';
+      root.querySelector('[data-ok-msg]').textContent = how + (state.kind === 'project' ? ' appena sono libero per fissare il sopralluogo gratuito.' : ' appena sono libero: tieni il telefono a portata di mano.');
       go(5);
     });
   }
 
-  function open() {
+  function open(src) {
     if (!window.lmSendLead) return;
     if (!root) build();
     lastFocus = document.activeElement;
     root.hidden = false;
     document.documentElement.style.overflow = 'hidden';
     go(1);
-    track('popup_open', {});
+    track('popup_open', { popup_source: src === 'manual' ? 'manuale' : 'automatico' });
   }
   function close(user) {
     if (!root || root.hidden) return;
     root.hidden = true;
     document.documentElement.style.overflow = '';
-    if (user && !(function () { try { return JSON.parse(localStorage.getItem(KEY)).until - Date.now() > 4 * DAY; } catch (e) { return false; } })()) suppress(3);
+    if (user && !(function () { try { return JSON.parse(localStorage.getItem(KEY)).until - Date.now() > 2 * DAY; } catch (e) { return false; } })()) suppress(1);
     if (lastFocus && lastFocus.focus) try { lastFocus.focus({ preventScroll: true }); } catch (e) {}
     track('popup_close', {});
   }
@@ -383,11 +436,11 @@
   window.lmPopup = { open: open, close: close };
 
   // Quando compare: la prima che accade tra
-  //  · 8 secondi dopo la fine della splash (2.8s)
+  //  · 5 secondi dopo la fine della splash (2.8s)
   //  · scroll oltre il 35% della pagina (interesse reale)
   //  · desktop: il mouse esce verso l'alto (sta per chiudere la scheda)
   // Mai prima della fine della splash e mai sopra il banner cookie (aspetta la scelta).
-  var SPLASH_MS = 2800, WAIT_MS = 8000, fired = false;
+  var SPLASH_MS = 2800, WAIT_MS = 5000, fired = false;
   function trigger() {
     if (fired) return;
     fired = true;
@@ -406,7 +459,24 @@
     if (!e.relatedTarget && e.clientY <= 0 && Date.now() - t0 > SPLASH_MS + 1500) trigger();
   }
   var t0 = Date.now();
+
+  // Apertura su richiesta: pulsanti [data-open-popup], link #preventivo, ?popup
+  function forced() { return /[?&]popup(=|&|$)/.test(location.search) || location.hash === '#preventivo'; }
+  document.addEventListener('click', function (e) {
+    var t = e.target && e.target.closest && e.target.closest('[data-open-popup], a[href="#preventivo"]');
+    if (t) { e.preventDefault(); open('manual'); }
+  });
+  window.addEventListener('hashchange', function () { if (location.hash === '#preventivo') open('manual'); });
+
   function schedule() {
+    if (forced() && !window.__lmNoAutoBanner) {
+      fired = true;
+      setTimeout(function () {
+        if (window.lmCookie && window.lmCookie.pending()) document.addEventListener('lm:cookie-closed', function () { setTimeout(function () { open('manual'); }, 500); }, { once: true });
+        else open('manual');
+      }, SPLASH_MS + 300);
+      return;
+    }
     if (window.__lmNoAutoBanner || suppressed()) return;
     setTimeout(trigger, SPLASH_MS + WAIT_MS);
     window.addEventListener('scroll', onScroll, { passive: true });
