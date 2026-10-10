@@ -38,9 +38,13 @@
     window.fbq('track', 'PageView');
   }
   function revokePixel() { if (window.fbq) window.fbq('consent', 'revoke'); pixelOn = false; }
-  window.lmTrack = function (name, params) {
+  // userData (opzionale): nome, telefono, email dal modulo. Con il consenso Marketing
+  // il Pixel li cifra nel browser prima dell'invio (associazione avanzata manuale).
+  window.lmTrack = function (name, params, userData) {
     var c = read();
-    if (c && c.marketing && window.fbq) window.fbq('track', name, params || {});
+    if (!(c && c.marketing && window.fbq)) return;
+    if (userData) window.fbq('init', PIXEL_ID, userData);
+    window.fbq('track', name, params || {});
   };
 
   function apply(c) {
