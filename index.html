@@ -96,6 +96,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   .mob-bar  { display: flex; }
   .wa-float { display: none; }
   .hero-btns { display: flex; flex-direction: column; gap: 12px; }
+  .hero-cta  { display: flex; flex-direction: column; gap: 12px; }
   .hero-grid { display: grid; grid-template-columns: 1fr; }
   .hero-img  { width: 100%; max-width: 360px; height: 300px; position: relative; z-index: 1; }
 
@@ -119,6 +120,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     .mob-bar  { display: none; }
     .wa-float { display: flex; }
     .hero-btns { flex-direction: row; }
+    .hero-cta  { align-self: flex-start; width: fit-content; }
   }
   /* Card hover lift — via grid selector (class attr stripped by DC compiler) */
   .card, .srv-grid > div, .cert-grid > div { transition: transform 0.22s ease, box-shadow 0.22s ease; }
@@ -483,6 +485,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </p>
 
       <!-- CTAs -->
+      <div class="hero-cta">
       <div class="hero-btns">
         <a href="{{ phoneHref }}" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;background:#E43808;color:#fff;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;padding:16px 32px;border-radius:8px;white-space:nowrap;box-shadow:0 4px 20px rgba(228,56,8,0.4);">
           <i class="fa-solid fa-phone"></i> CHIAMA ORA
@@ -491,9 +494,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <i class="fa-brands fa-whatsapp"></i> SCRIVI SU WHATSAPP
         </a>
       </div>
-      <a href="#preventivo" data-open-popup style="display:inline-flex;align-items:center;justify-content:center;gap:10px;background:#fff;color:#032D6E;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;padding:16px 32px;border-radius:8px;box-shadow:0 4px 20px rgba(1,24,72,0.35);">
+      <a href="#preventivo" data-open-popup style="display:flex;align-items:center;justify-content:center;gap:10px;background:#fff;color:#032D6E;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;padding:16px 32px;border-radius:8px;box-shadow:0 4px 20px rgba(1,24,72,0.35);">
         <i class="fa-solid fa-clipboard-list"></i> RICHIEDI UN PREVENTIVO GRATUITO
       </a>
+      </div>
 
       <!-- Note -->
       <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:rgba(255,255,255,0.7);display:flex;align-items:center;gap:8px;">
