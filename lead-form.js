@@ -9,7 +9,7 @@
   var ENDPOINT = 'https://api.web3forms.com/submit';
   var ACCESS_KEY = 'af9514cd-a1b2-43ba-af03-5cfccac636eb'; // chiave pubblica
   // URL dell'app web Apps Script (Distribuisci → Applicazione web). Vuoto = solo email.
-  var LEADS_URL = '';
+  var LEADS_URL = 'https://script.google.com/macros/s/AKfycbxh9mXmG8ZgmudhtUuoiqg6i1h91srddgmC2ezENXGWV-6NaEwPMlfj9kALpnluG90/exec';
 
   function userData(d) {
     var ud = {};
