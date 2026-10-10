@@ -130,9 +130,17 @@
     view(c ? 'custom' : 'main');
     root.hidden = false;
   }
-  function close() { if (root) root.hidden = true; }
+  function close() {
+    if (!root || root.hidden) return;
+    root.hidden = true;
+    document.dispatchEvent(new Event('lm:cookie-closed'));
+  }
 
-  window.lmCookie = { open: open };
+  window.lmCookie = {
+    open: open,
+    // true se il banner è visibile o sta per comparire (primo accesso, nessuna scelta)
+    pending: function () { return root ? !root.hidden : (!read() && !window.__lmNoAutoBanner); }
+  };
 
   document.addEventListener('click', function (e) {
     var t = e.target && e.target.closest && e.target.closest('[data-cookie-settings]');
