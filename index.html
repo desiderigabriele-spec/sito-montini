@@ -298,6 +298,100 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     *, *::before, *::after { animation-duration: 0.01ms !important; animation-delay: 0s !important; transition: none !important; scroll-behavior: auto !important; }
     [data-splash] { display: none !important; }
   }
+
+  /* ═══ v3: servizi compatti, 3D, etichette, recensioni Google ═══ */
+  .hero-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip { display: inline-flex; align-items: center; gap: 10px; font-family: 'Open Sans', sans-serif; font-size: 15px; font-weight: 600; color: #fff; background: rgba(255,255,255,0.09); border: 1px solid rgba(255,255,255,0.22); border-radius: 100px; padding: 9px 16px 9px 14px; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); box-shadow: inset 0 1px 0 rgba(255,255,255,0.12); }
+  .chip i { color: #ff8a5c; }
+  .live-dot { position: relative; width: 10px; height: 10px; border-radius: 50%; background: #2fe07a; flex-shrink: 0; box-shadow: 0 0 10px rgba(47,224,122,0.8); }
+  .live-dot::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: #2fe07a; animation: live-ping 1.8s cubic-bezier(0,0,.2,1) infinite; }
+  @keyframes live-ping { 0% { transform: scale(1); opacity: .8; } 80%, 100% { transform: scale(2.8); opacity: 0; } }
+
+  .shine { position: relative; overflow: hidden; }
+  .shine::after { content: ""; position: absolute; top: 0; left: -70%; width: 45%; height: 100%; background: linear-gradient(100deg, transparent, rgba(255,255,255,0.45), transparent); transform: skewX(-20deg); animation: shine 7s ease-in-out 2.5s infinite; pointer-events: none; }
+  @keyframes shine { 0% { left: -70%; } 14%, 100% { left: 140%; } }
+
+  .hero-photo { perspective: 900px; }
+  .hero-glow { position: absolute; bottom: 4%; left: 50%; width: 360px; height: 360px; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(circle, rgba(255,138,92,0.28) 0%, rgba(100,180,255,0.18) 40%, rgba(100,180,255,0) 70%); pointer-events: none; animation: glow 6s ease-in-out infinite; }
+  @keyframes glow { 0%, 100% { opacity: .75; transform: translateX(-50%) scale(1); } 50% { opacity: 1; transform: translateX(-50%) scale(1.06); } }
+  [data-tilt-photo] { transition: transform .5s cubic-bezier(.2,.8,.2,1); transform-origin: 50% 100%; will-change: transform; }
+  @media (max-width: 767px) { [data-tilt-photo] { animation: float 6s ease-in-out infinite; } }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+  .pd-reveal { position: absolute; top: 0; left: 50%; width: 50%; height: 220px; background: linear-gradient(135deg, #0d3e90, #032D6E); display: flex; align-items: center; justify-content: center; clip-path: inset(0 0 0 0); transition: clip-path 1s cubic-bezier(.7,0,.2,1); pointer-events: none; z-index: 1; }
+  .pd-reveal span { font-family: 'Oswald', sans-serif; font-size: 22px; font-weight: 700; color: #fff; letter-spacing: 1px; transition: opacity .3s ease; }
+  .pd-card.revealed .pd-reveal { clip-path: inset(0 0 0 100%); }
+  .pd-card.revealed .pd-reveal span { opacity: 0; }
+
+  .steps { position: relative; }
+  .steps-line { position: absolute; z-index: 0; background: linear-gradient(90deg, #E43808, #ff8a5c); border-radius: 3px; transition: transform 1.4s cubic-bezier(.6,0,.2,1); }
+  .step { z-index: 1; }
+  @media (min-width: 860px) { .steps-line { top: 0; left: 16%; right: 16%; height: 3px; transform: scaleX(0); transform-origin: left; } .steps.in .steps-line { transform: scaleX(1); } }
+  @media (max-width: 859px) { .steps-line { top: 0; bottom: 0; left: 50%; width: 3px; margin-left: -1.5px; transform: scaleY(0); transform-origin: top; } .steps.in .steps-line { transform: scaleY(1); } .step { background: #0a3480; } }
+  .steps .step { opacity: 0; transform: translateY(24px) scale(.96); transition: opacity .6s ease, transform .6s cubic-bezier(.2,.8,.2,1); }
+  .steps.in .step { opacity: 1; transform: none; }
+  .steps.in .step:nth-of-type(2) { transition-delay: .45s; }
+  .steps.in .step:nth-of-type(3) { transition-delay: .9s; }
+
+  .tilt { transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease; transform-style: preserve-3d; }
+  .reveal3d { opacity: 0; transform: perspective(900px) rotateX(14deg) translateY(28px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1); }
+  .reveal3d.in { opacity: 1; transform: none; }
+
+  /* Servizi compatti */
+  .srv-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 560px; }
+  .srv-tabs button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 10px 6px; border-radius: 14px; font-size: 15px; line-height: 1.15; text-align: center; }
+  .srv-tabs button span { font-size: 18px; }
+  .srv-hint { font-family: 'Open Sans', sans-serif; font-size: 14px; color: #475569; margin: -10px 0 14px; }
+  .srv-list { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .srv-item { display: block; padding: 0; overflow: hidden; }
+  .srv-item summary { list-style: none; display: flex; align-items: center; gap: 14px; padding: 16px 18px; cursor: pointer; }
+  .srv-item summary::-webkit-details-marker { display: none; }
+  .srv-item .srv-ic { width: 48px; height: 48px; font-size: 20px; }
+  .srv-head { flex: 1; min-width: 0; }
+  .srv-item h3 { margin: 0 0 2px; font-size: 17.5px; line-height: 1.25; }
+  .srv-short { display: block; font-family: 'Open Sans', sans-serif; font-size: 15px; color: #475569; line-height: 1.4; }
+  .srv-chev { color: #032D6E; font-size: 15px; transition: transform .25s ease; flex-shrink: 0; }
+  .srv-item[open] .srv-chev { transform: rotate(180deg); }
+  .srv-body { padding: 0 18px 18px 80px; }
+  .srv-body p { font-size: 16px; }
+  @media (min-width: 700px) { .srv-list { grid-template-columns: 1fr 1fr; gap: 18px; } }
+  @media (min-width: 900px) { .srv-item summary { cursor: default; } .srv-chev { display: none; } .srv-hint { display: none; } }
+  @media (max-width: 420px) { .srv-body { padding-left: 18px; } }
+
+  /* Recensioni stile Google */
+  .g-logo { width: 22px; height: 22px; flex-shrink: 0; }
+  .g-summary { display: grid; grid-template-columns: 1fr; gap: 16px; align-items: center; text-decoration: none; background: #fff; border: 1px solid #dadce0; border-radius: 16px; padding: 20px 22px; box-shadow: 0 1px 3px rgba(60,64,67,0.15), 0 4px 16px rgba(60,64,67,0.08); margin-bottom: 22px; font-family: 'Open Sans', sans-serif; color: #202124; transition: box-shadow .2s ease, transform .2s ease; }
+  .g-summary:hover { box-shadow: 0 2px 6px rgba(60,64,67,0.2), 0 10px 26px rgba(60,64,67,0.12); transform: translateY(-2px); }
+  .g-sum-brand { display: flex; align-items: center; gap: 12px; }
+  .g-sum-brand .g-logo { width: 36px; height: 36px; }
+  .g-sum-brand b { display: block; font-size: 18px; }
+  .g-sum-brand small, .g-sum-score small { display: block; font-size: 13.5px; color: #5f6368; }
+  .g-sum-score { display: flex; align-items: center; gap: 12px; }
+  .g-sum-score > b { font-family: 'Open Sans', sans-serif; font-size: 44px; font-weight: 700; line-height: 1; color: #202124; }
+  .g-sum-score .g-stars { font-size: 22px; }
+  .g-sum-btn { justify-self: start; display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700; color: #1a73e8; border: 1px solid #dadce0; border-radius: 100px; padding: 10px 18px; }
+  @media (min-width: 860px) { .g-summary { grid-template-columns: auto auto 1fr; gap: 36px; } .g-sum-btn { justify-self: end; } }
+  .g-stars { color: #FBBC04; letter-spacing: 1px; font-size: 18px; line-height: 1; }
+  .g-star-off { color: #dadce0; }
+  .g-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+  @media (min-width: 700px) { .g-grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1100px) { .g-grid { grid-template-columns: repeat(3, 1fr); } }
+  .g-rev { display: flex; flex-direction: column; gap: 10px; text-decoration: none; background: #fff; border: 1px solid #e3e3e3; border-radius: 14px; padding: 18px 20px; font-family: 'Open Sans', sans-serif; color: #202124; transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease; }
+  .g-rev:hover { border-color: #c6c6c6; box-shadow: 0 4px 18px rgba(60,64,67,0.14); }
+  .g-rev-top { display: flex; align-items: center; gap: 12px; }
+  .g-av { width: 42px; height: 42px; border-radius: 50%; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 19px; font-weight: 600; flex-shrink: 0; }
+  .g-who { flex: 1; min-width: 0; }
+  .g-who b { display: block; font-size: 16px; }
+  .g-who small { display: block; font-size: 13px; color: #5f6368; }
+  .g-text { font-size: 16.5px; line-height: 1.6; color: #3c4043; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pd-reveal { display: none; }
+    .steps .step, .reveal3d { opacity: 1 !important; transform: none !important; }
+    .steps-line { transform: none !important; }
+    [data-tilt-photo], .hero-glow { animation: none !important; }
+    .shine::after, .live-dot::after { display: none; }
+  }
 </style>
 <script type="application/ld+json">
 {
@@ -567,7 +661,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <!-- CTAs -->
       <div class="hero-cta">
       <div class="hero-btns">
-        <a class="btn-lift" href="tel:+393664366759" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;background:#E43808;color:#fff;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;padding:16px 32px;border-radius:8px;white-space:nowrap;box-shadow:0 4px 20px rgba(228,56,8,0.4);">
+        <a class="btn-lift shine" href="tel:+393664366759" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;background:#E43808;color:#fff;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;padding:16px 32px;border-radius:8px;white-space:nowrap;box-shadow:0 4px 20px rgba(228,56,8,0.4);">
           <i class="fa-solid fa-phone"></i> CHIAMA ORA
         </a>
         <a class="btn-lift" href="https://wa.me/393664366759?text=Salve%2C%20ho%20bisogno%20di%20un%20idraulico.%20Pu%C3%B2%20aiutarmi%3F" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;background:#25D366;color:#fff;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;padding:16px 32px;border-radius:8px;white-space:nowrap;box-shadow:0 4px 20px rgba(37,211,102,0.35);">
@@ -575,21 +669,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </a>
       </div>
       <a class="btn-lift" href="#preventivo" data-open-popup style="display:flex;align-items:center;justify-content:center;gap:10px;background:#fff;color:#032D6E;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:17px;font-weight:700;padding:16px 32px;border-radius:8px;box-shadow:0 4px 20px rgba(1,24,72,0.35);">
-        <i class="fa-solid fa-clipboard-list"></i> RICHIEDI UN PREVENTIVO GRATUITO
+        <i class="fa-solid fa-clipboard-list"></i> PREVENTIVO GRATUITO
       </a>
       </div>
 
-      <!-- Note -->
-      <p style="font-family:'Open Sans',sans-serif;font-size:16px;color:rgba(255,255,255,0.88);display:flex;align-items:center;gap:8px;">
-        <span style="color:#25D366;font-size:11px;display:inline-block;animation:dot-blink 1.2s ease-in-out infinite;">●</span>
-        Pronto intervento per i guasti · Sopralluogo gratuito per ristrutturazioni e nuovi impianti
-      </p>
+      <!-- Etichette -->
+      <div class="hero-chips">
+        <span class="chip"><span class="live-dot" aria-hidden="true"></span>Pronto intervento per i guasti</span>
+        <span class="chip"><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i>Sopralluogo gratuito</span>
+      </div>
 
     </div>
     <!-- Foto Luigi -->
-    <div style="display:flex;align-items:flex-end;justify-content:center;position:relative;overflow:hidden;">
-      <div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(100,180,255,0.2) 0%,rgba(100,180,255,0) 70%);pointer-events:none;"></div>
-      <img src="luigi.webp" alt="Luigino Montini — Idraulico civile" width="720" height="953" fetchpriority="high" style="width:100%;max-width:380px;height:auto;display:block;margin:0 auto;position:relative;z-index:1;">
+    <div class="hero-photo" style="display:flex;align-items:flex-end;justify-content:center;position:relative;overflow:hidden;">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <img src="luigi.webp" alt="Luigino Montini — Idraulico civile" width="720" height="953" fetchpriority="high" data-tilt-photo style="width:100%;max-width:380px;height:auto;display:block;margin:0 auto;position:relative;z-index:1;">
     </div>
   </div>
 </section>
@@ -599,11 +693,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="trust-grid">
     <div class="trust-tile">
       <span class="trust-ic"><i class="fa-solid fa-star" aria-hidden="true"></i></span>
-      <span><b>4,9 su Google</b><small>Recensioni reali dei clienti</small></span>
+      <span><b><span data-count-to="4.9" data-dec="1">4,9</span> su Google</b><small>Recensioni reali dei clienti</small></span>
     </div>
     <div class="trust-tile">
       <span class="trust-ic"><i class="fa-solid fa-medal" aria-hidden="true"></i></span>
-      <span><b>40 anni di mestiere</b><small>Idraulico e installatore</small></span>
+      <span><b><span data-count-to="40">40</span> anni di mestiere</b><small>Idraulico e installatore</small></span>
     </div>
     <div class="trust-tile">
       <span class="trust-ic"><i class="fa-solid fa-house-circle-check" aria-hidden="true"></i></span>
@@ -631,6 +725,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
           <div class="pd-card" data-lb tabindex="0" role="button" aria-label="Ingrandisci la foto">
             <img src="pd-impianto-idraulico.webp" alt="Rifacimento impianto idraulico datato in abitazione — Sesto San Giovanni" loading="lazy" decoding="async" style="width:100%;height:220px;object-fit:cover;object-position:top;display:block;">
+            <span class="pd-reveal" aria-hidden="true"><span>DOPO →</span></span>
             <div style="padding:14px 18px;background:#F2F6FC;border-top:3px solid #032D6E;">
               <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#032D6E;margin-bottom:2px;">Rifacimento impianto idraulico</p>
               <p style="font-family:'Open Sans',sans-serif;font-size:14px;color:#475569;">Impianti idraulici civili</p>
@@ -639,6 +734,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
           <div class="pd-card" data-lb tabindex="0" role="button" aria-label="Ingrandisci la foto">
             <img src="pd-scarico-intasato.png" alt="Scarico doccia intasato sbloccato — idraulico a Sesto San Giovanni" loading="lazy" decoding="async" style="width:100%;height:220px;object-fit:cover;object-position:top;display:block;">
+            <span class="pd-reveal" aria-hidden="true"><span>DOPO →</span></span>
             <div style="padding:14px 18px;background:#F2F6FC;border-top:3px solid #032D6E;">
               <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#032D6E;margin-bottom:2px;">Sblocco scarico doccia</p>
               <p style="font-family:'Open Sans',sans-serif;font-size:14px;color:#475569;">Pronto intervento</p>
@@ -647,6 +743,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
           <div class="pd-card" data-lb tabindex="0" role="button" aria-label="Ingrandisci la foto">
             <img src="pd-pompa-di-calore.webp" alt="Sostituzione vecchio impianto gas con pompa di calore aria-acqua — Sesto San Giovanni" loading="lazy" decoding="async" style="width:100%;height:220px;object-fit:cover;object-position:top;display:block;">
+            <span class="pd-reveal" aria-hidden="true"><span>DOPO →</span></span>
             <div style="padding:14px 18px;background:#F2F6FC;border-top:3px solid #032D6E;">
               <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#032D6E;margin-bottom:2px;">Installazione pompa di calore</p>
               <p style="font-family:'Open Sans',sans-serif;font-size:14px;color:#475569;">Pompe di calore</p>
@@ -655,6 +752,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
           <div class="pd-card" data-lb tabindex="0" role="button" aria-label="Ingrandisci la foto">
             <img src="pd-miscelatore-doccia.png" alt="Miscelatore doccia rotto e usurato sostituito — idraulico a Sesto San Giovanni" loading="lazy" decoding="async" style="width:100%;height:220px;object-fit:cover;object-position:top;display:block;">
+            <span class="pd-reveal" aria-hidden="true"><span>DOPO →</span></span>
             <div style="padding:14px 18px;background:#F2F6FC;border-top:3px solid #032D6E;">
               <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#032D6E;margin-bottom:2px;">Sostituzione miscelatore doccia</p>
               <p style="font-family:'Open Sans',sans-serif;font-size:14px;color:#475569;">Sanitari e rubinetteria</p>
@@ -663,6 +761,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
           <div class="pd-card" data-lb tabindex="0" role="button" aria-label="Ingrandisci la foto">
             <img src="pd-riscaldamento-pavimento.webp" alt="Installazione riscaldamento a pavimento radiante — idraulico a Sesto San Giovanni" loading="lazy" decoding="async" style="width:100%;height:220px;object-fit:cover;object-position:top;display:block;">
+            <span class="pd-reveal" aria-hidden="true"><span>DOPO →</span></span>
             <div style="padding:14px 18px;background:#F2F6FC;border-top:3px solid #032D6E;">
               <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#032D6E;margin-bottom:2px;">Riscaldamento a pavimento</p>
               <p style="font-family:'Open Sans',sans-serif;font-size:14px;color:#475569;">Impianti idronici</p>
@@ -671,6 +770,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
           <div class="pd-card" data-lb tabindex="0" role="button" aria-label="Ingrandisci la foto">
             <img src="pd-rubinetto-lavabo.png" alt="Sostituzione rubinetto lavabo usurato — idraulico a Sesto San Giovanni" loading="lazy" decoding="async" style="width:100%;height:220px;object-fit:cover;object-position:top;display:block;">
+            <span class="pd-reveal" aria-hidden="true"><span>DOPO →</span></span>
             <div style="padding:14px 18px;background:#F2F6FC;border-top:3px solid #032D6E;">
               <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#032D6E;margin-bottom:2px;">Sostituzione rubinetto lavabo</p>
               <p style="font-family:'Open Sans',sans-serif;font-size:14px;color:#475569;">Sanitari e rubinetteria</p>
@@ -679,6 +779,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
           <div class="pd-card" data-lb tabindex="0" role="button" aria-label="Ingrandisci la foto">
             <img src="pd-caldaia.png" alt="Sostituzione caldaia vecchia con caldaia a condensazione — Sesto San Giovanni" loading="lazy" decoding="async" style="width:100%;height:220px;object-fit:cover;object-position:top;display:block;">
+            <span class="pd-reveal" aria-hidden="true"><span>DOPO →</span></span>
             <div style="padding:14px 18px;background:#F2F6FC;border-top:3px solid #032D6E;">
               <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#032D6E;margin-bottom:2px;">Sostituzione caldaia</p>
               <p style="font-family:'Open Sans',sans-serif;font-size:14px;color:#475569;">Caldaie e riscaldamento</p>
@@ -687,6 +788,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
           <div class="pd-card" data-lb tabindex="0" role="button" aria-label="Ingrandisci la foto">
             <img src="pd-cassetta-wc.webp" alt="Cassetta WC incassata rotta riparata — idraulico a Sesto San Giovanni" loading="lazy" decoding="async" style="width:100%;height:220px;object-fit:cover;object-position:top;display:block;">
+            <span class="pd-reveal" aria-hidden="true"><span>DOPO →</span></span>
             <div style="padding:14px 18px;background:#F2F6FC;border-top:3px solid #032D6E;">
               <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#032D6E;margin-bottom:2px;">Riparazione cassetta WC incassata</p>
               <p style="font-family:'Open Sans',sans-serif;font-size:14px;color:#475569;">Sanitari e rubinetteria</p>
@@ -695,6 +797,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
           <div class="pd-card" data-lb tabindex="0" role="button" aria-label="Ingrandisci la foto">
             <img src="pd-tubazioni.webp" alt="Tubazioni vecchie e arrugginite rifatte — idraulico a Sesto San Giovanni" loading="lazy" decoding="async" style="width:100%;height:220px;object-fit:cover;object-position:top;display:block;">
+            <span class="pd-reveal" aria-hidden="true"><span>DOPO →</span></span>
             <div style="padding:14px 18px;background:#F2F6FC;border-top:3px solid #032D6E;">
               <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#032D6E;margin-bottom:2px;">Rifacimento tubazioni</p>
               <p style="font-family:'Open Sans',sans-serif;font-size:14px;color:#475569;">Impianti idraulici civili</p>
@@ -718,91 +821,78 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <h2 style="font-family:'Oswald',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:700;color:#032D6E;margin-bottom:12px;">Dal pronto intervento all'impianto completo</h2>
     <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#4a5568;max-width:680px;line-height:1.7;margin-bottom:28px;">Mi occupo di impianti civili e residenziali — case, appartamenti e uffici. Dal guasto da sistemare subito alla ristrutturazione completa: un solo professionista, dal sopralluogo gratuito alla dichiarazione di conformità.</p>
     <div class="srv-tabs" role="group" aria-label="Mostra i servizi">
-      <button type="button" data-srv-filter="all" aria-pressed="true">Tutti</button>
-      <button type="button" data-srv-filter="rip" aria-pressed="false">🔧 Riparazioni</button>
-      <button type="button" data-srv-filter="lav" aria-pressed="false">🏗️ Lavori completi</button>
+      <button type="button" data-srv-filter="all" aria-pressed="true"><span aria-hidden="true">✨</span>Tutti</button>
+      <button type="button" data-srv-filter="rip" aria-pressed="false"><span aria-hidden="true">🔧</span>Riparazioni</button>
+      <button type="button" data-srv-filter="lav" aria-pressed="false"><span aria-hidden="true">🏗️</span>Lavori completi</button>
     </div>
+    <p class="srv-hint">Tocca un servizio per i dettagli.</p>
     <div class="srv-list">
-      <article class="srv-item" data-cat="rip">
-        <span class="srv-ic"><i class="fa-solid fa-bolt" aria-hidden="true"></i></span>
-        <div>
-          <h3>Pronto intervento</h3>
-          <p>Se sono disponibile intervengo subito, altrimenti entro 24 ore. Perdite, allagamenti e guasti improvvisi.</p>
+      <details class="srv-item" data-cat="rip">
+        <summary>
+          <span class="srv-ic"><i class="fa-solid fa-bolt" aria-hidden="true"></i></span>
+          <span class="srv-head"><h3>Pronto intervento e perdite</h3><span class="srv-short">Perdite, allagamenti e guasti improvvisi.</span></span>
+          <i class="fa-solid fa-chevron-down srv-chev" aria-hidden="true"></i>
+        </summary>
+        <div class="srv-body">
+          <p>Se sono disponibile intervengo subito, altrimenti entro 24 ore. Individuo e riparo anche le perdite nascoste su tubazioni e impianti.</p>
           <a href="#preventivo" data-open-popup class="srv-cta">Chiedi un preventivo <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
         </div>
-      </article>
-      <article class="srv-item" data-cat="lav">
-        <span class="srv-ic"><i class="fa-solid fa-bath" aria-hidden="true"></i></span>
-        <div>
-          <h3>Rifacimento bagno completo</h3>
-          <p>Dalla demolizione alle piastrelle, dalla muratura all'impianto idraulico e ai sanitari: ti consegno il bagno finito, con un unico referente.</p>
+      </details>
+      <details class="srv-item" data-cat="lav rip">
+        <summary>
+          <span class="srv-ic"><i class="fa-solid fa-bath" aria-hidden="true"></i></span>
+          <span class="srv-head"><h3>Rifacimento bagno completo</h3><span class="srv-short">Bagno nuovo chiavi in mano, o solo sanitari e rubinetti.</span></span>
+          <i class="fa-solid fa-chevron-down srv-chev" aria-hidden="true"></i>
+        </summary>
+        <div class="srv-body">
+          <p>Dalla demolizione alle piastrelle, dalla muratura all'impianto idraulico: ti consegno il bagno finito, con un unico referente. Sostituisco anche singoli sanitari, rubinetti e miscelatori.</p>
           <a href="#preventivo" data-open-popup class="srv-cta">Chiedi un preventivo <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
         </div>
-      </article>
-      <article class="srv-item" data-cat="rip">
-        <span class="srv-ic"><i class="fa-solid fa-right-left" aria-hidden="true"></i></span>
-        <div>
-          <h3>Ricerca e riparazione perdite</h3>
-          <p>Individuo e riparo perdite su tubazioni e impianti, anche quelle nascoste.</p>
+      </details>
+      <details class="srv-item" data-cat="lav">
+        <summary>
+          <span class="srv-ic"><i class="fa-solid fa-hammer" aria-hidden="true"></i></span>
+          <span class="srv-head"><h3>Impianti e ristrutturazioni</h3><span class="srv-short">Impianti nuovi o da rifare, anche con opere murarie.</span></span>
+          <i class="fa-solid fa-chevron-down srv-chev" aria-hidden="true"></i>
+        </summary>
+        <div class="srv-body">
+          <p>Realizzazione e rifacimento completo di impianti idraulici per appartamenti, case e uffici, con le opere murarie coordinate da un solo professionista. Sopralluogo gratuito.</p>
           <a href="#preventivo" data-open-popup class="srv-cta">Chiedi un preventivo <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
         </div>
-      </article>
-      <article class="srv-item" data-cat="lav">
-        <span class="srv-ic"><i class="fa-solid fa-wrench" aria-hidden="true"></i></span>
-        <div>
-          <h3>Impianti idraulici civili</h3>
-          <p>Realizzazione e rifacimento di impianti idraulici, anche completi, per appartamenti, case e uffici.</p>
+      </details>
+      <details class="srv-item" data-cat="rip lav">
+        <summary>
+          <span class="srv-ic"><i class="fa-solid fa-temperature-half" aria-hidden="true"></i></span>
+          <span class="srv-head"><h3>Caldaie, riscaldamento e pompe di calore</h3><span class="srv-short">Installazione, sostituzione e manutenzione.</span></span>
+          <i class="fa-solid fa-chevron-down srv-chev" aria-hidden="true"></i>
+        </summary>
+        <div class="srv-body">
+          <p>Caldaie e impianti di riscaldamento, anche a pavimento. Installazione di pompe di calore e impianti idronici aria/acqua efficienti.</p>
           <a href="#preventivo" data-open-popup class="srv-cta">Chiedi un preventivo <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
         </div>
-      </article>
-      <article class="srv-item" data-cat="rip">
-        <span class="srv-ic"><i class="fa-solid fa-shower" aria-hidden="true"></i></span>
-        <div>
-          <h3>Sanitari e rubinetteria</h3>
-          <p>Sostituzione di sanitari, rubinetti e miscelatori a regola d'arte.</p>
+      </details>
+      <details class="srv-item" data-cat="rip lav">
+        <summary>
+          <span class="srv-ic"><i class="fa-solid fa-snowflake" aria-hidden="true"></i></span>
+          <span class="srv-head"><h3>Climatizzazione</h3><span class="srv-short">Installazione e manutenzione di climatizzatori.</span></span>
+          <i class="fa-solid fa-chevron-down srv-chev" aria-hidden="true"></i>
+        </summary>
+        <div class="srv-body">
+          <p>Con patentino F-Gas per la gestione dei gas refrigeranti di climatizzatori e pompe di calore.</p>
           <a href="#preventivo" data-open-popup class="srv-cta">Chiedi un preventivo <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
         </div>
-      </article>
-      <article class="srv-item" data-cat="lav">
-        <span class="srv-ic"><i class="fa-solid fa-hammer" aria-hidden="true"></i></span>
-        <div>
-          <h3>Ristrutturazioni e nuove realizzazioni</h3>
-          <p>Impianti e opere murarie per appartamenti e case da ristrutturare o realizzare, coordinati da un solo professionista. Sopralluogo gratuito.</p>
+      </details>
+      <details class="srv-item" data-cat="rip lav">
+        <summary>
+          <span class="srv-ic"><i class="fa-solid fa-fire" aria-hidden="true"></i></span>
+          <span class="srv-head"><h3>Impianti gas</h3><span class="srv-short">Installazione e messa a norma.</span></span>
+          <i class="fa-solid fa-chevron-down srv-chev" aria-hidden="true"></i>
+        </summary>
+        <div class="srv-body">
+          <p>Installazione, manutenzione e messa a norma di impianti a gas, con dichiarazione di conformità.</p>
           <a href="#preventivo" data-open-popup class="srv-cta">Chiedi un preventivo <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
         </div>
-      </article>
-      <article class="srv-item" data-cat="rip lav">
-        <span class="srv-ic"><i class="fa-solid fa-layer-group" aria-hidden="true"></i></span>
-        <div>
-          <h3>Caldaie e riscaldamento</h3>
-          <p>Installazione, sostituzione e manutenzione di caldaie e impianti di riscaldamento, anche a pavimento.</p>
-          <a href="#preventivo" data-open-popup class="srv-cta">Chiedi un preventivo <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
-        </div>
-      </article>
-      <article class="srv-item" data-cat="lav">
-        <span class="srv-ic"><i class="fa-regular fa-clock" aria-hidden="true"></i></span>
-        <div>
-          <h3>Pompe di calore e impianti idronici</h3>
-          <p>Collegamento e installazione di sistemi aria/acqua e impianti idronici efficienti.</p>
-          <a href="#preventivo" data-open-popup class="srv-cta">Chiedi un preventivo <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
-        </div>
-      </article>
-      <article class="srv-item" data-cat="rip lav">
-        <span class="srv-ic"><i class="fa-solid fa-fire" aria-hidden="true"></i></span>
-        <div>
-          <h3>Impianti gas</h3>
-          <p>Installazione, manutenzione e messa a norma di impianti a gas.</p>
-          <a href="#preventivo" data-open-popup class="srv-cta">Chiedi un preventivo <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
-        </div>
-      </article>
-      <article class="srv-item" data-cat="rip lav">
-        <span class="srv-ic"><i class="fa-solid fa-snowflake" aria-hidden="true"></i></span>
-        <div>
-          <h3>Condizionamento</h3>
-          <p>Installazione e manutenzione di climatizzatori, con gestione dei gas refrigeranti.</p>
-          <a href="#preventivo" data-open-popup class="srv-cta">Chiedi un preventivo <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
-        </div>
-      </article>
+      </details>
     </div>
   </div>
 </section>
@@ -813,7 +903,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p style="font-family:'Open Sans',sans-serif;font-size:12px;font-weight:700;color:#ff8a5c;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;">COME LAVORO</p>
     <h2 style="font-family:'Oswald',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:700;color:#fff;margin-bottom:12px;">Semplice, in 3 passi</h2>
     <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:rgba(255,255,255,0.85);max-width:620px;margin:0 auto 40px;line-height:1.7;">Che sia un guasto o un lavoro da progettare, funziona sempre così.</p>
-    <ol class="steps">
+    <ol class="steps" data-steps><span class="steps-line" aria-hidden="true"></span>
       <li class="step">
         <span class="step-n">1</span>
         <span class="step-ic"><i class="fa-solid fa-phone-volume" aria-hidden="true"></i></span>
@@ -969,116 +1059,82 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
-<!-- ─── RECENSIONI ────────────────────────────────────────────────────── -->
+<!-- ─── RECENSIONI (stile Google) ─────────────────────────────────────── -->
 <section id="recensioni" data-screen-label="Recensioni" style="background:#fff;padding:80px 24px;">
   <div style="max-width:1200px;margin:0 auto;">
-    <div class="rev-hdr">
-      <div>
-        <p style="font-family:'Open Sans',sans-serif;font-size:12px;font-weight:700;color:#E43808;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;">RECENSIONI</p>
-        <h2 style="font-family:'Oswald',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:700;color:#032D6E;margin-bottom:10px;">Cosa dicono i clienti</h2>
-        <p style="font-family:'Open Sans',sans-serif;font-size:16px;color:#475569;">Recensioni reali, verificabili direttamente sulla scheda Google.</p>
-      </div>
-      <div style="background:#F2F6FC;border-radius:16px;padding:24px 28px;text-align:center;flex-shrink:0;min-width:200px;">
-        <div style="font-family:'Oswald',sans-serif;font-size:52px;font-weight:700;color:#032D6E;line-height:1;">4,9</div>
-        <div style="color:#FFC107;font-size:20px;letter-spacing:2px;margin:4px 0;">★★★★★</div>
-        <p style="font-family:'Open Sans',sans-serif;font-size:13px;color:#475569;font-weight:600;">su Google</p>
-      </div>
-    </div>
+    <p style="font-family:'Open Sans',sans-serif;font-size:12px;font-weight:700;color:#E43808;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;">RECENSIONI</p>
+    <h2 style="font-family:'Oswald',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:700;color:#032D6E;margin-bottom:10px;">Cosa dicono i clienti</h2>
+    <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#475569;margin-bottom:28px;">Recensioni pubbliche su Google: toccane una per leggerla sulla scheda di Luigi.</p>
 
-    <div class="rev-grid" style="margin-bottom:40px;">
+    <a class="g-summary" href="https://share.google/Yzprccf5v4xQF8ibe" target="_blank" rel="noopener noreferrer">
+      <span class="g-sum-brand"><svg class="g-logo" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg><span><b>Recensioni Google</b><small>Montini Luigino · Idraulico</small></span></span>
+      <span class="g-sum-score"><b data-count-to="4.9" data-dec="1">4,9</b><span><span class="g-stars" aria-label="5 stelle su 5">★★★★★<span class="g-star-off"></span></span><small>basato sulle recensioni dei clienti</small></span></span>
+      <span class="g-sum-btn">Vedi tutte su Google <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
+    </a>
 
-      <div class="rev-card" style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 2px 16px rgba(3,45,110,0.08);border:1px solid #e8ecf2;position:relative;">
-        <span class="rev-g" aria-label="Recensione Google"><i class="fa-brands fa-google" aria-hidden="true"></i></span>
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
-          <div style="width:48px;height:48px;border-radius:50%;background:#032D6E;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <span style="color:#fff;font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;">L</span>
-          </div>
-          <div>
-            <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#16213C;">Lame Nuredikaj</p>
-            <p style="color:#F5B301;font-size:19px;letter-spacing:2px;line-height:1.2;">★★★★★</p>
-          </div>
-        </div>
-        <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#334155;line-height:1.7;">"Molto gentile e disponibile negli interventi d'urgenza. Attento e preciso sul lavoro."</p>
-      </div>
-
-      <div class="rev-card" style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 2px 16px rgba(3,45,110,0.08);border:1px solid #e8ecf2;position:relative;">
-        <span class="rev-g" aria-label="Recensione Google"><i class="fa-brands fa-google" aria-hidden="true"></i></span>
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
-          <div style="width:48px;height:48px;border-radius:50%;background:#032D6E;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <span style="color:#fff;font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;">E</span>
-          </div>
-          <div>
-            <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#16213C;">Elisa Gramegna</p>
-            <p style="color:#F5B301;font-size:19px;letter-spacing:2px;line-height:1.2;">★★★★★</p>
-          </div>
-        </div>
-        <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#334155;line-height:1.7;">"Artigiano serio, puntuale e preciso. Non ho mai avuto motivo di lamentarmi."</p>
-      </div>
-
-      <div class="rev-card" style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 2px 16px rgba(3,45,110,0.08);border:1px solid #e8ecf2;position:relative;">
-        <span class="rev-g" aria-label="Recensione Google"><i class="fa-brands fa-google" aria-hidden="true"></i></span>
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
-          <div style="width:48px;height:48px;border-radius:50%;background:#032D6E;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <span style="color:#fff;font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;">A</span>
-          </div>
-          <div>
-            <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#16213C;">Antonio Artuso</p>
-            <p style="color:#F5B301;font-size:19px;letter-spacing:2px;line-height:1.2;">★★★★☆</p>
-          </div>
-        </div>
-        <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#334155;line-height:1.7;">"Bravo e onesto idraulico. Molto attento e preciso."</p>
-      </div>
-
-      <div class="rev-card" style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 2px 16px rgba(3,45,110,0.08);border:1px solid #e8ecf2;position:relative;">
-        <span class="rev-g" aria-label="Recensione Google"><i class="fa-brands fa-google" aria-hidden="true"></i></span>
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
-          <div style="width:48px;height:48px;border-radius:50%;background:#032D6E;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <span style="color:#fff;font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;">M</span>
-          </div>
-          <div>
-            <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#16213C;">Marina Bonandin</p>
-            <p style="color:#F5B301;font-size:19px;letter-spacing:2px;line-height:1.2;">★★★★★</p>
-          </div>
-        </div>
-        <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#334155;line-height:1.7;">"Servizio efficiente e preciso a prezzi competitivi."</p>
-      </div>
-
-      <div class="rev-card" style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 2px 16px rgba(3,45,110,0.08);border:1px solid #e8ecf2;position:relative;">
-        <span class="rev-g" aria-label="Recensione Google"><i class="fa-brands fa-google" aria-hidden="true"></i></span>
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
-          <div style="width:48px;height:48px;border-radius:50%;background:#032D6E;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <span style="color:#fff;font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;">F</span>
-          </div>
-          <div>
-            <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#16213C;">Fabio Bonarini</p>
-            <p style="color:#F5B301;font-size:19px;letter-spacing:2px;line-height:1.2;">★★★★★</p>
-          </div>
-        </div>
-        <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#334155;line-height:1.7;">"Ottimo professionista, esperto e competente. Consigliato."</p>
-      </div>
-
-      <div class="rev-card" style="background:#fff;border-radius:14px;padding:24px;box-shadow:0 2px 16px rgba(3,45,110,0.08);border:1px solid #e8ecf2;position:relative;">
-        <span class="rev-g" aria-label="Recensione Google"><i class="fa-brands fa-google" aria-hidden="true"></i></span>
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
-          <div style="width:48px;height:48px;border-radius:50%;background:#032D6E;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-            <span style="color:#fff;font-family:'Oswald',sans-serif;font-size:20px;font-weight:700;">G</span>
-          </div>
-          <div>
-            <p style="font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;color:#16213C;">Giovanna Marcone</p>
-            <p style="color:#F5B301;font-size:19px;letter-spacing:2px;line-height:1.2;">★★★★★</p>
-          </div>
-        </div>
-        <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#334155;line-height:1.7;">"Persona squisita, gentile e molto preparata. Lo consiglio vivamente."</p>
-      </div>
-
-    </div>
-
-    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:14px;">
-      <a href="https://share.google/M4iQ7k59pFZKr6FDl" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;background:#032D6E;color:#fff;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;padding:14px 28px;border-radius:8px;">
-        <i class="fa-brands fa-google"></i> Leggi tutte le recensioni su Google
+    <div class="g-grid">
+      <a class="g-rev" href="https://share.google/Yzprccf5v4xQF8ibe" target="_blank" rel="noopener noreferrer" aria-label="Leggi la recensione di Lame Nuredikaj su Google">
+        <span class="g-rev-top">
+          <span class="g-av" style="background:#1a73e8;">L</span>
+          <span class="g-who"><b>Lame Nuredikaj</b><small>Recensione su Google</small></span>
+          <svg class="g-logo" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        </span>
+        <span class="g-stars" aria-label="5 stelle su 5">★★★★★<span class="g-star-off"></span></span>
+        <span class="g-text">Molto gentile e disponibile negli interventi d'urgenza. Attento e preciso sul lavoro.</span>
       </a>
-      <a href="https://share.google/M4iQ7k59pFZKr6FDl" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;border:2px solid #032D6E;color:#032D6E;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;padding:14px 28px;border-radius:8px;">
-        Lascia una recensione
+      <a class="g-rev" href="https://share.google/Yzprccf5v4xQF8ibe" target="_blank" rel="noopener noreferrer" aria-label="Leggi la recensione di Elisa Gramegna su Google">
+        <span class="g-rev-top">
+          <span class="g-av" style="background:#e8710a;">E</span>
+          <span class="g-who"><b>Elisa Gramegna</b><small>Recensione su Google</small></span>
+          <svg class="g-logo" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        </span>
+        <span class="g-stars" aria-label="5 stelle su 5">★★★★★<span class="g-star-off"></span></span>
+        <span class="g-text">Artigiano serio, puntuale e preciso. Non ho mai avuto motivo di lamentarmi.</span>
+      </a>
+      <a class="g-rev" href="https://share.google/Yzprccf5v4xQF8ibe" target="_blank" rel="noopener noreferrer" aria-label="Leggi la recensione di Antonio Artuso su Google">
+        <span class="g-rev-top">
+          <span class="g-av" style="background:#188038;">A</span>
+          <span class="g-who"><b>Antonio Artuso</b><small>Recensione su Google</small></span>
+          <svg class="g-logo" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        </span>
+        <span class="g-stars" aria-label="4 stelle su 5">★★★★<span class="g-star-off">★</span></span>
+        <span class="g-text">Bravo e onesto idraulico. Molto attento e preciso.</span>
+      </a>
+      <a class="g-rev" href="https://share.google/Yzprccf5v4xQF8ibe" target="_blank" rel="noopener noreferrer" aria-label="Leggi la recensione di Marina Bonandin su Google">
+        <span class="g-rev-top">
+          <span class="g-av" style="background:#d93025;">M</span>
+          <span class="g-who"><b>Marina Bonandin</b><small>Recensione su Google</small></span>
+          <svg class="g-logo" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        </span>
+        <span class="g-stars" aria-label="5 stelle su 5">★★★★★<span class="g-star-off"></span></span>
+        <span class="g-text">Servizio efficiente e preciso a prezzi competitivi.</span>
+      </a>
+      <a class="g-rev" href="https://share.google/Yzprccf5v4xQF8ibe" target="_blank" rel="noopener noreferrer" aria-label="Leggi la recensione di Fabio Bonarini su Google">
+        <span class="g-rev-top">
+          <span class="g-av" style="background:#9334e6;">F</span>
+          <span class="g-who"><b>Fabio Bonarini</b><small>Recensione su Google</small></span>
+          <svg class="g-logo" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        </span>
+        <span class="g-stars" aria-label="5 stelle su 5">★★★★★<span class="g-star-off"></span></span>
+        <span class="g-text">Ottimo professionista, esperto e competente. Consigliato.</span>
+      </a>
+      <a class="g-rev" href="https://share.google/Yzprccf5v4xQF8ibe" target="_blank" rel="noopener noreferrer" aria-label="Leggi la recensione di Giovanna Marcone su Google">
+        <span class="g-rev-top">
+          <span class="g-av" style="background:#007b83;">G</span>
+          <span class="g-who"><b>Giovanna Marcone</b><small>Recensione su Google</small></span>
+          <svg class="g-logo" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        </span>
+        <span class="g-stars" aria-label="5 stelle su 5">★★★★★<span class="g-star-off"></span></span>
+        <span class="g-text">Persona squisita, gentile e molto preparata. Lo consiglio vivamente.</span>
+      </a>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:32px;">
+      <a href="https://share.google/Yzprccf5v4xQF8ibe" target="_blank" rel="noopener noreferrer" class="btn-lift" style="display:inline-flex;align-items:center;gap:10px;background:#fff;color:#1f1f1f;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;padding:14px 26px;border-radius:100px;border:1px solid #dadce0;box-shadow:0 1px 3px rgba(60,64,67,0.2);">
+        <svg class="g-logo" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg> Leggi tutte le recensioni
+      </a>
+      <a href="https://share.google/M4iQ7k59pFZKr6FDl" target="_blank" rel="noopener noreferrer" class="btn-lift" style="display:inline-flex;align-items:center;gap:8px;background:#1a73e8;color:#fff;text-decoration:none;font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;padding:14px 26px;border-radius:100px;">
+        <i class="fa-solid fa-pen" aria-hidden="true"></i> Lascia una recensione
       </a>
     </div>
   </div>
