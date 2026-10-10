@@ -7,6 +7,10 @@
  *   CHAT_ID    id della chat o del gruppo di Luigi
  *   EMAIL      (facoltativo) email dove ricevere la copia se Telegram non funziona
  */
+// ID del foglio "Richieste Luigi" (dall'indirizzo: docs.google.com/spreadsheets/d/<ID>/edit).
+// Con l'ID lo script funziona anche se non è stato creato dentro il foglio.
+var SPREADSHEET_ID = '15WRomDPISaIX2jLzyHM7nqKDj5mPYZmJ63eDIh4ecRU';
+
 var COLONNE = ['Data e ora', 'Provenienza', 'Categoria', 'Urgenza / Tempi', 'Problema', 'Tipo immobile', 'Nome', 'Cognome', 'Telefono', 'Email',
   'Comune', 'Indirizzo', 'Posizione GPS', 'Tipo di richiesta', 'Quando contattare', 'Messaggio', 'Stato', 'Note di Luigi'];
 
@@ -27,13 +31,17 @@ function doPost(e) {
       canale: tipo_(cut_(d.canale, 20))[0], fascia: cut_(d.fascia, 40), msg: cut_(d.messaggio, 1000)
     };
 
-    var sh = sheet_();
-    sh.appendRow([new Date(), riga.prov, riga.cat, riga.urg, riga.prob, riga.imm, riga.nome, riga.cognome, riga.tel, riga.email,
-      riga.comune, riga.via, riga.gps, riga.canale, riga.fascia, riga.msg, 'Da richiamare', '']);
+    var salvata = true, errore = '';
+    try {
+      var sh = sheet_();
+      sh.appendRow([new Date(), riga.prov, riga.cat, riga.urg, riga.prob, riga.imm, riga.nome, riga.cognome, riga.tel, riga.email,
+        riga.comune, riga.via, riga.gps, riga.canale, riga.fascia, riga.msg, 'Da richiamare', '']);
+    } catch (e) { salvata = false; errore = String(e); }
 
-    var tg = telegram_(riga);
-    if (!tg) mail_(riga);
-    return out_({ success: true, telegram: tg });
+    // Telegram parte comunque, anche se il foglio non ha salvato
+    var tg = telegram_(riga, salvata ? '' : '⚠️ Non salvata nel foglio: ' + errore);
+    if (!tg || !salvata) mail_(riga, errore);
+    return out_({ success: salvata || tg, saved: salvata, telegram: tg, error: errore });
   } catch (err) {
     return out_({ success: false, error: String(err) });
   }
@@ -61,7 +69,8 @@ function rateOk_() {
 }
 
 function sheet_() {
-  var sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Richieste') || SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+  var ss = SPREADSHEET_ID ? SpreadsheetApp.openById(SPREADSHEET_ID) : SpreadsheetApp.getActiveSpreadsheet();
+  var sh = ss.getSheetByName('Richieste') || ss.getSheets()[0];
   if (sh.getLastRow() === 0) {
     sh.appendRow(COLONNE);
     sh.getRange(1, 1, 1, COLONNE.length).setFontWeight('bold').setBackground('#032D6E').setFontColor('#ffffff');
@@ -84,7 +93,7 @@ function waNum_(tel) {
   return d.slice(0, 2) === '39' ? d : '39' + d;
 }
 
-function telegram_(r) {
+function telegram_(r, avviso) {
   var p = PropertiesService.getScriptProperties(), token = p.getProperty('BOT_TOKEN'), chat = p.getProperty('CHAT_ID');
   if (!token || !chat) return false;
   var urgente = /emergenza/i.test(r.urg);
@@ -102,6 +111,7 @@ function telegram_(r) {
   if (r.fascia) t.push('🕐 Quando: ' + esc_(r.fascia));
   if (r.msg) t.push('', esc_(r.msg));
   t.push('', '<i>' + esc_(r.prov) + '</i>');
+  if (avviso) t.push('', esc_(avviso));
   try {
     var res = UrlFetchApp.fetch('https://api.telegram.org/bot' + token + '/sendMessage', {
       method: 'post', contentType: 'application/json', muteHttpExceptions: true,
@@ -114,15 +124,26 @@ function telegram_(r) {
   } catch (e) { return false; }
 }
 
-function mail_(r) {
+function mail_(r, errore) {
   var to = PropertiesService.getScriptProperties().getProperty('EMAIL');
   if (!to) return;
   MailApp.sendEmail(to, 'Richiesta dal sito: ' + r.nome + ' ' + r.cognome + ' (' + r.comune + ')',
-    [r.nome + ' ' + r.cognome, r.tel, r.comune + ' ' + r.via, r.gps, r.prob + ' · ' + r.urg, 'Tipo di richiesta: ' + r.canale, r.msg].join('\n'));
+    [r.nome + ' ' + r.cognome, r.tel, r.comune + ' ' + r.via, r.gps, r.prob + ' · ' + r.urg, 'Tipo di richiesta: ' + r.canale, r.msg, errore ? 'Errore foglio: ' + errore : ''].join('\n'));
 }
 
 // Facoltativo: lancia questa funzione una volta per verificare il collegamento con Telegram.
 function prova() {
   Logger.log(telegram_({ prov: 'Prova', cat: 'Lavoro da realizzare', imm: 'Appartamento', urg: 'Nei prossimi giorni', prob: 'Prova', nome: 'Prova', cognome: 'Test', tel: '333 0000000',
     email: '', comune: 'Sesto San Giovanni', via: '', gps: '', canale: 'Messaggio', fascia: 'Appena possibile', msg: 'Messaggio di prova' }));
+}
+
+// Prova dell'intero percorso (foglio + Telegram) senza passare dal sito:
+// scegli questa funzione nel menu e premi Esegui. Deve comparire una riga nel foglio e un messaggio su Telegram.
+function provaCompleta() {
+  var r = doPost({ postData: { contents: JSON.stringify({
+    nome: 'Prova', cognome: 'Completa', telefono: '333 0000000', email: '', comune: 'Sesto San Giovanni', indirizzo: 'Via di prova 1',
+    tipo: 'Rifacimento bagno', urgenza: 'Nei prossimi 1-3 mesi', canale: 'WhatsApp', fascia: 'Appena possibile',
+    messaggio: 'Prova automatica', source: 'popup', categoria: 'progetto', immobile: 'Appartamento'
+  }) } });
+  Logger.log(r.getContent());
 }
