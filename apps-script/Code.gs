@@ -8,7 +8,7 @@
  *   EMAIL      (facoltativo) email dove ricevere la copia se Telegram non funziona
  */
 var COLONNE = ['Data e ora', 'Provenienza', 'Urgenza', 'Problema', 'Nome', 'Cognome', 'Telefono', 'Email',
-  'Comune', 'Indirizzo', 'Posizione GPS', 'Preventivo via', 'Quando chiamare', 'Messaggio', 'Stato', 'Note di Luigi'];
+  'Comune', 'Indirizzo', 'Posizione GPS', 'Tipo di richiesta', 'Quando contattare', 'Messaggio', 'Stato', 'Note di Luigi'];
 
 function doPost(e) {
   try {
@@ -23,7 +23,7 @@ function doPost(e) {
       prov: d.source === 'popup' ? 'Popup' : 'Modulo Contatti',
       urg: cut_(d.urgenza, 60), prob: cut_(d.tipo, 80), nome: nome, cognome: cut_(d.cognome, 60), tel: tel,
       email: cut_(d.email, 100), comune: comune, via: cut_(d.indirizzo, 120), gps: gps,
-      canale: cut_(d.canale, 20), fascia: cut_(d.fascia, 40), msg: cut_(d.messaggio, 1000)
+      canale: tipo_(cut_(d.canale, 20))[0], fascia: cut_(d.fascia, 40), msg: cut_(d.messaggio, 1000)
     };
 
     var sh = sheet_();
@@ -42,6 +42,11 @@ function doGet() { return out_({ ok: true }); }
 
 function out_(o) {
   return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON);
+}
+// Come vuole essere contattato: etichetta + icona per Telegram
+function tipo_(c) {
+  var m = { 'Email': ['Scrivi mail', '✉️'], 'WhatsApp': ['Messaggio', '💬'], 'Chiamata': ['Chiamata', '📞'] }[c];
+  return m || [c || '-', '📩'];
 }
 function cut_(s, n) { return String(s == null ? '' : s).trim().slice(0, n); }
 function esc_(s) { return String(s || '').replace(/[&<>]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]; }); }
@@ -66,6 +71,11 @@ function sheet_() {
   return sh;
 }
 
+function tipoTg_(label) {
+  var icon = { 'Scrivi mail': '✉️', 'Messaggio': '💬', 'Chiamata': '📞' }[label] || '📩';
+  return icon + ' <b>TIPO: ' + esc_(String(label || '-').toUpperCase()) + '</b>';
+}
+
 function waNum_(tel) {
   var d = String(tel).replace(/[^\d+]/g, '');
   if (d.charAt(0) === '+') return d.slice(1);
@@ -78,7 +88,8 @@ function telegram_(r) {
   if (!token || !chat) return false;
   var urgente = /emergenza/i.test(r.urg);
   var t = [
-    urgente ? '🚨🚨 <b>URGENTE — nuova richiesta dal sito</b>' : '🔔 <b>Nuova richiesta dal sito</b>', '',
+    urgente ? '🚨🚨 <b>URGENTE — nuova richiesta dal sito</b>' : '🔔 <b>Nuova richiesta dal sito</b>',
+    tipoTg_(r.canale), '',
     '👤 <b>' + esc_(r.nome + ' ' + r.cognome) + '</b>',
     '📞 ' + esc_(r.tel),
     '📍 <b>' + esc_(r.comune) + '</b>' + (r.via ? ', ' + esc_(r.via) : '')
@@ -86,7 +97,7 @@ function telegram_(r) {
   if (r.gps) t.push('🗺️ <a href="' + r.gps + '">Posizione sulla mappa</a>');
   if (r.email) t.push('✉️ ' + esc_(r.email));
   t.push('', '🔧 ' + esc_(r.prob || '-') + ' · ' + esc_(r.urg || '-'));
-  t.push('📩 Preventivo via: <b>' + esc_(r.canale || '-') + '</b>' + (r.fascia ? ' · ' + esc_(r.fascia) : ''));
+  if (r.fascia) t.push('🕐 Quando: ' + esc_(r.fascia));
   if (r.msg) t.push('', esc_(r.msg));
   t.push('', '<i>' + esc_(r.prov) + '</i>');
   try {
@@ -105,11 +116,11 @@ function mail_(r) {
   var to = PropertiesService.getScriptProperties().getProperty('EMAIL');
   if (!to) return;
   MailApp.sendEmail(to, 'Richiesta dal sito: ' + r.nome + ' ' + r.cognome + ' (' + r.comune + ')',
-    [r.nome + ' ' + r.cognome, r.tel, r.comune + ' ' + r.via, r.gps, r.prob + ' · ' + r.urg, 'Preventivo via: ' + r.canale, r.msg].join('\n'));
+    [r.nome + ' ' + r.cognome, r.tel, r.comune + ' ' + r.via, r.gps, r.prob + ' · ' + r.urg, 'Tipo di richiesta: ' + r.canale, r.msg].join('\n'));
 }
 
 // Facoltativo: lancia questa funzione una volta per verificare il collegamento con Telegram.
 function prova() {
   Logger.log(telegram_({ prov: 'Prova', urg: 'Nei prossimi giorni', prob: 'Prova', nome: 'Prova', cognome: 'Test', tel: '333 0000000',
-    email: '', comune: 'Sesto San Giovanni', via: '', gps: '', canale: 'WhatsApp', fascia: '', msg: 'Messaggio di prova' }));
+    email: '', comune: 'Sesto San Giovanni', via: '', gps: '', canale: 'Messaggio', fascia: 'Appena possibile', msg: 'Messaggio di prova' }));
 }
