@@ -7,6 +7,9 @@
   'use strict';
   var ENDPOINT = 'https://api.web3forms.com/submit';
   var ACCESS_KEY = 'af9514cd-a1b2-43ba-af03-5cfccac636eb'; // chiave pubblica
+  // Worker Cloudflare che inoltra la richiesta su Telegram (vedi worker/telegram-lead.js).
+  // Vuoto = solo email. L'email Web3Forms parte comunque come copia di sicurezza.
+  var TELEGRAM_WORKER = '';
 
   function userData(name, phone, email) {
     var ud = {}, parts = name.toLowerCase().split(/\s+/).filter(Boolean);
@@ -35,17 +38,29 @@
       botcheck: ''
     };
     if (email) payload.email = email;
-    return fetch(ENDPOINT, {
+    var viaEmail = fetch(ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify(payload)
-    }).then(function (r) { return r.json(); }).then(function (res) {
-      if (!res || !res.success) return false;
+    }).then(function (r) { return r.json(); }).then(function (res) { return !!(res && res.success); })
+      .catch(function () { return false; });
+
+    var viaTelegram = !TELEGRAM_WORKER ? Promise.resolve(false) : fetch(TELEGRAM_WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: name, phone: phone, email: email, zona: payload.zona,
+        message: payload.message, source: d.source || 'form', botcheck: '' })
+    }).then(function (r) { return r.json(); }).then(function (res) { return !!(res && res.success); })
+      .catch(function () { return false; });
+
+    // Basta che uno dei due canali (Telegram o email) vada a buon fine
+    return Promise.all([viaEmail, viaTelegram]).then(function (r) {
+      if (!r[0] && !r[1]) return false;
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({ event: 'form_lead', lead_source: d.source || 'form' });
       if (window.lmTrack) window.lmTrack('Lead', { method: d.source || 'form' }, userData(name, phone, email));
       return true;
-    }).catch(function () { return false; });
+    });
   };
 
   function v(f, n) { var el = f.elements[n]; return el ? String(el.value || '').trim() : ''; }
