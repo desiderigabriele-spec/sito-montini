@@ -7,6 +7,7 @@
   var KEY = 'lm_consent';
   var MAX_AGE = 180 * 24 * 3600 * 1000; // 6 mesi, poi si richiede di nuovo
   var POLICY = 'privacy.html';
+  var PIXEL_ID = '1625986432269243';
 
   window.dataLayer = window.dataLayer || [];
   function gtag() { window.dataLayer.push(arguments); }
@@ -21,7 +22,29 @@
   function write(c) {
     try { localStorage.setItem(KEY, JSON.stringify(c)); } catch (e) {}
   }
+  // Meta Pixel: si carica SOLO con il consenso Marketing (niente <noscript>,
+  // che partirebbe senza consenso). Eventi: PageView, Contact (chiamata/WhatsApp).
+  var pixelOn = false;
+  function loadPixel() {
+    if (pixelOn) { if (window.fbq) window.fbq('consent', 'grant'); return; }
+    pixelOn = true;
+    !function (f, b, e, v, n, t, s) {
+      if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); };
+      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = [];
+      t = b.createElement(e); t.async = !0; t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
+    }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+    window.fbq('set', 'autoConfig', false, PIXEL_ID);
+    window.fbq('init', PIXEL_ID);
+    window.fbq('track', 'PageView');
+  }
+  function revokePixel() { if (window.fbq) window.fbq('consent', 'revoke'); pixelOn = false; }
+  window.lmTrack = function (name, params) {
+    var c = read();
+    if (c && c.marketing && window.fbq) window.fbq('track', name, params || {});
+  };
+
   function apply(c) {
+    if (c.marketing) loadPixel(); else revokePixel();
     var a = c.analytics ? 'granted' : 'denied';
     var m = c.marketing ? 'granted' : 'denied';
     gtag('consent', 'update', {
@@ -112,7 +135,15 @@
     if (t) { e.preventDefault(); open(); }
   });
 
+  // Click su WhatsApp -> evento Contact per Meta (la chiamata arriva da index.html)
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest && e.target.closest('a[href*="wa.me"]');
+    if (a) window.lmTrack('Contact', { method: 'whatsapp' });
+  }, true);
+
   function init() {
+    var c0 = read();
+    if (c0 && c0.marketing) loadPixel();
     if (window.__lmNoAutoBanner) return;
     if (!read()) setTimeout(open, 3800); // dopo la splash
   }
