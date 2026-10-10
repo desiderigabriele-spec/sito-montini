@@ -75,6 +75,13 @@
     '#lm-cc .lm-row{display:flex;gap:10px}' +
     '#lm-cc button{font:700 14px/1 "Open Sans",system-ui,sans-serif;cursor:pointer;border-radius:10px;min-height:44px;padding:0 14px;border:2px solid #032D6E;background:#fff;color:#032D6E}' +
     '#lm-cc .lm-row button{flex:1}' +
+    '#lm-cc .lm-row button.lm-yes{flex:1.35;background:#16a34a;border-color:#16a34a;color:#fff;box-shadow:0 6px 18px rgba(22,163,74,.35);font-size:15px}' +
+    '#lm-cc .lm-row button.lm-yes:hover{background:#15803d;border-color:#15803d}' +
+    '#lm-cc .lm-row button.lm-no{background:#fff;border-color:#cbd5e1;color:#334155}' +
+    '#lm-cc .lm-row button.lm-no:hover{border-color:#94a3b8;background:#f8fafc}' +
+    '#lm-cc .lm-luigi{display:flex;align-items:center;gap:12px;margin-bottom:10px}' +
+    '#lm-cc .lm-luigi img{width:46px;height:46px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 2px #032D6E;object-fit:cover;flex-shrink:0}' +
+    '#lm-cc .lm-luigi h2{margin:0}' +
     '#lm-cc button:focus-visible{outline:3px solid #E43808;outline-offset:2px}' +
     '#lm-cc .lm-link{display:block;width:100%;margin-top:8px;border:0;background:none;color:#475569;text-decoration:underline;font-weight:600;min-height:40px}' +
     '#lm-cc .lm-opt{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-top:1px solid #e2e8f0}' +
@@ -96,17 +103,17 @@
     root.hidden = true;
     root.innerHTML =
       '<div data-v="main">' +
-        '<h2>Cookie e privacy</h2>' +
-        '<p>Usiamo strumenti di Google e Meta per capire quante persone visitano il sito e per misurare le pubblicità. Parte solo se accetti: il sito funziona uguale anche se rifiuti. Dettagli nella <a href="' + POLICY + '">informativa privacy e cookie</a>.</p>' +
-        '<div class="lm-row"><button type="button" data-a="reject">Rifiuta</button><button type="button" data-a="accept">Accetta</button></div>' +
-        '<button type="button" class="lm-link" data-a="custom">Personalizza</button>' +
+        '<div class="lm-luigi"><img src="luigi-avatar.webp" alt="Luigi" width="46" height="46"><h2>Ciao, sono Luigi 👋</h2></div>' +
+        '<p>Uso i cookie di Google e di Facebook per capire quante persone visitano il sito e se le mie pubblicità servono davvero. Così non butto soldi in annunci inutili. Non li uso per altro e non vendo i tuoi dati a nessuno. Se accetti mi dai una bella mano; se non vuoi, il sito funziona uguale. <a href="' + POLICY + '">Maggiori informazioni</a></p>' +
+        '<div class="lm-row"><button type="button" class="lm-no" data-a="reject">No, grazie</button><button type="button" class="lm-yes" data-a="accept">✓ Va bene, accetto</button></div>' +
+        '<button type="button" class="lm-link" data-a="custom">Scegli cosa accettare</button>' +
       '</div>' +
       '<div data-v="custom" hidden>' +
-        '<h2>Scegli i cookie</h2>' +
-        '<div class="lm-opt"><input type="checkbox" checked disabled id="lm-n"><label for="lm-n"><b>Necessari</b><span>Servono al funzionamento del sito e a ricordare questa scelta. Sempre attivi.</span></label></div>' +
-        '<div class="lm-opt"><input type="checkbox" id="lm-an"><label for="lm-an"><b>Statistiche</b><span>Google Analytics: ci dice quante persone visitano il sito e quali pagine usano.</span></label></div>' +
-        '<div class="lm-opt"><input type="checkbox" id="lm-mk"><label for="lm-mk"><b>Marketing</b><span>Google Ads e Meta (Facebook/Instagram): misurano se una pubblicità ha portato un contatto.</span></label></div>' +
-        '<div class="lm-row" style="margin-top:6px"><button type="button" data-a="save">Salva scelte</button><button type="button" data-a="accept">Accetta tutto</button></div>' +
+        '<h2>Scegli cosa accettare</h2>' +
+        '<div class="lm-opt"><input type="checkbox" checked disabled id="lm-n"><label for="lm-n"><b>Necessari</b><span>Servono al sito per funzionare e a ricordare la tua scelta. Sono sempre attivi.</span></label></div>' +
+        '<div class="lm-opt"><input type="checkbox" id="lm-an"><label for="lm-an"><b>Statistiche</b><span>Mi dicono quante persone visitano il sito e quali pagine guardano (Google Analytics).</span></label></div>' +
+        '<div class="lm-opt"><input type="checkbox" id="lm-mk"><label for="lm-mk"><b>Marketing</b><span>Mi dicono se una mia pubblicità su Google o Facebook/Instagram ti ha portato a contattarmi.</span></label></div>' +
+        '<div class="lm-row" style="margin-top:6px"><button type="button" class="lm-no" data-a="save">Salva scelte</button><button type="button" class="lm-yes" data-a="accept">✓ Accetto tutto</button></div>' +
       '</div>';
     document.body.appendChild(root);
     root.addEventListener('click', function (e) {
