@@ -7,7 +7,7 @@
  *   CHAT_ID    id della chat o del gruppo di Luigi
  *   EMAIL      (facoltativo) email dove ricevere la copia se Telegram non funziona
  */
-var COLONNE = ['Data e ora', 'Provenienza', 'Urgenza', 'Problema', 'Nome', 'Cognome', 'Telefono', 'Email',
+var COLONNE = ['Data e ora', 'Provenienza', 'Categoria', 'Urgenza / Tempi', 'Problema', 'Tipo immobile', 'Nome', 'Cognome', 'Telefono', 'Email',
   'Comune', 'Indirizzo', 'Posizione GPS', 'Tipo di richiesta', 'Quando contattare', 'Messaggio', 'Stato', 'Note di Luigi'];
 
 function doPost(e) {
@@ -21,13 +21,14 @@ function doPost(e) {
     var gps = (d.lat && d.lon) ? 'https://www.google.com/maps?q=' + Number(d.lat).toFixed(5) + ',' + Number(d.lon).toFixed(5) : '';
     var riga = {
       prov: d.source === 'popup' ? 'Popup' : 'Modulo Contatti',
-      urg: cut_(d.urgenza, 60), prob: cut_(d.tipo, 80), nome: nome, cognome: cut_(d.cognome, 60), tel: tel,
+      cat: d.categoria === 'progetto' ? 'Lavoro da realizzare' : 'Da riparare',
+      urg: cut_(d.urgenza, 60), prob: cut_(d.tipo, 80), imm: cut_(d.immobile, 40), nome: nome, cognome: cut_(d.cognome, 60), tel: tel,
       email: cut_(d.email, 100), comune: comune, via: cut_(d.indirizzo, 120), gps: gps,
       canale: tipo_(cut_(d.canale, 20))[0], fascia: cut_(d.fascia, 40), msg: cut_(d.messaggio, 1000)
     };
 
     var sh = sheet_();
-    sh.appendRow([new Date(), riga.prov, riga.urg, riga.prob, riga.nome, riga.cognome, riga.tel, riga.email,
+    sh.appendRow([new Date(), riga.prov, riga.cat, riga.urg, riga.prob, riga.imm, riga.nome, riga.cognome, riga.tel, riga.email,
       riga.comune, riga.via, riga.gps, riga.canale, riga.fascia, riga.msg, 'Da richiamare', '']);
 
     var tg = telegram_(riga);
@@ -66,7 +67,7 @@ function sheet_() {
     sh.getRange(1, 1, 1, COLONNE.length).setFontWeight('bold').setBackground('#032D6E').setFontColor('#ffffff');
     sh.setFrozenRows(1);
     sh.getRange('A:A').setNumberFormat('dd/MM/yyyy HH:mm');
-    sh.getRange('G:G').setNumberFormat('@'); // telefono come testo
+    sh.getRange('I:I').setNumberFormat('@'); // telefono come testo
   }
   return sh;
 }
@@ -88,7 +89,7 @@ function telegram_(r) {
   if (!token || !chat) return false;
   var urgente = /emergenza/i.test(r.urg);
   var t = [
-    urgente ? '🚨🚨 <b>URGENTE — nuova richiesta dal sito</b>' : '🔔 <b>Nuova richiesta dal sito</b>',
+    urgente ? '🚨🚨 <b>URGENTE — nuova richiesta dal sito</b>' : (r.cat === 'Lavoro da realizzare' ? '🏗️ <b>Nuova richiesta di preventivo — lavoro da realizzare</b>' : '🔔 <b>Nuova richiesta dal sito</b>'),
     tipoTg_(r.canale), '',
     '👤 <b>' + esc_(r.nome + ' ' + r.cognome) + '</b>',
     '📞 ' + esc_(r.tel),
@@ -97,6 +98,7 @@ function telegram_(r) {
   if (r.gps) t.push('🗺️ <a href="' + r.gps + '">Posizione sulla mappa</a>');
   if (r.email) t.push('✉️ ' + esc_(r.email));
   t.push('', '🔧 ' + esc_(r.prob || '-') + ' · ' + esc_(r.urg || '-'));
+  if (r.imm) t.push('🏠 Immobile: ' + esc_(r.imm));
   if (r.fascia) t.push('🕐 Quando: ' + esc_(r.fascia));
   if (r.msg) t.push('', esc_(r.msg));
   t.push('', '<i>' + esc_(r.prov) + '</i>');
@@ -121,6 +123,6 @@ function mail_(r) {
 
 // Facoltativo: lancia questa funzione una volta per verificare il collegamento con Telegram.
 function prova() {
-  Logger.log(telegram_({ prov: 'Prova', urg: 'Nei prossimi giorni', prob: 'Prova', nome: 'Prova', cognome: 'Test', tel: '333 0000000',
+  Logger.log(telegram_({ prov: 'Prova', cat: 'Lavoro da realizzare', imm: 'Appartamento', urg: 'Nei prossimi giorni', prob: 'Prova', nome: 'Prova', cognome: 'Test', tel: '333 0000000',
     email: '', comune: 'Sesto San Giovanni', via: '', gps: '', canale: 'Messaggio', fascia: 'Appena possibile', msg: 'Messaggio di prova' }));
 }
