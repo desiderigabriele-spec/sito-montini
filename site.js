@@ -194,6 +194,88 @@
       c.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLb(i); } });
     });
 
+    var hasIO = 'IntersectionObserver' in window;
+    var finePointer = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    function onVisible(els, opts, fn) {
+      if (!hasIO || reduce) { Array.prototype.forEach.call(els, function (el, i) { fn(el, i, true); }); return; }
+      var io = new IntersectionObserver(function (en) {
+        en.forEach(function (e) { if (e.isIntersecting) { io.unobserve(e.target); fn(e.target, 0, false); } });
+      }, opts);
+      Array.prototype.forEach.call(els, function (el) { io.observe(el); });
+    }
+
+    // ── Servizi: su computer tutti aperti, su telefono si aprono al tocco ──
+    var srvItems = document.querySelectorAll('details.srv-item');
+    var wide = window.matchMedia('(min-width: 900px)');
+    function srvLayout() { Array.prototype.forEach.call(srvItems, function (d) { if (wide.matches) d.open = true; }); }
+    srvLayout();
+    if (wide.addEventListener) wide.addEventListener('change', srvLayout);
+    Array.prototype.forEach.call(srvItems, function (d) {
+      d.querySelector('summary').addEventListener('click', function (e) { if (wide.matches) e.preventDefault(); });
+    });
+
+    // ── Numeri che si riempiono (4,9 e 40) ───────────────────
+    onVisible(document.querySelectorAll('[data-count-to]'), { threshold: 0.6 }, function (el, i, instant) {
+      var to = parseFloat(el.getAttribute('data-count-to')), dec = parseInt(el.getAttribute('data-dec') || '0', 10);
+      function fmt(v) { return v.toFixed(dec).replace('.', ','); }
+      if (instant) { el.textContent = fmt(to); return; }
+      var t0 = null, dur = 1200;
+      el.textContent = fmt(0);
+      function tick(t) {
+        if (!t0) t0 = t;
+        var k = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+        el.textContent = fmt(to * e);
+        if (k < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    });
+
+    // ── Prima/dopo: la tendina scopre il DOPO ─────────────────
+    onVisible(document.querySelectorAll('.pd-card'), { threshold: 0.6 }, function (el, i, instant) {
+      if (instant) el.classList.add('revealed');
+      else setTimeout(function () { el.classList.add('revealed'); }, 350);
+    });
+
+    // ── Come lavoro: linea e passi in sequenza ────────────────
+    onVisible(document.querySelectorAll('[data-steps]'), { threshold: 0.25 }, function (el) { el.classList.add('in'); });
+
+    // ── Schede che entrano in prospettiva ─────────────────────
+    if (hasIO && !reduce) {
+      var cardsIn = document.querySelectorAll('.srv-item, .why-grid > div, .cert-grid > div, .g-rev');
+      var below = Array.prototype.filter.call(cardsIn, function (c) { return c.getBoundingClientRect().top > window.innerHeight * 0.9; });
+      below.forEach(function (c) {
+        var sib = Array.prototype.indexOf.call(c.parentNode.children, c);
+        c.classList.add('reveal3d');
+        c.style.transitionDelay = (sib % 3) * 0.09 + 's';
+      });
+      onVisible(below, { threshold: 0.15 }, function (c) {
+        c.classList.add('in');
+        setTimeout(function () { c.style.transitionDelay = ''; }, 900);
+      });
+    }
+
+    // ── Inclinazione 3D al passaggio del mouse (solo computer) ─
+    if (finePointer && !reduce) {
+      document.querySelectorAll('.srv-item, .why-grid > div, .cert-grid > div, .step, .g-rev, .trust-tile').forEach(function (el) {
+        el.classList.add('tilt');
+        el.addEventListener('pointermove', function (e) {
+          var r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+          el.style.transform = 'perspective(900px) rotateX(' + (-y * 6).toFixed(2) + 'deg) rotateY(' + (x * 7).toFixed(2) + 'deg) translateY(-4px)';
+          el.style.boxShadow = (-x * 14).toFixed(1) + 'px ' + (14 - y * 10).toFixed(1) + 'px 34px rgba(3,45,110,0.18)';
+        });
+        el.addEventListener('pointerleave', function () { el.style.transform = ''; el.style.boxShadow = ''; });
+      });
+      // Foto di Luigi che segue il mouse
+      var hero = document.querySelector('section[data-screen-label="Hero"]'), photo = document.querySelector('[data-tilt-photo]');
+      if (hero && photo) {
+        hero.addEventListener('pointermove', function (e) {
+          var r = hero.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+          photo.style.transform = 'rotateY(' + (x * 12).toFixed(2) + 'deg) rotateX(' + (-y * 6).toFixed(2) + 'deg) translateZ(0)';
+        });
+        hero.addEventListener('pointerleave', function () { photo.style.transform = ''; });
+      }
+    }
+
     // ── Protezione foto (niente menu "salva immagine") ────────
     document.addEventListener('contextmenu', function (e) { if (e.target.tagName === 'IMG') e.preventDefault(); }, true);
     document.addEventListener('dragstart', function (e) { if (e.target.tagName === 'IMG') e.preventDefault(); }, true);
