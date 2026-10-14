@@ -435,30 +435,9 @@
 
   window.lmPopup = { open: open, close: close };
 
-  // Quando compare: la prima che accade tra
-  //  · 5 secondi dopo la fine della splash (circa 1s)
-  //  · scroll oltre il 35% della pagina (interesse reale)
-  //  · desktop: il mouse esce verso l'alto (sta per chiudere la scheda)
-  // Mai prima della fine della splash e mai sopra il banner cookie (aspetta la scelta).
-  var SPLASH_MS = 1100, WAIT_MS = 5000, fired = false;
-  function trigger() {
-    if (fired) return;
-    fired = true;
-    window.removeEventListener('scroll', onScroll);
-    document.removeEventListener('mouseout', onLeave);
-    if (suppressed()) return;
-    if (window.lmCookie && window.lmCookie.pending()) {
-      document.addEventListener('lm:cookie-closed', function () { setTimeout(open, 700); }, { once: true });
-    } else open();
-  }
-  function onScroll() {
-    var h = document.documentElement.scrollHeight - window.innerHeight;
-    if (h > 0 && window.pageYOffset / h > 0.35 && Date.now() - t0 > SPLASH_MS) trigger();
-  }
-  function onLeave(e) {
-    if (!e.relatedTarget && e.clientY <= 0 && Date.now() - t0 > SPLASH_MS + 1500) trigger();
-  }
-  var t0 = Date.now();
+  // Il popup NON compare più da solo: si apre solo quando il visitatore lo chiede,
+  // dai pulsanti del sito ([data-open-popup]), dal link #preventivo o con ?popup.
+  var SPLASH_MS = 1100;
 
   // Apertura su richiesta: pulsanti [data-open-popup], link #preventivo, ?popup
   function forced() { return /[?&]popup(=|&|$)/.test(location.search) || location.hash === '#preventivo'; }
@@ -470,17 +449,12 @@
 
   function schedule() {
     if (forced() && !window.__lmNoAutoBanner) {
-      fired = true;
       setTimeout(function () {
         if (window.lmCookie && window.lmCookie.pending()) document.addEventListener('lm:cookie-closed', function () { setTimeout(function () { open('manual'); }, 500); }, { once: true });
         else open('manual');
       }, SPLASH_MS + 300);
       return;
     }
-    if (window.__lmNoAutoBanner || suppressed()) return;
-    setTimeout(trigger, SPLASH_MS + WAIT_MS);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    document.addEventListener('mouseout', onLeave);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', schedule);
   else schedule();
