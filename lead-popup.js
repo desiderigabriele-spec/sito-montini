@@ -182,7 +182,7 @@
             '<p class="lp-gl">🏗️ Un lavoro da realizzare</p>' +
             '<div class="lp-grid" data-group="problem" data-kind="project">' + PROJECTS.map(function (p) { return chip(p[0], p[1]); }).join('') + '</div>' +
             '<button type="button" class="lp-link lp-other" data-other>Altro, non so come descriverlo</button>' +
-            '<div class="lp-trust"><span>Senza impegno</span><span>Sopralluogo gratuito</span><span>Prezzo chiaro prima di iniziare</span></div>' +
+            '<div class="lp-trust"><span>Senza impegno</span><span>Prezzo chiaro prima di iniziare</span></div>' +
             '<div class="lp-nav"><span></span><button type="button" class="lp-link" data-close>Non ora, do solo un\'occhiata</button></div>' +
           '</section>' +
 
@@ -206,7 +206,7 @@
 
           '<section class="lp-step" data-step="3" hidden>' +
             '<h2>Dove devo venire?</h2>' +
-            '<p class="lp-p">Mi serve per organizzare l\'intervento o il sopralluogo gratuito e per prepararti un preventivo preciso.</p>' +
+            '<p class="lp-p">Mi serve per organizzare l\'intervento o il sopralluogo e per prepararti un preventivo preciso.</p>' +
             '<div class="lp-f" data-where>' +
               '<input name="comune" list="lp-comuni" required autocomplete="address-level2" placeholder="Comune *" aria-label="Comune">' +
               '<datalist id="lp-comuni">' + COMUNI.map(function (c) { return '<option value="' + c + '">'; }).join('') + '</datalist>' +
@@ -277,7 +277,7 @@
     var boxes = root.querySelectorAll('[data-s2]');
     for (var i = 0; i < boxes.length; i++) boxes[i].hidden = boxes[i].getAttribute('data-s2') !== kind;
     root.querySelector('[data-s2-title]').textContent = proj ? 'Quando vorresti iniziare?' : 'Quanto è urgente?';
-    root.querySelector('[data-s2-sub]').textContent = proj ? 'Così organizzo il sopralluogo gratuito al momento giusto.' : 'Così so come organizzarmi per te.';
+    root.querySelector('[data-s2-sub]').textContent = proj ? 'Così organizzo il sopralluogo al momento giusto.' : 'Così so come organizzarmi per te.';
     root.querySelector('[data-immobile]').hidden = !proj;
     root.querySelector('[data-sos]').hidden = true;
   }
@@ -410,7 +410,7 @@
       suppress(60);
       var how = { WhatsApp: 'Ti scrivo su WhatsApp', Chiamata: 'Ti chiamo', Email: 'Ti scrivo via email' }[state.canale] || 'Ti contatto';
       root.querySelector('[data-ok-title]').textContent = 'Ricevuto, ' + nome + '! 🙌';
-      root.querySelector('[data-ok-msg]').textContent = how + (state.kind === 'project' ? ' appena sono libero per fissare il sopralluogo gratuito.' : ' appena sono libero: tieni il telefono a portata di mano.');
+      root.querySelector('[data-ok-msg]').textContent = how + (state.kind === 'project' ? ' appena sono libero per fissare il sopralluogo.' : ' appena sono libero: tieni il telefono a portata di mano.');
       go(5);
     });
   }
