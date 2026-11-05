@@ -52,7 +52,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta name="geo.position" content="45.5349;9.2360">
 <meta name="ICBM" content="45.5349, 9.2360">
 <meta name="author" content="Montini Luigino">
-<meta name="keywords" content="idraulico Sesto San Giovanni, idraulico Cinisello Balsamo, idraulico Cologno Monzese, idraulico Monza, idraulico Bresso, idraulico Cusano Milanino, idraulico Paderno Dugnano, idraulico Muggiò, idraulico Nova Milanese, idraulico Brugherio, idraulico Segrate, pronto intervento idraulico, riparazione perdite, installazione caldaia, impianti gas, condizionamento, idraulico hinterland nord Milano, rifacimento bagno Sesto San Giovanni, rifacimento bagno completo, ristrutturazione impianto idraulico, rifacimento impianto idraulico">
+<meta name="keywords" content="idraulico Sesto San Giovanni, idraulico Cinisello Balsamo, idraulico Cologno Monzese, idraulico Monza, idraulico Bresso, idraulico Cusano Milanino, idraulico Paderno Dugnano, idraulico Muggiò, idraulico Nova Milanese, idraulico Brugherio, idraulico Segrate, pronto intervento idraulico, riparazione perdite, installazione caldaia, impianti gas, condizionamento, idraulico hinterland nord Milano, rifacimento bagno Sesto San Giovanni, rifacimento bagno completo, ristrutturazione impianto idraulico, rifacimento impianto idraulico, classe energetica casa, migliorare classe energetica, pompa di calore Sesto San Giovanni">
 <meta name="theme-color" content="#032D6E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
@@ -385,6 +385,28 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .g-who small { display: block; font-size: 13px; color: #5f6368; }
   .g-text { font-size: 16.5px; line-height: 1.6; color: #3c4043; }
 
+  /* Classe energetica */
+  .ce-head { display: grid; gap: 22px; align-items: end; }
+  .ce-scale { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+  .ce-scale span { font-family: 'Open Sans', sans-serif; font-weight: 700; font-size: 14px; text-align: center; padding: 6px 0; }
+  .ce-scale span:first-child { border-radius: 6px 0 0 6px; } .ce-scale span:last-child { border-radius: 0 6px 6px 0; }
+  .ce-table { display: grid; grid-template-columns: 1fr 1fr; border-radius: 14px; overflow: hidden; border: 1px solid #e2e5ea; margin-top: 28px; font-family: 'Open Sans', sans-serif; }
+  .ce-table > div { padding: 11px 12px; font-size: 14px; line-height: 1.4; }
+  .ce-table .ce-old { background: #f4f5f7; color: #475569; border-bottom: 1px solid #e2e5ea; }
+  .ce-table .ce-new { background: #032D6E; color: #fff; font-weight: 600; border-bottom: 1px solid #0d3e90; }
+  .ce-table .ce-last { border-bottom: none; }
+  .ce-table .ce-th { display: flex; align-items: center; gap: 8px; font-weight: 700; }
+  .ce-badge { flex: 0 0 26px; width: 26px; height: 26px; border-radius: 6px; color: #fff; font-family: 'Oswald', sans-serif; font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .ce-foot { display: grid; gap: 18px; margin-top: 26px; align-items: center; }
+  .ce-cta { display: flex; align-items: center; justify-content: center; gap: 10px; background: #E43808; color: #fff; text-decoration: none; font-family: 'Open Sans', sans-serif; font-size: 17px; font-weight: 700; padding: 15px 26px; border-radius: 8px; box-shadow: 0 4px 20px rgba(228,56,8,0.35); white-space: nowrap; }
+  @media (min-width: 860px) {
+    .ce-head { grid-template-columns: 1fr 300px; gap: 56px; }
+    .ce-table > div { padding: 12px 24px; font-size: 16px; }
+    .ce-table .ce-th { padding: 14px 24px; font-size: 17px; gap: 12px; }
+    .ce-badge { flex-basis: 34px; width: 34px; height: 34px; border-radius: 8px; font-size: 20px; }
+    .ce-foot { grid-template-columns: 1fr auto; gap: 32px; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .pd-reveal { display: none; }
     .steps .step, .reveal3d { opacity: 1 !important; transform: none !important; }
@@ -492,6 +514,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "@type": "Question",
       "name": "Fate anche il rifacimento completo del bagno o di tutto l'impianto?",
       "acceptedAnswer": { "@type": "Answer", "text": "Sì. Oltre alle riparazioni mi occupo di lavori completi: rifacimento del bagno (demolizione, muratura, impianto idraulico, piastrelle e sanitari), nuovi impianti idraulici e di riscaldamento, ristrutturazioni, sostituzione di caldaie, pompe di calore e climatizzatori. Vengo a vedere di persona e ti do un preventivo chiaro." }
+    },
+    {
+      "@type": "Question",
+      "name": "Posso migliorare la classe energetica di casa mia?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Sì, soprattutto lavorando su riscaldamento e acqua calda: pompa di calore o sistema ibrido, caldaia nuova con valvole termostatiche, scaldabagno a pompa di calore o solare termico, riscaldamento a pavimento. Quante classi si guadagnano lo misura il certificatore con l'APE. Per cappotto, serramenti, fotovoltaico e APE ti metto in contatto con professionisti di fiducia." }
     },
     {
       "@type": "Question",
@@ -897,6 +924,43 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
+<!-- ─── CLASSE ENERGETICA ──────────────────────────────────────────────── -->
+<section id="classe-energetica" data-screen-label="Classe energetica" style="background:#fff;padding:72px 20px;">
+  <div style="max-width:1088px;margin:0 auto;">
+    <div class="ce-head">
+      <div>
+        <p style="font-family:'Open Sans',sans-serif;font-size:12px;font-weight:700;color:#E43808;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;">CLASSE ENERGETICA</p>
+        <h2 style="font-family:'Oswald',sans-serif;font-size:clamp(32px,4.4vw,48px);font-weight:700;color:#032D6E;line-height:1.04;text-transform:uppercase;margin-bottom:12px;">Sali di classe, <span style="color:#E43808;">scendi in bolletta</span></h2>
+        <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#334155;line-height:1.6;">Una casa in classe alta costa meno da scaldare e vale di più se la vendi o la affitti. Riscaldamento e acqua calda pesano tanto sulla classe energetica: è lì che intervengo io.</p>
+      </div>
+      <div>
+        <div class="ce-scale" aria-label="Scala delle classi energetiche, dalla G alla A">
+          <span style="background:#e3261f;color:#fff;">G</span><span style="background:#f06a22;color:#fff;">F</span><span style="background:#fbb315;color:#16213C;">E</span><span style="background:#f5d90a;color:#16213C;">D</span><span style="background:#a4c837;color:#16213C;">C</span><span style="background:#4cb848;color:#fff;">B</span><span style="background:#00a651;color:#fff;">A</span>
+        </div>
+        <p style="font-family:'Open Sans',sans-serif;font-size:12px;color:#64748b;line-height:1.45;margin-top:6px;">La scala dell'APE. Il salto reale lo misura il certificatore.</p>
+      </div>
+    </div>
+
+    <div class="ce-table" role="table" aria-label="Oggi e con Luigi">
+      <div class="ce-old ce-th" role="columnheader"><span class="ce-badge" style="background:#e3261f;" aria-hidden="true">G</span>Oggi</div>
+      <div class="ce-new ce-th" role="columnheader"><span class="ce-badge" style="background:#00a651;" aria-hidden="true">↑</span>Con Luigi</div>
+      <div class="ce-old" role="cell">Caldaia vecchia</div>
+      <div class="ce-new" role="cell">Pompa di calore o sistema ibrido</div>
+      <div class="ce-old" role="cell">Boiler elettrico</div>
+      <div class="ce-new" role="cell">Acqua calda a pompa di calore o solare termico</div>
+      <div class="ce-old" role="cell">Termosifoni senza regolazione</div>
+      <div class="ce-new" role="cell">Valvole termostatiche o riscaldamento a pavimento</div>
+      <div class="ce-old ce-last" role="cell">Bollette alte, casa che vale meno</div>
+      <div class="ce-new ce-last" role="cell">Bollette più leggere, casa che vale di più</div>
+    </div>
+
+    <div class="ce-foot">
+      <p style="font-family:'Open Sans',sans-serif;font-size:15px;color:#334155;line-height:1.6;"><strong style="color:#032D6E;">Per il resto ti metto in contatto io</strong> con certificatore APE, termotecnico, serramentista, impresa per il cappotto ed elettricista. Molti lavori rientrano negli incentivi: verifichiamo insieme quali valgono per te.</p>
+      <a href="#preventivo" data-open-popup class="ce-cta btn-lift">Valutiamo casa tua <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+    </div>
+  </div>
+</section>
+
 <!-- ─── COME LAVORO ────────────────────────────────────────────────────── -->
 <section id="come-lavoro" data-screen-label="Come lavoro" style="background:linear-gradient(155deg,#0d3e90 0%,#032D6E 55%,#011848 100%);padding:80px 24px;">
   <div style="max-width:1100px;margin:0 auto;text-align:center;">
@@ -1055,6 +1119,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span style="border:2px solid #032D6E;color:#032D6E;font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;padding:10px 24px;border-radius:100px;">Geometri</span>
       <span style="border:2px solid #032D6E;color:#032D6E;font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;padding:10px 24px;border-radius:100px;">Architetti</span>
       <span style="border:2px solid #032D6E;color:#032D6E;font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;padding:10px 24px;border-radius:100px;">Studi di progettazione</span>
+      <span style="border:2px solid #032D6E;color:#032D6E;font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;padding:10px 24px;border-radius:100px;">Certificatori energetici</span>
+      <span style="border:2px solid #032D6E;color:#032D6E;font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;padding:10px 24px;border-radius:100px;">Termotecnici</span>
     </div>
   </div>
 </section>
@@ -1212,6 +1278,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="faq-icon">+</span>
       </summary>
       <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#334155;line-height:1.8;padding:4px 0 24px;">Sì. Oltre alle riparazioni mi occupo di lavori completi: rifacimento del bagno (demolizione, muratura, impianto idraulico, piastrelle e sanitari), nuovi impianti idraulici e di riscaldamento, ristrutturazioni, sostituzione di caldaie, pompe di calore e climatizzatori. Vengo a vedere di persona e ti do un preventivo chiaro.</p>
+    </details>
+
+    <details class="faq-item">
+      <summary>
+        <span style="font-family:'Open Sans',sans-serif;font-size:18px;font-weight:700;color:#16213C;">Posso migliorare la classe energetica di casa mia?</span>
+        <span class="faq-icon">+</span>
+      </summary>
+      <p style="font-family:'Open Sans',sans-serif;font-size:17px;color:#334155;line-height:1.8;padding:4px 0 24px;">Sì, soprattutto lavorando su riscaldamento e acqua calda: pompa di calore o sistema ibrido, caldaia nuova con valvole termostatiche, scaldabagno a pompa di calore o solare termico, riscaldamento a pavimento. Quante classi si guadagnano lo misura il certificatore con l'APE. Per cappotto, serramenti, fotovoltaico e APE ti metto in contatto con professionisti di fiducia.</p>
     </details>
 
     <details class="faq-item" style="border-bottom:none;">
