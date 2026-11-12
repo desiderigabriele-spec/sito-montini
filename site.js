@@ -241,7 +241,7 @@
 
     // ── Schede che entrano in prospettiva ─────────────────────
     if (hasIO && !reduce) {
-      var cardsIn = document.querySelectorAll('.srv-item, .why-grid > div, .cert-grid > div, .g-rev');
+      var cardsIn = document.querySelectorAll('.srv-item, .why-grid > div, .cert-grid > div');
       var below = Array.prototype.filter.call(cardsIn, function (c) { return c.getBoundingClientRect().top > window.innerHeight * 0.9; });
       below.forEach(function (c) {
         var sib = Array.prototype.indexOf.call(c.parentNode.children, c);
@@ -256,7 +256,7 @@
 
     // ── Inclinazione 3D al passaggio del mouse (solo computer) ─
     if (finePointer && !reduce) {
-      document.querySelectorAll('.srv-item, .why-grid > div, .cert-grid > div, .step, .g-rev, .trust-tile').forEach(function (el) {
+      document.querySelectorAll('.srv-item, .why-grid > div, .cert-grid > div, .step, .trust-tile').forEach(function (el) {
         el.classList.add('tilt');
         el.addEventListener('pointermove', function (e) {
           var r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
