@@ -427,18 +427,34 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .cb-card { padding: 22px; }
     .cb-chips span { font-size: 15px; padding: 9px 18px; }
   }
-  /* Dove lavoro (mappa) */
-  .zn-wrap { display: grid; gap: 28px; align-items: center; }
-  .zn-list { display: grid; grid-template-columns: 1fr 1fr; gap: 9px 16px; margin-top: 6px; }
-  .zn-list span { display: flex; gap: 8px; align-items: center; font-family: 'Open Sans', sans-serif; font-size: 14.5px; font-weight: 600; color: #fff; }
-  .zn-list svg { flex: 0 0 15px; }
-  .zn-map { position: relative; border-radius: 18px; background: #0a3480; border: 1px solid rgba(255,255,255,0.14); overflow: hidden; }
-  .zn-map svg { display: block; width: 100%; height: auto; }
-  .zn-map p { position: absolute; left: 16px; bottom: 12px; font-family: 'Open Sans', sans-serif; font-size: 12px; color: rgba(255,255,255,0.65); }
-  .zn-cta { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: #E43808; color: #fff; text-decoration: none; font-family: 'Open Sans', sans-serif; font-size: 16px; font-weight: 700; padding: 14px 22px; border-radius: 8px; }
-  @media (min-width: 960px) {
-    .zn-wrap { grid-template-columns: 1fr 500px; gap: 56px; }
-    .zn-list span { font-size: 15px; }
+  /* Dove lavoro (fasce di distanza) */
+  .zd-head { display: grid; gap: 20px; align-items: end; }
+  .zd-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 26px; }
+  .zd-card { background: #fff; color: #16213C; border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+  .zd-top { display: flex; align-items: center; gap: 12px; }
+  .zd-top svg { flex: 0 0 40px; }
+  .zd-top b { display: block; font-family: 'Oswald', sans-serif; font-size: 20px; font-weight: 700; color: #032D6E; text-transform: uppercase; line-height: 1.1; }
+  .zd-top small { display: block; font-family: 'Open Sans', sans-serif; font-size: 12.5px; color: #475569; }
+  .zd-card p { font-family: 'Open Sans', sans-serif; font-size: 14.5px; line-height: 1.7; color: #334155; }
+  .zd-far { display: flex; align-items: flex-start; gap: 12px; border: 1px dashed rgba(255,255,255,0.35); border-radius: 12px; padding: 14px 16px; margin-top: 14px; }
+  .zd-far svg { flex: 0 0 24px; }
+  .zd-cta { display: flex; align-items: center; justify-content: center; gap: 10px; background: #E43808; color: #fff; text-decoration: none; font-family: 'Open Sans', sans-serif; font-size: 16px; font-weight: 700; padding: 14px 22px; border-radius: 8px; }
+  @media (min-width: 860px) {
+    .zd-head { grid-template-columns: 1fr auto; gap: 48px; }
+    .zd-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 32px; }
+    .zd-card { padding: 24px; gap: 14px; }
+    .zd-top b { font-size: 22px; }
+    .zd-card p { font-size: 15px; }
+    .zd-far { padding: 16px 22px; margin-top: 18px; }
+  }
+  /* Perché scegliermi: griglia 2×2 compatta sul telefono */
+  @media (max-width: 767px) {
+    .why-grid { gap: 10px; }
+    .why-grid > .card { padding: 18px 14px !important; text-align: left !important; align-items: flex-start !important; gap: 6px !important; }
+    .why-grid > .card > div:first-child { font-size: 32px !important; margin-bottom: 2px !important; }
+    .why-grid > .card > div:first-child i { font-size: 30px !important; }
+    .why-grid > .card h3 { font-size: 15px !important; line-height: 1.25; }
+    .why-grid > .card p { font-size: 13.5px !important; line-height: 1.45 !important; }
   }
   /* Recensioni che scorrono verso destra */
   @keyframes g-slide-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
@@ -1317,52 +1333,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- ─── ZONE SERVITE ───────────────────────────────────────────────────── -->
 <section id="zone" data-screen-label="Zone servite" style="background:#032D6E;padding:72px 20px;">
-  <div class="zn-wrap" style="max-width:1088px;margin:0 auto;">
-    <div>
-      <p style="font-family:'Open Sans',sans-serif;font-size:12px;font-weight:700;color:#ff7a45;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;">ZONE SERVITE</p>
-      <h2 style="font-family:'Oswald',sans-serif;font-size:clamp(32px,4.2vw,44px);font-weight:700;color:#fff;line-height:1.06;text-transform:uppercase;margin-bottom:12px;">Dove lavoro</h2>
-      <p style="font-family:'Open Sans',sans-serif;font-size:16px;color:rgba(255,255,255,0.85);line-height:1.6;margin-bottom:14px;">Parto da Sesto San Giovanni e copro tutto il Nord Milano: per un guasto arrivo in fretta.</p>
-      <div class="zn-list">
-          <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ff7a45" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Sesto San Giovanni</span>
-          <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ff7a45" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Cinisello Balsamo</span>
-          <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ff7a45" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Cologno Monzese</span>
-          <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ff7a45" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Monza</span>
-          <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ff7a45" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Bresso</span>
-          <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ff7a45" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Brugherio</span>
-          <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ff7a45" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Cusano Milanino</span>
-          <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ff7a45" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Segrate</span>
-          <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ff7a45" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Paderno Dugnano</span>
-          <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ff7a45" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Vimodrone</span>
-          <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ff7a45" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Muggiò</span>
-          <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ff7a45" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Nova Milanese</span>
-          <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ff7a45" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Milano</span>
+  <div style="max-width:1088px;margin:0 auto;">
+    <div class="zd-head">
+      <div>
+        <p style="font-family:'Open Sans',sans-serif;font-size:12px;font-weight:700;color:#ff7a45;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:10px;">ZONE SERVITE</p>
+        <h2 style="font-family:'Oswald',sans-serif;font-size:clamp(32px,4.2vw,44px);font-weight:700;color:#fff;line-height:1.06;text-transform:uppercase;margin-bottom:12px;">Dove lavoro</h2>
+        <p style="font-family:'Open Sans',sans-serif;font-size:16px;color:rgba(255,255,255,0.85);line-height:1.6;">Parto da Sesto San Giovanni. Più sei vicino, prima arrivo.</p>
       </div>
-      <p style="font-family:'Open Sans',sans-serif;font-size:14px;color:rgba(255,255,255,0.75);line-height:1.55;margin:16px 0 18px;">Per lavori importanti mi sposto anche in altre province d'Italia.</p>
-      <a href="tel:+393664366759" class="zn-cta btn-lift">Il tuo comune non c'è? Chiamami</a>
+      <a href="tel:+393664366759" class="zd-cta btn-lift">Il tuo comune non c'è? Chiamami</a>
     </div>
-    <div class="zn-map">
-      <svg viewBox="0 0 470 440" role="img" aria-label="Mappa indicativa delle zone servite intorno a Sesto San Giovanni">
-        <circle cx="257" cy="224" r="200" fill="rgba(255,122,69,0.07)" stroke="rgba(255,122,69,0.5)" stroke-width="1.5" stroke-dasharray="6 6"/>
-        <circle cx="257" cy="224" r="110" fill="rgba(255,122,69,0.08)"/>
-        <g fill="#ffffff" font-family="Open Sans, sans-serif" font-size="15" font-weight="600">
-          <circle cx="205" cy="165" r="5.5"/><text x="214" y="160">Cinisello</text>
-          <circle cx="362" cy="240" r="5.5"/><text x="370" y="236">Cologno</text>
-          <circle cx="142" cy="210" r="5.5"/><text x="133" y="215" text-anchor="end">Bresso</text>
-          <circle cx="127" cy="178" r="5.5"/><text x="118" y="183" text-anchor="end">Cusano</text>
-          <circle cx="82" cy="127" r="5.5"/><text x="91" y="122">Paderno D.</text>
-          <circle cx="242" cy="74" r="5.5"/><text x="251" y="69">Muggiò</text>
-          <circle cx="167" cy="74" r="5.5"/><text x="158" y="69" text-anchor="end">Nova M.</text>
-          <circle cx="355" cy="90" r="5.5"/><text x="364" y="85">Monza</text>
-          <circle cx="420" cy="176" r="5.5"/><text x="412" y="198" text-anchor="end">Brugherio</text>
-          <circle cx="407" cy="342" r="5.5"/><text x="399" y="364" text-anchor="end">Segrate</text>
-          <circle cx="382" cy="275" r="5.5"/><text x="391" y="292">Vimodrone</text>
-          <circle cx="145" cy="395" r="9" fill="none" stroke="#ffffff" stroke-width="2"/><text x="161" y="401" font-size="17" font-weight="700">Milano</text>
-        </g>
-        <circle cx="257" cy="224" r="16" fill="#E43808"/>
-        <circle cx="257" cy="224" r="6" fill="#ffffff"/>
-        <text x="257" y="259" text-anchor="middle" fill="#ffffff" font-family="Oswald, sans-serif" font-size="18" font-weight="700">SESTO SAN GIOVANNI</text>
-      </svg>
-      <p>Mappa indicativa</p>
+    <div class="zd-grid">
+      <div class="zd-card"><div class="zd-top"><svg width="40" height="40" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20" fill="none" stroke="#e2e8f0" stroke-width="2"/><circle cx="22" cy="22" r="13" fill="none" stroke="#e2e8f0" stroke-width="2"/><circle cx="22" cy="22" r="7" fill="#E43808"/></svg><span><b>Fino a 5 km</b><small>i più vicini</small></span></div><p>Cinisello Balsamo · Cologno Monzese · Bresso · Vimodrone · Cusano Milanino</p></div>
+      <div class="zd-card"><div class="zd-top"><svg width="40" height="40" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20" fill="none" stroke="#e2e8f0" stroke-width="2"/><circle cx="22" cy="22" r="13" fill="none" stroke="#ff7a45" stroke-width="4"/><circle cx="22" cy="22" r="4" fill="#032D6E"/></svg><span><b>Da 5 a 7 km</b><small>Brianza e dintorni</small></span></div><p>Brugherio · Muggiò · Monza · Paderno Dugnano · Segrate · Nova Milanese</p></div>
+      <div class="zd-card"><div class="zd-top"><svg width="40" height="40" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="19" fill="none" stroke="#ff7a45" stroke-width="4"/><circle cx="22" cy="22" r="12" fill="none" stroke="#e2e8f0" stroke-width="2"/><circle cx="22" cy="22" r="4" fill="#032D6E"/></svg><span><b>Milano</b><small>circa 9 km</small></span></div><p>Milano città</p></div>
+    </div>
+    <div class="zd-far">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff7a45" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17h2l2-5h10l2 5h2"/><circle cx="7.5" cy="17.5" r="1.8"/><circle cx="16.5" cy="17.5" r="1.8"/></svg>
+      <p style="font-family:'Open Sans',sans-serif;font-size:14.5px;line-height:1.5;color:rgba(255,255,255,0.88);"><strong style="color:#fff;">Più lontano?</strong> Per lavori importanti mi sposto anche in altre province d'Italia. Distanze indicative in linea d'aria da Sesto San Giovanni.</p>
     </div>
   </div>
 </section>
